@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.joda.time.Interval;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,8 +17,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Data
@@ -54,11 +58,42 @@ public class Subscription extends BaseEntity {
 	@DBRef
 	private List<PaymentHistory> paymentHistory;
 
-	private Interval trialPeriod;
+	// string form stored in db but converted during runtime
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private String trialPeriod;
+
+	@Transient
+	private Interval trialPeriodInterval;
+
+	@Getter(AccessLevel.NONE)
+	@Setter(AccessLevel.NONE)
+	private String supportPeriod;
+
+	@Transient
+	private Interval supportPeriodInterval;
 
 	public void setProductPlan(ProductPlan productPlan) {
 		this.productPlan = productPlan;
 		this.productPlan.setSubscription(this);
+	}
+	
+	public void setTrialPeriodInterval(Interval trialPeriodInterval) {
+		this.trialPeriodInterval = trialPeriodInterval;
+		this.trialPeriod = this.trialPeriodInterval.toString();
+	}
+	
+	public Interval getTrialPeriodInterval(){
+		return new Interval(trialPeriod);
+	}
+	
+	public Interval getSupportPeriodInterval(){
+		return new Interval(supportPeriod);
+	}
+	
+	public void setSupportPeriodInterval(Interval supportPeriodInterval) {
+		this.supportPeriodInterval = supportPeriodInterval;
+		this.supportPeriod = this.supportPeriodInterval.toString();
 	}
 
 	public boolean isExpired() {

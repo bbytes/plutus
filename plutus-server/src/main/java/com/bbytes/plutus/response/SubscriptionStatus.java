@@ -1,5 +1,6 @@
 package com.bbytes.plutus.response;
 
+import com.bbytes.plutus.enums.Currency;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -17,11 +18,15 @@ public class SubscriptionStatus {
 
 	private Double billingAmount = null;
 
-	public SubscriptionStatus(String message, boolean valid, String validTill, double billingAmount) {
+	private Currency currency = null;
+
+	public SubscriptionStatus(String message, boolean valid, String validTill, double billingAmount,
+			Currency currency) {
 		this.message = message;
 		this.valid = valid;
 		this.validTill = validTill;
 		this.billingAmount = billingAmount;
+		this.currency = currency;
 	}
 
 	public SubscriptionStatus(String message, boolean valid) {

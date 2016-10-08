@@ -19,7 +19,7 @@ import com.bbytes.plutus.service.SubscriptionInvalidException;
 import com.bbytes.plutus.service.SubscriptionService;
 
 @RestController
-@RequestMapping("v1/api/subscription/")
+@RequestMapping("v1/api/subscription")
 public class SubscriptionRestController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class SubscriptionRestController {
 		}
 
 		SubscriptionStatus status = new SubscriptionStatus("Subscription check done", true,
-				subscription.getValidTill().toString(), subscription.getBillingAmount());
+				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getProductPlan().getCurrency());
 
 		return status;
 	}

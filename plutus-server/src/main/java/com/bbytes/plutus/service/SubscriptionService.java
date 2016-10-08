@@ -15,7 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bbytes.plutus.enums.GlobalConstant;
+import com.bbytes.plutus.GlobalConstant;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.repo.SubscriptionRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
