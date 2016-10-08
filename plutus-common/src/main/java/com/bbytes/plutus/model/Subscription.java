@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.bbytes.plutus.enums.SubscriptionType;
+import com.bbytes.plutus.mongo.CascadeSave;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,13 +32,16 @@ public class Subscription extends BaseEntity {
 
 	@Indexed(unique = true)
 	private String subscriptionKey;
-	
-	private SubscriptionType type;
+
+	@Indexed(unique = true)
+	private String subscriptionSecret;
 
 	@DBRef
+	@CascadeSave
 	private Customer customer;
 
 	@DBRef
+	@CascadeSave
 	private ProductPlan productPlan;
 
 	@JsonIgnore
@@ -52,6 +55,11 @@ public class Subscription extends BaseEntity {
 	private List<PaymentHistory> paymentHistory;
 
 	private Interval trialPeriod;
+
+	public void setProductPlan(ProductPlan productPlan) {
+		this.productPlan = productPlan;
+		this.productPlan.setSubscription(this);
+	}
 
 	public boolean isExpired() {
 		long nowMillis = System.currentTimeMillis();

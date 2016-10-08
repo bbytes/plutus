@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.enums.DeploymentMode;
+import com.bbytes.plutus.mongo.CascadeSave;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ import lombok.ToString;
 public class ProductPlan extends BaseEntity {
 
 	@DBRef
+	@CascadeSave
 	private Product product;
 	
 	@DBRef
@@ -28,7 +30,7 @@ public class ProductPlan extends BaseEntity {
 	// usually Map of items that is considered for the product plan like
 	// no of users , no of projects , no of candidates allowed to its cost
 	// like charge per user 3$ etc
-	private Map<String, Double> productPlanItemToCost;
+	private Map<String, Number> productPlanItemToCost;
 
 	private Currency currency;
 

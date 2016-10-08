@@ -1,6 +1,7 @@
-package com.bbytes.plutus.config;
+package com.bbytes.plutus.mongo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -29,5 +30,10 @@ public class MongoConfig extends AbstractMongoConfiguration {
 	@Override
 	protected String getMappingBasePackage() {
 		return "com.bbytes.plutus.model";
+	}
+
+	@Bean
+	public CascadeSaveMongoEventListener cascadingMongoEventListener() {
+		return new CascadeSaveMongoEventListener();
 	}
 }

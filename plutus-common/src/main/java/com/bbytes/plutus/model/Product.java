@@ -1,5 +1,7 @@
 package com.bbytes.plutus.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +18,10 @@ public class Product extends BaseEntity {
 
 	private String desc;
 
-	private List<String> productTeamNotifyEmails;
+	private List<String> productTeamEmails = new ArrayList<>();
+	
+	public void addProductTeamEmails(String... emails) {
+		productTeamEmails.addAll(Arrays.asList(emails));
+	}
 
 }

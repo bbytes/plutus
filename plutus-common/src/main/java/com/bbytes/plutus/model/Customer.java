@@ -1,5 +1,7 @@
 package com.bbytes.plutus.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -27,9 +29,13 @@ public class Customer extends BaseEntity {
 
 	private String billingAddress;
 
-	private List<String> billingEmails;
+	private List<String> billingEmails = new ArrayList<>();
 
 	@DBRef
 	private List<Subscription> subscriptions;
+
+	public void addBillingEmails(String... emails) {
+		billingEmails.addAll(Arrays.asList(emails));
+	}
 
 }
