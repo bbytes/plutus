@@ -18,7 +18,7 @@ public class PaymentHistory extends BaseEntity {
 
 	private double amount;
 
-	private Date date;
+	private Date paymentDate;
 
 	private PaymentMode paymentMode;
 	

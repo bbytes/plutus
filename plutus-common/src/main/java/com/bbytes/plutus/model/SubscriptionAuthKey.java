@@ -1,6 +1,7 @@
 package com.bbytes.plutus.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -16,6 +17,7 @@ public class SubscriptionAuthKey {
 	@Id
 	private String subscriptionKey;
 
+	@Indexed(unique=true)
 	private String subscriptionSecret;
 
 	

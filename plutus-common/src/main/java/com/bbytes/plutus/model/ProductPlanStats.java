@@ -19,7 +19,7 @@ import lombok.ToString;
 public class ProductPlanStats extends BaseEntity {
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	private Date date;
+	private Date entryDate;
 
 	// plan item like no od users to the current count for that date or hour
 	// that is sent from the client. Billing happens based on these nos 

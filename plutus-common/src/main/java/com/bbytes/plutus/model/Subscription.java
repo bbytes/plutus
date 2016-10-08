@@ -30,7 +30,7 @@ public class Subscription extends BaseEntity {
 
 	private double billingAmount;
 
-	@Indexed
+	@Indexed(unique = true)
 	private String subscriptionKey;
 	
 	private SubscriptionType type;

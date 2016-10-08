@@ -21,6 +21,9 @@ public class ProductPlan extends BaseEntity {
 
 	@DBRef
 	private Product product;
+	
+	@DBRef
+	private Subscription subscription;
 
 	// usually Map of items that is considered for the product plan like
 	// no of users , no of projects , no of candidates allowed to its cost
