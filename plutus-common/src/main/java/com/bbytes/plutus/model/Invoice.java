@@ -1,6 +1,7 @@
 package com.bbytes.plutus.model;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,5 +19,9 @@ public class Invoice extends BaseEntity {
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date date;
+
+	private Map<String, Object> invoiceData;
+
+	private String invoiceTemplate;
 
 }

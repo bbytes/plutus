@@ -16,15 +16,16 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Document
-public class ProductStats extends BaseEntity {
+public class ProductPlanStats extends BaseEntity {
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date date;
 
-	private Map<String, Object> stats;
+	// plan item like no od users to the current count for that date or hour
+	// that is sent from the client. Billing happens based on these nos 
+	private Map<String, Integer> stats;
 
 	@Indexed
 	private String subscriptionKey;
-
 
 }
