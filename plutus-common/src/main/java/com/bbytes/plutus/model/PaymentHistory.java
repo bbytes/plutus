@@ -1,8 +1,10 @@
 package com.bbytes.plutus.model;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.bbytes.plutus.enums.PaymentMode;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,10 +14,14 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Document
-public class Product extends BaseEntity {
+public class PaymentHistory extends BaseEntity {
 
-	private String desc;
+	private double amount;
 
-	private List<String> productTeamNotifyEmails;
+	private Date date;
+
+	private PaymentMode paymentMode;
+	
+	private Invoice invoice;
 
 }

@@ -1,4 +1,4 @@
-package com.bbytes.plutus.model;
+package com.bbytes.plutus.enums;
 
 public class GlobalConstant {
 

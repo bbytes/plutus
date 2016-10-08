@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(Include.NON_NULL)
-public class LicenseStatus {
+public class SubscriptionStatus {
 
 	private boolean valid = false;
 
@@ -15,16 +15,16 @@ public class LicenseStatus {
 
 	private String validTill;
 
-	private int count;
+	private double amount;
 
-	public LicenseStatus(String message, boolean valid, String validTill, int count) {
+	public SubscriptionStatus(String message, boolean valid, String validTill, double amount) {
 		this.message = message;
 		this.valid = valid;
 		this.validTill = validTill;
-		this.count = count;
+		this.amount = amount;
 	}
 
-	public LicenseStatus(String message, boolean valid) {
+	public SubscriptionStatus(String message, boolean valid) {
 		this.message = message;
 		this.valid = valid;
 	}

@@ -14,7 +14,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.stereotype.Service;
 
-import com.bbytes.plutus.model.GlobalConstant;
+import com.bbytes.plutus.enums.GlobalConstant;
 import com.bbytes.plutus.model.Subscription;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -26,7 +26,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class SubscriptionService {
 
-	public String createLicenseContent(Subscription licenseData) throws LicenseCreateException {
+	public String createLicenseContent(Subscription licenseData) throws SubscriptionCreateException {
 
 		// The JWT signature algorithm we will be using to sign the token
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -42,12 +42,12 @@ public class SubscriptionService {
 		try {
 			claims.put(GlobalConstant.LIC_DATA_KEY, licenseData.toJson());
 		} catch (JsonProcessingException e) {
-			throw new LicenseCreateException(e);
+			throw new SubscriptionCreateException(e);
 		}
 
 		// Let's set the JWT Claims
 		JwtBuilder builder = Jwts.builder().setId(licenseData.getId()).setClaims(claims).setIssuedAt(now)
-				.setSubject(licenseData.getOwner()).setIssuer(licenseData.getIssuer()).setClaims(claims)
+				.setSubject(licenseData.getSubscriptionKey()).setIssuer("Plutus").setClaims(claims)
 				.signWith(signatureAlgorithm, signingKey);
 
 		// if it has been specified, let's add the expiration
@@ -57,7 +57,7 @@ public class SubscriptionService {
 		return builder.compact();
 	}
 
-	public File createLicenseFile(Subscription licenseData) throws LicenseCreateException {
+	public File createLicenseFile(Subscription licenseData) throws SubscriptionCreateException {
 		String licContent = createLicenseContent(licenseData);
 		PrintWriter out = null;
 		try {
@@ -66,7 +66,7 @@ public class SubscriptionService {
 			out.write(licContent);
 			return licFile;
 		} catch (Exception e) {
-			throw new LicenseCreateException(e);
+			throw new SubscriptionCreateException(e);
 		} finally {
 			if (out != null)
 				out.close();
@@ -74,7 +74,7 @@ public class SubscriptionService {
 
 	}
 
-	public Subscription validate(String licenseContent) throws LicenseInvalidException {
+	public Subscription validate(String licenseContent) throws SubscriptionInvalidException {
 
 		try {
 			Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(GlobalConstant.SECRET_KEY))
@@ -89,12 +89,12 @@ public class SubscriptionService {
 			// Builds the JWT and serializes it to a compact, URL-safe string
 			return (Subscription) claims.get(GlobalConstant.LIC_DATA_KEY);
 		} catch (Exception e) {
-			throw new LicenseInvalidException(e.getMessage());
+			throw new SubscriptionInvalidException(e.getMessage());
 		}
 
 	}
 
-	public Subscription validateLicenseFile(File licenseFile) throws LicenseInvalidException, IOException {
+	public Subscription validateLicenseFile(File licenseFile) throws SubscriptionInvalidException, IOException {
 		String licenseContent = new String(Files.readAllBytes(licenseFile.toPath()));
 		return validate(licenseContent);
 	}

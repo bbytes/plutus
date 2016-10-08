@@ -2,10 +2,14 @@ package com.bbytes.plutus.model;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import org.joda.time.Interval;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.bbytes.plutus.enums.SubscriptionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,32 +17,41 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @ToString(exclude = { "validTill" })
 @Document
-public class Subscription {
+public class Subscription extends BaseEntity {
 
-	@Id
-	private String id;
+	private boolean enable;
 
-	private boolean active;
+	private double billingAmount;
+
+	@Indexed
+	private String subscriptionKey;
 	
-	private boolean ownerKey;
+	private SubscriptionType type;
 
-	private String owner;
+	@DBRef
+	private Customer customer;
 
-	private String issuer;
-
-	private Product product;
-
-	private int count;
+	@DBRef
+	private ProductPlan productPlan;
 
 	@JsonIgnore
 	private Date validTill;
 
-	private SubscriptionType type;
+	private boolean deactivate = false;
+
+	private String deactivateReason;
+
+	@DBRef
+	private List<PaymentHistory> paymentHistory;
+
+	private Interval trialPeriod;
 
 	public boolean isExpired() {
 		long nowMillis = System.currentTimeMillis();
