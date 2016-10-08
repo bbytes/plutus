@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.Subscription;
-import com.bbytes.plutus.repo.SubscriptionRepository;
 import com.bbytes.plutus.response.SubscriptionStatus;
 import com.bbytes.plutus.service.SubscriptionCreateException;
 import com.bbytes.plutus.service.SubscriptionInvalidException;
@@ -24,53 +23,36 @@ import com.bbytes.plutus.service.SubscriptionService;
 public class SubscriptionRestController {
 
 	@Autowired
-	private SubscriptionRepository licenseDataRepository;
-
-	@Autowired
 	private SubscriptionService subscriptionService;
 
+	@RequestMapping(value = "/validate/{subscriptionKey}", method = RequestMethod.GET)
+	SubscriptionStatus validateLicenseId(@PathVariable String subscriptionKey) throws SubscriptionInvalidException {
+		Subscription subscription = subscriptionService.findBysubscriptionKey(subscriptionKey);
+		if (subscription == null)
+			throw new SubscriptionInvalidException("Subscription Key invalid ");
 
-	@RequestMapping(value = "/validate", method = RequestMethod.GET)
-	SubscriptionStatus validate(@RequestBody String licenseContent) throws SubscriptionInvalidException {
-		Subscription licenseData = subscriptionService.validate(licenseContent);
-		if (!licenseData.isEnable() || licenseData.isExpired()) {
-			throw new SubscriptionInvalidException("license inactive or expired");
+		if (!subscription.isEnable() || subscription.isExpired() || subscription.isDeactivate()) {
+			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
 		}
 
-		SubscriptionStatus status = new SubscriptionStatus("License check done", true, licenseData.getValidTill().toString(),
-				licenseData.getBillingAmount());
-
-		return status;
-	}
-
-	@RequestMapping(value = "/validate/{id}", method = RequestMethod.GET)
-	SubscriptionStatus validateLicenseId(@PathVariable String id) throws SubscriptionInvalidException {
-		Subscription licenseData = licenseDataRepository.findOne(id);
-		if (licenseData == null)
-			throw new SubscriptionInvalidException("license info missing in central database for given id");
-
-		if (!licenseData.isEnable() || licenseData.isExpired()) {
-			throw new SubscriptionInvalidException("license inactive or expired");
-		}
-
-		SubscriptionStatus status = new SubscriptionStatus("License check done", true, licenseData.getValidTill().toString(),
-				licenseData.getBillingAmount());
+		SubscriptionStatus status = new SubscriptionStatus("Subscription check done", true,
+				subscription.getValidTill().toString(), subscription.getBillingAmount());
 
 		return status;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	String create(@RequestBody Subscription licenseData) throws SubscriptionCreateException {
+	SubscriptionStatus create(@RequestBody Subscription subscription) throws SubscriptionCreateException {
 
 		try {
-			licenseData = licenseDataRepository.save(licenseData);
+			subscription = subscriptionService.save(subscription);
 		} catch (Exception e) {
-			throw new SubscriptionCreateException("Failed to save license to storage");
+			throw new SubscriptionCreateException("Failed to save subscription info to storage");
 		}
+		SubscriptionStatus status = new SubscriptionStatus(
+				"Subscription created with key " + subscription.getSubscriptionKey(), true);
 
-		String licenseContent = subscriptionService.createLicenseContent(licenseData);
-
-		return licenseContent;
+		return status;
 
 	}
 

@@ -42,7 +42,7 @@ public class SubscriptionCreationTest extends ProductLicenseWebApplicationTests 
 		customer.setBillingAddress("Test address");
 		customer.addBillingEmails("test@bbytes.com");
 		customer.setCreationDate(DateTime.now().toDate());
-		customer.setId(UUID.randomUUID().toString());
+		customer.setId("Test customer");
 		customer.setName("Test customer");
 		customer.setWebsite("www.example.com");
 		customer.setPrimaryContactNo("+919012345676");

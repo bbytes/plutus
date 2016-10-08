@@ -28,9 +28,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class SubscriptionService extends AbstractService<Subscription, String> {
 
+	private SubscriptionRepository subscriptionRepository;
+
 	@Autowired
 	public SubscriptionService(SubscriptionRepository subscriptionRepository) {
 		super(subscriptionRepository);
+		this.subscriptionRepository = subscriptionRepository;
+	}
+
+	public Subscription findBysubscriptionKey(String subscriptionKey) {
+		return subscriptionRepository.findBysubscriptionKey(subscriptionKey);
 	}
 
 	public String createLicenseContent(Subscription licenseData) throws SubscriptionCreateException {

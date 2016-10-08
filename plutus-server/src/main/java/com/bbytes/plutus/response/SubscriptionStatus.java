@@ -11,17 +11,17 @@ public class SubscriptionStatus {
 
 	private boolean valid = false;
 
-	private String message;
+	private String message = null;
 
-	private String validTill;
+	private String validTill = null;
 
-	private double amount;
+	private Double billingAmount = null;
 
-	public SubscriptionStatus(String message, boolean valid, String validTill, double amount) {
+	public SubscriptionStatus(String message, boolean valid, String validTill, double billingAmount) {
 		this.message = message;
 		this.valid = valid;
 		this.validTill = validTill;
-		this.amount = amount;
+		this.billingAmount = billingAmount;
 	}
 
 	public SubscriptionStatus(String message, boolean valid) {
