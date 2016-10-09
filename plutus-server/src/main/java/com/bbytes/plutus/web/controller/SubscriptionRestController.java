@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.Subscription;
-import com.bbytes.plutus.response.SubscriptionStatusResponse;
+import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
 import com.bbytes.plutus.service.SubscriptionCreateException;
 import com.bbytes.plutus.service.SubscriptionInvalidException;
 import com.bbytes.plutus.service.SubscriptionService;
@@ -26,7 +26,7 @@ public class SubscriptionRestController {
 	private SubscriptionService subscriptionService;
 
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
-	SubscriptionStatusResponse validateSubscription() throws SubscriptionInvalidException {
+	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
 		Subscription subscription = subscriptionService
 				.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription == null)
@@ -36,7 +36,7 @@ public class SubscriptionRestController {
 			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
 		}
 
-		SubscriptionStatusResponse status = new SubscriptionStatusResponse("Subscription check done", true,
+		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse("Subscription check done", true,
 				subscription.getValidTill().toString(), subscription.getBillingAmount(),
 				subscription.getProductPlan().getCurrency());
 
@@ -44,10 +44,11 @@ public class SubscriptionRestController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	SubscriptionStatusResponse create(@RequestBody Subscription subscription) throws SubscriptionCreateException {
+	private SubscriptionStatusRestResponse create(@RequestBody Subscription subscription)
+			throws SubscriptionCreateException {
 
 		if (RequestContextHolder.getAppProfile().isEnterpriseMode()) {
-			throw new SubscriptionCreateException("Subscription creation is allowed only for saas mode via api ");
+			throw new SubscriptionCreateException("Subscription creation is allowed only for saas mode via api call ");
 		}
 
 		try {
@@ -55,7 +56,7 @@ public class SubscriptionRestController {
 		} catch (Exception e) {
 			throw new SubscriptionCreateException("Failed to save subscription info to storage");
 		}
-		SubscriptionStatusResponse status = new SubscriptionStatusResponse(
+		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(
 				"Subscription created with key " + subscription.getSubscriptionKey(), true);
 
 		return status;
@@ -63,14 +64,14 @@ public class SubscriptionRestController {
 	}
 
 	@ExceptionHandler(SubscriptionCreateException.class)
-	public ResponseEntity<SubscriptionStatusResponse> exceptionCreate(HttpServletRequest req, Exception e) {
-		SubscriptionStatusResponse status = new SubscriptionStatusResponse(e.getMessage(), false);
-		return new ResponseEntity<SubscriptionStatusResponse>(status, HttpStatus.OK);
+	public ResponseEntity<SubscriptionStatusRestResponse> exceptionCreate(HttpServletRequest req, Exception e) {
+		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(e.getMessage(), false);
+		return new ResponseEntity<SubscriptionStatusRestResponse>(status, HttpStatus.OK);
 	}
 
 	@ExceptionHandler(SubscriptionInvalidException.class)
-	public ResponseEntity<SubscriptionStatusResponse> exceptionValidate(HttpServletRequest req, Exception e) {
-		SubscriptionStatusResponse status = new SubscriptionStatusResponse(e.getMessage(), false);
-		return new ResponseEntity<SubscriptionStatusResponse>(status, HttpStatus.OK);
+	public ResponseEntity<SubscriptionStatusRestResponse> exceptionValidate(HttpServletRequest req, Exception e) {
+		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(e.getMessage(), false);
+		return new ResponseEntity<SubscriptionStatusRestResponse>(status, HttpStatus.OK);
 	}
 }

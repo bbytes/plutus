@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -33,6 +34,8 @@ public class Subscription extends BaseEntity {
 	private boolean enable;
 
 	private double billingAmount;
+	
+	private DateTime amountUpdatedTimeStamp;
 
 	@Indexed(unique = true)
 	private String subscriptionKey;

@@ -15,6 +15,7 @@ public abstract class AbstractService<T, ID extends Serializable> {
 	public AbstractService(MongoRepository<T, ID> mongoRepository) {
 		this.mongoRepository = mongoRepository;
 	}
+
 	/*
 	 * Save all given entities into mongodb
 	 */

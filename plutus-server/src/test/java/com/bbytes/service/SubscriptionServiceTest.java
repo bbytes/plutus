@@ -17,6 +17,7 @@ import com.bbytes.plutus.model.Customer;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.ProductPlan;
 import com.bbytes.plutus.model.Subscription;
+import com.bbytes.plutus.util.BillingConstant;
 
 public class SubscriptionServiceTest extends PlutusApplicationTests {
 
@@ -33,7 +34,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		customer = new Customer();
 		customer.setBillingAddress("Test address");
 		customer.addBillingEmails("test@bbytes.com");
-		customer.setCreationDate(DateTime.now().toDate());
+		customer.setCreationDate(DateTime.now());
 		customer.setId("Test customer");
 		customer.setName("Test customer");
 		customer.setWebsite("www.example.com");
@@ -45,6 +46,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		product.setName("Statusnap");
 		product.setDesc("Capture status online everyday");
 		product.addProductTeamEmails("statusnap@bbytes.com");
+		
 
 		productPlan = new ProductPlan();
 		productPlan.setName("TEST");
@@ -56,8 +58,8 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		productPlan.setProduct(product);
 
 		Map<String, Number> productPlanItemToCost = new HashMap<>();
-		productPlanItemToCost.put("User", 120);
-		productPlanItemToCost.put("Project", 100);
+		productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 120);
+		productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 100);
 		productPlan.setProductPlanItemToCost(productPlanItemToCost);
 
 		subscription = new Subscription();

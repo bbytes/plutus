@@ -1,7 +1,11 @@
 package com.bbytes.plutus.client;
 
+import org.springframework.http.HttpEntity;
+
 import com.bbytes.plutus.enums.AppProfile;
-import com.bbytes.plutus.response.SubscriptionStatusResponse;
+import com.bbytes.plutus.model.ProductPlanStats;
+import com.bbytes.plutus.response.ProductStatsRestResponse;
+import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
 
 public class PlutusClient extends AbstractClient {
 
@@ -14,8 +18,17 @@ public class PlutusClient extends AbstractClient {
 		super(baseUrl, subscriptionKey, subscriptionSecret, appProfile);
 	}
 
-	public SubscriptionStatusResponse validateSubscription() throws PlutusClientException {
-		SubscriptionStatusResponse response = get("/subscription/validate", SubscriptionStatusResponse.class);
+	public SubscriptionStatusRestResponse validateSubscription() throws PlutusClientException {
+		SubscriptionStatusRestResponse response = get("/subscription/validate", SubscriptionStatusRestResponse.class);
+		return response;
+	}
+
+	public ProductStatsRestResponse sendStats(ProductPlanStats planStats) throws PlutusClientException {
+
+		// set your entity to send
+		HttpEntity<ProductPlanStats> entity = new HttpEntity<ProductPlanStats>(planStats);
+
+		ProductStatsRestResponse response = post("/product/stats/create", entity, ProductStatsRestResponse.class);
 		return response;
 	}
 }

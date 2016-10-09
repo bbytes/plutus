@@ -1,6 +1,7 @@
 package com.bbytes.plutus.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
-@ToString
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper = true)
 @Document
 public class ProductPlanStats extends BaseEntity {
@@ -22,10 +23,14 @@ public class ProductPlanStats extends BaseEntity {
 	private Date entryDate;
 
 	// plan item like no od users to the current count for that date or hour
-	// that is sent from the client. Billing happens based on these nos 
-	private Map<String, Integer> stats;
+	// that is sent from the client. Billing happens based on these nos
+	private Map<String, Integer> stats = new HashMap<String, Integer>();
 
 	@Indexed
 	private String subscriptionKey;
+
+	public void addStats(String key, Integer value) {
+		stats.put(key, value);
+	}
 
 }

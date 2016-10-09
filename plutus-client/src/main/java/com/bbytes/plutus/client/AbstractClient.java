@@ -16,7 +16,6 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.util.Base64Utils;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -85,20 +84,10 @@ public class AbstractClient {
 		this.baseURL = baseURL;
 	}
 
-	protected <T> T post(String reativeURL, MultiValueMap<String, String> paramMap, Class<T> type)
-			throws PlutusClientException {
-		try {
-			return restTemplate.postForObject(baseURL + reativeURL, paramMap, type);
-		} catch (Throwable e) {
-			throw new PlutusClientException(e);
-		}
 
-	}
-
-	protected <T> T post(String reativeURL, HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity,
-			Class<T> type) throws PlutusClientException {
+	protected <T> T post(String reativeURL, HttpEntity<?> entity, Class<T> type) throws PlutusClientException {
 		try {
-			return restTemplate.postForObject(baseURL + reativeURL, requestEntity, type);
+			return restTemplate.postForObject(baseURL + reativeURL, entity, type);
 		} catch (Throwable e) {
 			throw new PlutusClientException(e);
 		}

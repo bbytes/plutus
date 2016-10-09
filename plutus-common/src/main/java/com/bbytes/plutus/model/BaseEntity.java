@@ -1,7 +1,7 @@
 package com.bbytes.plutus.model;
 
-import java.util.Date;
-
+import org.joda.time.DateTime;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,13 +17,16 @@ public class BaseEntity {
 
 	@Id
 	private String id;
-	
+
 	private String name;
-	
+
 	@CreatedDate
-	private Date creationDate;
-	
+	private DateTime creationDate;
+
 	@LastModifiedDate
-	private Date lastModified;
+	private DateTime lastModified;
+
+	@CreatedBy
+	private String createdBy;
 
 }
