@@ -4,9 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.bbytes.PlutusApplicationWebTests;
 import com.bbytes.plutus.model.Subscription;

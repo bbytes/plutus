@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,13 +18,10 @@ import lombok.ToString;
 @Document
 public class Customer extends BaseEntity {
 
-	private String primaryContactNo;
+	private String contactNo;
 
-	private String secondaryContactNo;
-
-	private String primaryEmail;
-
-	private String secondaryEmail;
+	@Indexed(unique = true)
+	private String email;
 
 	private String website;
 

@@ -13,21 +13,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.bbytes.plutus.GlobalConstant;
-
 @Configuration
 @EnableWebSecurity
 @Order(2)
 public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final AuthUserDBService userService;
-	private final TokenAuthenticationService tokenAuthenticationService;
-
-	public PlutusSecurityConfig() {
-		super(true);
-		this.userService = new AuthUserDBService();
-		tokenAuthenticationService = new TokenAuthenticationService(GlobalConstant.SECRET_KEY, userService);
-	}
+	public final static String SECRET_KEY = "T3g4hS9XD83r6omVjmA8nHZaa0yATTfM";
 
 	@Override
 	public void configure(WebSecurity webSecurity) throws Exception {
@@ -58,7 +49,7 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// Custom Token based authentication based on the header
 				// previously given to the client
-				.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService),
+				.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService()),
 						UsernamePasswordAuthenticationFilter.class)
 
 				.headers().cacheControl();
@@ -79,12 +70,12 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	public AuthUserDBService userDetailsService() {
-		return userService;
+		return new AuthUserDBService();
 	}
 
 	@Bean
 	public TokenAuthenticationService tokenAuthenticationService() {
-		return tokenAuthenticationService;
+		return new TokenAuthenticationService();
 	}
 
 }

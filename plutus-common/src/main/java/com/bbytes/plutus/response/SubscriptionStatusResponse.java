@@ -1,16 +1,22 @@
 package com.bbytes.plutus.response;
 
+import java.io.Serializable;
+
 import com.bbytes.plutus.enums.Currency;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 @JsonInclude(Include.NON_NULL)
-public class SubscriptionStatus {
+public class SubscriptionStatusResponse implements Serializable {
 
-	private boolean valid = false;
+	private static final long serialVersionUID = 5045802370817104910L;
+
+	private boolean success = false;
 
 	private String message = null;
 
@@ -20,18 +26,22 @@ public class SubscriptionStatus {
 
 	private Currency currency = null;
 
-	public SubscriptionStatus(String message, boolean valid, String validTill, double billingAmount,
+	public SubscriptionStatusResponse() {
+		// empty constructor
+	}
+
+	public SubscriptionStatusResponse(String message, boolean success, String validTill, double billingAmount,
 			Currency currency) {
 		this.message = message;
-		this.valid = valid;
+		this.success = success;
 		this.validTill = validTill;
 		this.billingAmount = billingAmount;
 		this.currency = currency;
 	}
 
-	public SubscriptionStatus(String message, boolean valid) {
+	public SubscriptionStatusResponse(String message, boolean success) {
 		this.message = message;
-		this.valid = valid;
+		this.success = success;
 	}
 
 }

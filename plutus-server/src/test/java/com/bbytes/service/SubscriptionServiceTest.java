@@ -2,7 +2,6 @@ package com.bbytes.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -11,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.bbytes.PlutusApplicationTests;
+import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
-import com.bbytes.plutus.enums.DeploymentMode;
 import com.bbytes.plutus.model.Customer;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.ProductPlan;
@@ -38,8 +37,8 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		customer.setId("Test customer");
 		customer.setName("Test customer");
 		customer.setWebsite("www.example.com");
-		customer.setPrimaryContactNo("+919012345676");
-		customer.setPrimaryEmail("test@bbytes.com");
+		customer.setContactNo("+919012345676");
+		customer.setEmail("test@bbytes.com");
 
 		product = new Product();
 		product.setId("STATUSNAP");
@@ -48,12 +47,12 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		product.addProductTeamEmails("statusnap@bbytes.com");
 
 		productPlan = new ProductPlan();
-		productPlan.setName("Normal Statusnap");
+		productPlan.setName("TEST");
 		productPlan.setBillingCycle(BillingCycle.Monthy);
 		productPlan.setCurrency(Currency.INR);
-		productPlan.setDeploymentMode(DeploymentMode.SAAS);
+		productPlan.setAppProfile(AppProfile.saas);
 		productPlan.setDiscount(null);
-		productPlan.setId(UUID.randomUUID().toString());
+		productPlan.setId("TEST");
 		productPlan.setProduct(product);
 
 		Map<String, Number> productPlanItemToCost = new HashMap<>();
@@ -68,11 +67,9 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		subscription.setDeactivateReason("none");
 		subscription.setEnable(true);
 		subscription.setProductPlan(productPlan);
-		subscription.setSubscriptionKey(UUID.randomUUID().toString());
-		subscription.setSubscriptionSecret(UUID.randomUUID().toString());
-
-		subscription.setId(UUID.randomUUID().toString());
-
+		subscription.setSubscriptionKey("TEST");
+		subscription.setSubscriptionSecret("TEST");
+		subscription.setId("TEST");
 		subscription.setBillingAmount(100.5);
 		subscription.setValidTill(DateTime.now().plusDays(10).toDate());
 		subscription.setEnable(true);

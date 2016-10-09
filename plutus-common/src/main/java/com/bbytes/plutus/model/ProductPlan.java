@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
-import com.bbytes.plutus.enums.DeploymentMode;
+import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.mongo.CascadeSave;
 
 import lombok.Data;
@@ -34,7 +34,7 @@ public class ProductPlan extends BaseEntity {
 
 	private Currency currency;
 
-	private DeploymentMode deploymentMode;
+	private AppProfile appProfile;
 
 	private BillingCycle billingCycle;
 

@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Document
-public class User {
+public class PlutusUser {
 
 	@Id
 	private String email;
@@ -39,7 +39,7 @@ public class User {
 	@LastModifiedDate
 	private Date lastModified;
 
-	public User(String name, String email) {
+	public PlutusUser(String name, String email) {
 		this.name = name;
 		this.email = email;
 	}
