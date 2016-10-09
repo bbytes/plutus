@@ -36,15 +36,14 @@ public class AbstractClient {
 
 	private String baseURL;
 
-	public AbstractClient(String baseUrl, String subscriptionKey, String subscriptionSecret, String tenantId,
-			AppProfile appProfile) {
+	public AbstractClient(String baseUrl, String subscriptionKey, String subscriptionSecret, AppProfile appProfile) {
 		List<HttpMessageConverter<?>> messageConverters = getMessageConverters();
 		restTemplate = new RestTemplate(clientHttpRequestFactory());
 		if (messageConverters != null && !messageConverters.isEmpty()) {
 			restTemplate.setMessageConverters(messageConverters);
 		}
 
-		registerInterceptors(subscriptionKey, subscriptionSecret, tenantId, appProfile);
+		registerInterceptors(subscriptionKey, subscriptionSecret, appProfile);
 		setBaseURL(baseUrl);
 
 	}
@@ -64,10 +63,9 @@ public class AbstractClient {
 		return TIMEOUT_IN_SECS;
 	}
 
-	private void registerInterceptors(String subscriptionKey, String subscriptionSecret, String tenantId,
-			AppProfile appProfile) {
+	private void registerInterceptors(String subscriptionKey, String subscriptionSecret, AppProfile appProfile) {
 		List<ClientHttpRequestInterceptor> interceptors = getRestTemplate().getInterceptors();
-		interceptors.add(new PlutusTokenRequestInterceptor(subscriptionKey, subscriptionSecret, tenantId, appProfile));
+		interceptors.add(new PlutusTokenRequestInterceptor(subscriptionKey, subscriptionSecret, appProfile));
 		getRestTemplate().setInterceptors(interceptors);
 	}
 
@@ -132,22 +130,17 @@ public class AbstractClient {
 
 		private final String subscriptionKey;
 		private final String subscriptionSecret;
-		private final String tenantId;
 		private final AppProfile appProfile;
 
 		public PlutusTokenRequestInterceptor(final String subscriptionKey, final String subscriptionSecret,
-				final String tenantId, final AppProfile appProfile) {
+				final AppProfile appProfile) {
 			this.subscriptionKey = subscriptionKey;
 			this.subscriptionSecret = subscriptionSecret;
 			this.appProfile = appProfile;
-			this.tenantId = tenantId;
 		}
 
 		public ClientHttpResponse intercept(final HttpRequest request, final byte[] body,
 				ClientHttpRequestExecution execution) throws IOException {
-
-			if (appProfile.isSaasMode() && tenantId == null)
-				throw new IOException("Saas mode needs tenant id ");
 
 			request.getHeaders().add(GlobalConstant.APP_PROFILE_HEADER, appProfile.toString());
 			request.getHeaders().add(GlobalConstant.SUBSCRIPTION_KEY_HEADER, subscriptionKey);
@@ -159,7 +152,7 @@ public class AbstractClient {
 			Date now = new Date();
 			Date expiration = DateTime.now().plusDays(1).toDate();
 			return Jwts.builder().setId(UUID.randomUUID().toString()).setSubject(subscriptionKey).setIssuedAt(now)
-					.setIssuer(tenantId).setExpiration(expiration)
+					.setIssuer(subscriptionKey).setExpiration(expiration)
 					.signWith(SignatureAlgorithm.HS512, Base64Utils.encode(subscriptionSecret.getBytes())).compact();
 		}
 

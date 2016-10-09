@@ -26,19 +26,6 @@ public final class TokenHandler {
 		return userService.loadUserByUsername(username);
 	}
 
-	/**
-	 * The tenant id is set only if app profile is saas mode and the tenant id
-	 * is set as issuer in jwt claims object
-	 * 
-	 * @param token
-	 * @param secret
-	 * @return
-	 */
-	public String parseTenantIdFromToken(String token, String secret) {
-		String tenantId = Jwts.parser().setSigningKey(Base64.encode(secret.getBytes())).parseClaimsJws(token).getBody()
-				.getIssuer();
-		return tenantId;
-	}
 
 	public String createTokenForUser(User user, String secret) {
 		Date now = new Date();

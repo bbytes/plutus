@@ -16,14 +16,11 @@ public class AbstractPlutusClientTest {
 
 	protected static final String subscriptionSecret = "TEST";
 
-	protected static final String tenantId = "TEST";
-
 	protected PlutusClient plutusClient;
 
 	@Before
 	public void setup() throws FileNotFoundException, IOException {
-		plutusClient = PlutusClient.createSaas(BASE_URL, subscriptionKey, subscriptionSecret, tenantId,
-				AppProfile.saas);
+		plutusClient = PlutusClient.create(BASE_URL, subscriptionKey, subscriptionSecret, AppProfile.saas);
 	}
 
 }

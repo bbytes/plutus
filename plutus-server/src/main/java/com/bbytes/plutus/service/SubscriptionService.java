@@ -17,9 +17,10 @@ public class SubscriptionService extends AbstractService<Subscription, String> {
 		this.subscriptionRepository = subscriptionRepository;
 	}
 
-	public Subscription findBysubscriptionKey(String subscriptionKey) {
-		return subscriptionRepository.findBysubscriptionKey(subscriptionKey);
+	public Subscription findBySubscriptionKey(String subscriptionKey) {
+		return subscriptionRepository.findBySubscriptionKey(subscriptionKey);
 	}
+	
 
 //	public String createLicenseContent(Subscription licenseData) throws SubscriptionCreateException {
 //

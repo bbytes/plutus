@@ -41,14 +41,12 @@ public class TokenAuthenticationService {
 	public Authentication getAuthentication(HttpServletRequest request) {
 		final String token = request.getHeader(GlobalConstant.AUTH_TOKEN_HEADER);
 		String subscriptionKey = RequestContextHolder.getSubscriptionKey();
-		Subscription subscription = subscriptionService.findBysubscriptionKey(subscriptionKey);
+		Subscription subscription = subscriptionService.findBySubscriptionKey(subscriptionKey);
 
 		if (token == null || subscription == null) {
 			throw new InsufficientAuthenticationException("Auth token missing or subscription key incorrect");
 		}
 
-		final String tenantId = tokenHandler.parseTenantIdFromToken(token, subscription.getSubscriptionSecret());
-		RequestContextHolder.setTenant(tenantId);
 		final User user = tokenHandler.parseUserFromToken(token, subscription.getSubscriptionSecret());
 		if (user == null) {
 			throw new UsernameNotFoundException("Given user not found in system");

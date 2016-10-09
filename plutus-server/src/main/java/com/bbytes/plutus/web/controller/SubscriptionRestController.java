@@ -28,7 +28,7 @@ public class SubscriptionRestController {
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	SubscriptionStatusResponse validateSubscription() throws SubscriptionInvalidException {
 		Subscription subscription = subscriptionService
-				.findBysubscriptionKey(RequestContextHolder.getSubscriptionKey());
+				.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription == null)
 			throw new SubscriptionInvalidException("Subscription Key invalid ");
 
@@ -45,6 +45,10 @@ public class SubscriptionRestController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	SubscriptionStatusResponse create(@RequestBody Subscription subscription) throws SubscriptionCreateException {
+
+		if (RequestContextHolder.getAppProfile().isEnterpriseMode()) {
+			throw new SubscriptionCreateException("Subscription creation is allowed only for saas mode via api ");
+		}
 
 		try {
 			subscription = subscriptionService.save(subscription);

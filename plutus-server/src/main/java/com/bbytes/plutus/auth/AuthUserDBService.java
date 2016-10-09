@@ -28,7 +28,7 @@ public class AuthUserDBService implements org.springframework.security.core.user
 
 		// external request the user name is subscriptionKey
 		if (plutusUser == null) {
-			Subscription subscription = subscriptionService.findBysubscriptionKey(username);
+			Subscription subscription = subscriptionService.findBySubscriptionKey(username);
 			if (subscription != null && subscription.getCustomer() != null) {
 				final User user = new AuthUser(subscription.getCustomer());
 				return user;

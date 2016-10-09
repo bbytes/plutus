@@ -36,6 +36,9 @@ public class Subscription extends BaseEntity {
 
 	@Indexed(unique = true)
 	private String subscriptionKey;
+	
+	@Indexed
+	private String tenantId;
 
 	@Indexed(unique = true)
 	private String subscriptionSecret;
