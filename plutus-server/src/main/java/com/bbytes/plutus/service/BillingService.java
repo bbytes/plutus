@@ -1,9 +1,13 @@
 package com.bbytes.plutus.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bbytes.plutus.enums.ProductName;
 import com.bbytes.plutus.model.ProductPlanStats;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.util.BillingConstant;
@@ -43,7 +47,16 @@ public class BillingService {
 	}
 
 	private boolean isStatusnap(Subscription subscription) {
-		return "statusnap".equalsIgnoreCase(subscription.getProductPlan().getProduct().getName());
+		return ProductName.statusnap.toString().equalsIgnoreCase(subscription.getProductPlan().getProduct().getName());
+	}
+
+	public Map<String, Number> getProductCostMap(String productName) {
+		Map<String, Number> productPlanItemToCost = new HashMap<String, Number>();
+		if (ProductName.statusnap.toString().equalsIgnoreCase(productName)) {
+			productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 0);
+			productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 3);
+		}
+		return productPlanItemToCost;
 	}
 
 }

@@ -12,8 +12,10 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
 	public String getCurrentAuditor() {
 		String createdBy = null;
 		SecurityContext securityContext = SecurityContextHolder.getContext();
+		
 		if (securityContext.getAuthentication() != null)
 			createdBy = (String) securityContext.getAuthentication().getPrincipal();
+		
 		return createdBy == null ? "N/A" : createdBy;
 	}
 }

@@ -12,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.bbytes.plutus.enums.AppProfile;
@@ -25,23 +27,31 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
 	private final TokenAuthenticationService tokenAuthenticationService;
 
+	// ignore any register url as it will not have subscription key token or app
+	// profile info in header
+	protected RequestMatcher ignoreRequestMatcher;
+
 	public StatelessAuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
 		Assert.notNull(tokenAuthenticationService);
 		this.tokenAuthenticationService = tokenAuthenticationService;
+		ignoreRequestMatcher = new AntPathRequestMatcher("/v1/api/subscription/register","POST");
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
-		setRequestContext((HttpServletRequest) request);
-		try {
-			Authentication authentication = tokenAuthenticationService.getAuthentication((HttpServletRequest) request);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		} catch (SignatureException ex) {
-			throw new AuthenticationServiceException(
-					"Auth failed : Signature does not match locally computed signature");
-		} catch (Exception e) {
-			throw new AuthenticationServiceException("Auth failed");
+		if (!ignoreRequestMatcher.matches((HttpServletRequest) request)) {
+			setRequestContext((HttpServletRequest) request);
+			try {
+				Authentication authentication = tokenAuthenticationService
+						.getAuthentication((HttpServletRequest) request);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			} catch (SignatureException ex) {
+				throw new AuthenticationServiceException(
+						"Auth failed : Signature does not match locally computed signature");
+			} catch (Exception e) {
+				throw new AuthenticationServiceException("Auth failed");
+			}
 		}
 
 		filterChain.doFilter(request, response);

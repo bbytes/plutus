@@ -20,6 +20,7 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public final static String SECRET_KEY = "T3g4hS9XD83r6omVjmA8nHZaa0yATTfM";
 
+	
 	@Override
 	public void configure(WebSecurity webSecurity) throws Exception {
 		webSecurity.ignoring()
@@ -27,7 +28,10 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").antMatchers("/signup/**").antMatchers("/connect/**").antMatchers("/social/**")
 				.antMatchers("/{[path:[^\\.]*}").antMatchers("/resources/**").antMatchers("/assets/**")
 				.antMatchers("/favicon.ico").antMatchers("/**/*.html").antMatchers("/resources/**")
-				.antMatchers("/static/**").antMatchers("/app/**").antMatchers("/**/*.css").antMatchers("/**/*.js");
+				.antMatchers("**/register").antMatchers("/static/**").antMatchers("/app/**").antMatchers("/**/*.css")
+				.antMatchers("/**/*.js");
+		
+		
 	}
 
 	@Override
@@ -46,12 +50,10 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// Allow logins urls
 				.antMatchers("/auth/**").permitAll().antMatchers("/api/**").authenticated().and()
-
 				// Custom Token based authentication based on the header
 				// previously given to the client
 				.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService()),
 						UsernamePasswordAuthenticationFilter.class)
-
 				.headers().cacheControl();
 
 	}

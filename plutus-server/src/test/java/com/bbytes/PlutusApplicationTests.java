@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bbytes.plutus.PlutusWebApplication;
 import com.bbytes.plutus.service.ProductPlanService;
+import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.service.SubscriptionService;
 
 @RunWith(SpringRunner.class)
@@ -19,6 +20,9 @@ public class PlutusApplicationTests {
 
 	@Autowired
 	protected ProductPlanService productPlanService;
+	
+	@Autowired
+	protected ProductService productService;
 
 	@Test
 	public void contextLoads() {
