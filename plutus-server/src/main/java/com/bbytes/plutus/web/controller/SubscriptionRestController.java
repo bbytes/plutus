@@ -18,6 +18,7 @@ import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.ProductPlan;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.model.SubscriptionInfo;
+import com.bbytes.plutus.response.SubscriptionRegisterRestResponse;
 import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
 import com.bbytes.plutus.service.BillingService;
 import com.bbytes.plutus.service.CustomerService;
@@ -63,7 +64,7 @@ public class SubscriptionRestController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	private SubscriptionStatusRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo)
+	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo)
 			throws SubscriptionCreateException {
 
 		Product product = productService.findByName(subscriptionInfo.getProductName());
@@ -103,8 +104,9 @@ public class SubscriptionRestController {
 		} catch (Exception e) {
 			throw new SubscriptionCreateException("Failed to save subscription info to storage");
 		}
-		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(
-				"Subscription created with key " + subscription.getSubscriptionKey(), true);
+		SubscriptionRegisterRestResponse status = new SubscriptionRegisterRestResponse(
+				"Subscription created with key " + subscription.getSubscriptionKey(), true,
+				subscription.getSubscriptionKey(), subscription.getSubscriptionSecret());
 
 		return status;
 
