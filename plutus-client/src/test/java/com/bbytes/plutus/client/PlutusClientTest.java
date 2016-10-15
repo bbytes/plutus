@@ -29,6 +29,7 @@ public class PlutusClientTest extends AbstractPlutusClientTest {
 		ProductPlanStats productPlanStats = new ProductPlanStats();
 		productPlanStats.setSubscriptionKey(subscriptionKey);
 		productPlanStats.addStats(BillingConstant.STATUSNAP_USER_COUNT, 12);
+		productPlanStats.addStats(BillingConstant.STATUSNAP_PROJECT_COUNT, 5);
 		ProductStatsRestResponse response = plutusClient.sendStats(productPlanStats);
 		System.out.println(response);
 		Assert.assertTrue(response.isSuccess());
@@ -44,7 +45,7 @@ public class PlutusClientTest extends AbstractPlutusClientTest {
 		subscriptionInfo.setCurrency(Currency.INR);
 		subscriptionInfo.setCustomerName("test");
 		subscriptionInfo.setEmail("test@test.com");
-		subscriptionInfo.setProductName(ProductName.statusnap.toString());
+		subscriptionInfo.setProductName(ProductName.Statusnap.toString());
 		subscriptionInfo.setTenantId("randomTenantid");
 		
 		PlutusClient plutusClient = PlutusClient.create(BASE_URL, AppProfile.saas);

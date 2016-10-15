@@ -3,13 +3,19 @@ package com.bbytes.plutus.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public abstract class AbstractService<T, ID extends Serializable> {
 
+	@Autowired
+	protected MongoOperations mongoOperation;
+	
 	protected MongoRepository<T, ID> mongoRepository;
 
 	public AbstractService(MongoRepository<T, ID> mongoRepository) {
@@ -120,5 +126,12 @@ public abstract class AbstractService<T, ID extends Serializable> {
 	 */
 	public void deleteAll() {
 		mongoRepository.deleteAll();
+	}
+	
+	public T getLastModifiedRecord(Class<T> clazz) {
+		Query query = new Query();
+		query.limit(1);
+		query.with(new Sort(Sort.Direction.DESC, "lastModified"));
+		return mongoOperation.findOne(query,clazz) ;
 	}
 }

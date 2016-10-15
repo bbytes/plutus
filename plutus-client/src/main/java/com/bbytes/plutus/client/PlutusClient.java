@@ -15,7 +15,7 @@ public class PlutusClient extends AbstractClient {
 	}
 
 	public static PlutusClient create(String baseUrl, AppProfile appProfile) {
-		return new PlutusClient(baseUrl, "", "", appProfile);
+		return new PlutusClient(baseUrl, "empty", "empty", appProfile);
 	}
 
 	public PlutusClient(String baseUrl, String subscriptionKey, String subscriptionSecret, AppProfile appProfile) {
@@ -23,19 +23,19 @@ public class PlutusClient extends AbstractClient {
 	}
 
 	public SubscriptionStatusRestResponse validateSubscription() throws PlutusClientException {
-		SubscriptionStatusRestResponse response = get("/subscription/validate", SubscriptionStatusRestResponse.class);
+		SubscriptionStatusRestResponse response = get("/v1/api/subscription/validate", SubscriptionStatusRestResponse.class);
 		return response;
 	}
 
 	public ProductStatsRestResponse sendStats(ProductPlanStats planStats) throws PlutusClientException {
 		// set your entity to send
-		ProductStatsRestResponse response = post("/product/stats/create", planStats, ProductStatsRestResponse.class);
+		ProductStatsRestResponse response = post("/v1/api/product/stats/create", planStats, ProductStatsRestResponse.class);
 		return response;
 	}
 
 	public SubscriptionRegisterRestResponse register(SubscriptionInfo subscriptionInfo) throws PlutusClientException {
 		// set your entity to send
-		SubscriptionRegisterRestResponse response = post("/subscription/register", subscriptionInfo,
+		SubscriptionRegisterRestResponse response = post("/v1/api/subscription/register", subscriptionInfo,
 				SubscriptionRegisterRestResponse.class);
 		return response;
 	}

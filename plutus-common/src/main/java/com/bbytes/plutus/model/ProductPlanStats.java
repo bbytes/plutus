@@ -24,12 +24,12 @@ public class ProductPlanStats extends BaseEntity {
 
 	// plan item like no od users to the current count for that date or hour
 	// that is sent from the client. Billing happens based on these nos
-	private Map<String, Integer> stats = new HashMap<String, Integer>();
+	private Map<String, Number> stats = new HashMap<String, Number>();
 
 	@Indexed
 	private String subscriptionKey;
 
-	public void addStats(String key, Integer value) {
+	public void addStats(String key, Number value) {
 		stats.put(key, value);
 	}
 

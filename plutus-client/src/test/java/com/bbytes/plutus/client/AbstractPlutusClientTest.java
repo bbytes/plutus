@@ -10,7 +10,7 @@ import com.bbytes.plutus.enums.AppProfile;
 
 public class AbstractPlutusClientTest {
 
-	protected static final String BASE_URL = "http://localhost:9000/v1/api";
+	protected static final String BASE_URL = "http://localhost:9000";
 
 	protected static final String subscriptionKey = "TEST";
 

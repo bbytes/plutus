@@ -7,5 +7,7 @@ public class BillingConstant {
 	public final static String STATUSNAP_PROJECT_COST = "cost-per-project-per-month";
 
 	public final static String STATUSNAP_USER_COUNT = "user-count";
+	
+	public final static String STATUSNAP_PROJECT_COUNT = "project-count";
 
 }

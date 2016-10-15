@@ -29,7 +29,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class AbstractClient {
 
-	private static final Integer TIMEOUT_IN_SECS = 10;
+	private static final Integer TIMEOUT_IN_SECS = 30;
 
 	private RestTemplate restTemplate;
 

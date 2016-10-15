@@ -36,7 +36,7 @@ public class Subscription extends BaseEntity {
 	private double billingAmount;
 	
 	private DateTime amountUpdatedTimeStamp;
-
+	
 	@Indexed(unique = true)
 	private String subscriptionKey;
 	

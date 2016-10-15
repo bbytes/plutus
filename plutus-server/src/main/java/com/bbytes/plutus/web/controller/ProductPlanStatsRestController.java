@@ -15,6 +15,7 @@ import com.bbytes.plutus.model.ProductPlanStats;
 import com.bbytes.plutus.response.ProductStatsRestResponse;
 import com.bbytes.plutus.service.ProductPlanStatsService;
 import com.bbytes.plutus.service.ProductStatsException;
+import com.bbytes.plutus.util.RequestContextHolder;
 
 @RestController
 @RequestMapping("v1/api/product/stats")
@@ -27,7 +28,12 @@ public class ProductPlanStatsRestController {
 	ProductStatsRestResponse validateSubscription(@RequestBody ProductPlanStats productPlanStats)
 			throws ProductStatsException {
 		try {
-			productPlanStats = productPlanStatsService.save(productPlanStats);
+			if (productPlanStats != null) {
+				productPlanStats.setSubscriptionKey(RequestContextHolder.getSubscriptionKey());
+				productPlanStats = productPlanStatsService.save(productPlanStats);
+			} else {
+				return new ProductStatsRestResponse("Product Plan Stats cannot be null", false);
+			}
 		} catch (Throwable e) {
 			throw new ProductStatsException(e.getMessage());
 		}

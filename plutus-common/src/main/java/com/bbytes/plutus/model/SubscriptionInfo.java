@@ -11,6 +11,8 @@ public class SubscriptionInfo {
 
 	private String customerName;
 	
+	private String contactPerson;
+	
 	private String contactNo;
 
 	private String email;

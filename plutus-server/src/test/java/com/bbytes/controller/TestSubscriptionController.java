@@ -25,8 +25,8 @@ public class TestSubscriptionController extends PlutusApplicationWebTests {
 	public void setup() throws Exception {
 
 		Product product = new Product();
-		product.setName(ProductName.statusnap.toString());
-		product.setId(ProductName.statusnap.toString());
+		product.setName(ProductName.Statusnap.toString());
+		product.setId(ProductName.Statusnap.toString());
 		product.setDesc("statusnap");
 		product.addProductTeamEmails("purple@beyondbytes.co.in");
 		productService.save(product);
@@ -50,7 +50,7 @@ public class TestSubscriptionController extends PlutusApplicationWebTests {
 		subscriptionInfo.setCurrency(Currency.INR);
 		subscriptionInfo.setCustomerName("test");
 		subscriptionInfo.setEmail("test@test.com");
-		subscriptionInfo.setProductName(ProductName.statusnap.toString());
+		subscriptionInfo.setProductName(ProductName.Statusnap.toString());
 		subscriptionInfo.setTenantId("randomTenantid");
 
 		String requestBody = new ObjectMapper().writeValueAsString(subscriptionInfo);

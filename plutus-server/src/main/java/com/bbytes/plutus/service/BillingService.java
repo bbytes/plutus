@@ -20,7 +20,7 @@ public class BillingService {
 	private SubscriptionService subscriptionService;
 
 	public void process(ProductPlanStats productPlanStats) {
-		Subscription subscription = subscriptionService.findOne(productPlanStats.getSubscriptionKey());
+		Subscription subscription = subscriptionService.findBySubscriptionKey(productPlanStats.getSubscriptionKey());
 
 		if (isStatusnap(subscription)) {
 			calculateDailyBillingForStatusap(subscription, productPlanStats);
@@ -34,11 +34,21 @@ public class BillingService {
 			Double currentBillingAmt = subscription.getBillingAmount();
 			Number userCostPerMonth = subscription.getProductPlan().getProductPlanItemToCost()
 					.get(BillingConstant.STATUSNAP_USER_COST);
+			Number projectCostPerMonth = subscription.getProductPlan().getProductPlanItemToCost()
+					.get(BillingConstant.STATUSNAP_PROJECT_COST);
+			
 			double costPerUserPerDay = userCostPerMonth.doubleValue() / 30;
 
-			Integer userCountToday = productPlanStats.getStats().get(BillingConstant.STATUSNAP_USER_COUNT);
-			Double billAmtForToday = userCountToday * costPerUserPerDay;
-			currentBillingAmt = currentBillingAmt + billAmtForToday;
+			Number userCountToday = productPlanStats.getStats().get(BillingConstant.STATUSNAP_USER_COUNT);
+			Number projectCountToday = productPlanStats.getStats().get(BillingConstant.STATUSNAP_PROJECT_COUNT);
+			
+			Double billAmtForUserToday = userCountToday.intValue() * costPerUserPerDay;
+			currentBillingAmt = currentBillingAmt + billAmtForUserToday;
+			
+			double costPerProjectPerDay = projectCostPerMonth.doubleValue() / 30;
+			
+			Double billAmtForProjectToday =  projectCountToday.intValue() * costPerProjectPerDay;
+			currentBillingAmt = currentBillingAmt + billAmtForProjectToday;
 
 			subscription.setBillingAmount(currentBillingAmt);
 			subscription.setAmountUpdatedTimeStamp(DateTime.now());
@@ -47,12 +57,12 @@ public class BillingService {
 	}
 
 	private boolean isStatusnap(Subscription subscription) {
-		return ProductName.statusnap.toString().equalsIgnoreCase(subscription.getProductPlan().getProduct().getName());
+		return ProductName.Statusnap.toString().equalsIgnoreCase(subscription.getProductPlan().getProduct().getName());
 	}
 
 	public Map<String, Number> getProductCostMap(String productName) {
 		Map<String, Number> productPlanItemToCost = new HashMap<String, Number>();
-		if (ProductName.statusnap.toString().equalsIgnoreCase(productName)) {
+		if (ProductName.Statusnap.toString().equalsIgnoreCase(productName)) {
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 0);
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 3);
 		}

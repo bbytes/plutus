@@ -86,6 +86,7 @@ public class SubscriptionRestController {
 		subscription.setCustomer(customer);
 		subscription.setId(UUID.randomUUID().toString());
 		subscription.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
+		subscription.setTenantId(subscriptionInfo.getTenantId());
 
 		ProductPlan productPlan = new ProductPlan();
 		productPlan.setId(UUID.randomUUID().toString());
