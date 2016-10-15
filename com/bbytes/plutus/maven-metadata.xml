@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>com.bbytes</groupId>
-  <artifactId>plutus-client</artifactId>
+  <artifactId>plutus</artifactId>
   <versioning>
     <versions>
       <version>1.0.0-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20161015141051</lastUpdated>
+    <lastUpdated>20161015141319</lastUpdated>
   </versioning>
 </metadata>
