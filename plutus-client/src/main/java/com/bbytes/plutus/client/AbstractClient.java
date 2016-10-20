@@ -84,20 +84,19 @@ public class AbstractClient {
 		this.baseURL = baseURL;
 	}
 
-
-//	protected <T> T post(String reativeURL, HttpEntity<?> entity, Class<T> type) throws PlutusClientException {
-//		try {
-//			return restTemplate.postForObject(baseURL + reativeURL, entity, type);
-//		} catch (Throwable e) {
-//			throw new PlutusClientException(e);
-//		}
-//
-//	}
-	
 	protected <T> T post(String reativeURL, Object postEntity, Class<T> type) throws PlutusClientException {
 		try {
 			HttpEntity<?> entity = new HttpEntity<Object>(postEntity);
 			return restTemplate.postForObject(baseURL + reativeURL, entity, type);
+		} catch (Throwable e) {
+			throw new PlutusClientException(e);
+		}
+
+	}
+
+	protected void delete(String reativeURL) throws PlutusClientException {
+		try {
+			restTemplate.delete(baseURL + reativeURL);
 		} catch (Throwable e) {
 			throw new PlutusClientException(e);
 		}

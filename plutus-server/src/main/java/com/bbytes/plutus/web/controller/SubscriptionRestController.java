@@ -30,7 +30,7 @@ import com.bbytes.plutus.util.KeyUtil;
 import com.bbytes.plutus.util.RequestContextHolder;
 
 @RestController
-@RequestMapping("v1/api/subscription")
+@RequestMapping("v1/api")
 public class SubscriptionRestController {
 
 	@Autowired
@@ -45,10 +45,9 @@ public class SubscriptionRestController {
 	@Autowired
 	private BillingService billingService;
 
-	@RequestMapping(value = "/validate", method = RequestMethod.GET)
+	@RequestMapping(value = "/subscription/validate", method = RequestMethod.GET)
 	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
-		Subscription subscription = subscriptionService
-				.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
+		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription == null)
 			throw new SubscriptionInvalidException("Subscription Key invalid ");
 
@@ -57,16 +56,20 @@ public class SubscriptionRestController {
 		}
 
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse("Subscription check done", true,
-				subscription.getValidTill().toString(), subscription.getBillingAmount(),
-				subscription.getProductPlan().getCurrency());
+				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getProductPlan().getCurrency());
 
 		return status;
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo)
-			throws SubscriptionCreateException {
+	@RequestMapping(value = "/subscription", method = RequestMethod.DELETE)
+	private void delete() {
+		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
+		if (subscription != null)
+			subscriptionService.delete(subscription);
+	}
 
+	@RequestMapping(value = "/subscription/register", method = RequestMethod.POST)
+	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo) throws SubscriptionCreateException {
 		Product product = productService.findByName(subscriptionInfo.getProductName());
 		if (product == null)
 			throw new SubscriptionCreateException("Subscription registration failed , product name not available");
@@ -106,8 +109,8 @@ public class SubscriptionRestController {
 			throw new SubscriptionCreateException("Failed to save subscription info to storage");
 		}
 		SubscriptionRegisterRestResponse status = new SubscriptionRegisterRestResponse(
-				"Subscription created with key " + subscription.getSubscriptionKey(), true,
-				subscription.getSubscriptionKey(), subscription.getSubscriptionSecret());
+				"Subscription created with key " + subscription.getSubscriptionKey(), true, subscription.getSubscriptionKey(),
+				subscription.getSubscriptionSecret());
 
 		return status;
 
