@@ -9,9 +9,10 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<artifactId>plutus-client</artifactId>
-	<name>plutus-client</name>
-	<description>plutus rest api client impl</description>
+	<artifactId>plutus-common</artifactId>
+	<name>plutus-common</name>
+	<description>Plutus common lib to server and client</description>
+
 
 
 	<properties>
@@ -23,29 +24,22 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>com.bbytes</groupId>
-			<artifactId>plutus-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
 		</dependency>
 
 		<dependency>
@@ -55,10 +49,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
+
 	</dependencies>
 
 
@@ -79,7 +73,7 @@
 					<message>Maven artifacts for ${project.version}</message>
 					<noJekyll>true</noJekyll>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-					<branch>refs/heads/mvn-repo</branch>                      
+					<branch>refs/heads/mvn-repo</branch>
 					<includes>
 						<include>**/*</include>
 					</includes>
@@ -97,6 +91,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 
 </project>
