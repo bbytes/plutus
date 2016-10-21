@@ -19,6 +19,7 @@ import org.springframework.web.filter.GenericFilterBean;
 import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.util.GlobalConstant;
 import com.bbytes.plutus.util.RequestContextHolder;
+import com.bbytes.plutus.util.URLMapping;
 
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.lang.Assert;
@@ -34,7 +35,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	public StatelessAuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
 		Assert.notNull(tokenAuthenticationService);
 		this.tokenAuthenticationService = tokenAuthenticationService;
-		ignoreRequestMatcher = new AntPathRequestMatcher("/v1/api/subscription/register","POST");
+		ignoreRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL+"/subscription/register","POST");
 	}
 
 	@Override

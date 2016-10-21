@@ -21,13 +21,12 @@ import com.bbytes.plutus.util.GlobalConstant;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
 
-		String accessControlAllowHeaders = GlobalConstant.APP_PROFILE_HEADER + "," + GlobalConstant.APP_PROFILE_HEADER
-				+ "," + "Origin, X-Requested-With, purple-file-name, Content-Type, Accept";
+		String accessControlAllowHeaders = GlobalConstant.APP_PROFILE_HEADER + "," + GlobalConstant.AUTH_TOKEN_HEADER + ","
+				+ GlobalConstant.SUBSCRIPTION_KEY_HEADER + "," + "Origin, X-Requested-With, Content-Type, Accept";
 
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Origin", "*");

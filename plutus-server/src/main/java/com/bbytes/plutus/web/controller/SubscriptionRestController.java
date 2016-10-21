@@ -29,9 +29,10 @@ import com.bbytes.plutus.service.SubscriptionInvalidException;
 import com.bbytes.plutus.service.SubscriptionService;
 import com.bbytes.plutus.util.KeyUtil;
 import com.bbytes.plutus.util.RequestContextHolder;
+import com.bbytes.plutus.util.URLMapping;
 
 @RestController
-@RequestMapping("v1/api")
+@RequestMapping(URLMapping.SUBSCRIPTION_URL)
 public class SubscriptionRestController {
 
 	@Autowired
@@ -46,7 +47,7 @@ public class SubscriptionRestController {
 	@Autowired
 	private BillingService billingService;
 
-	@RequestMapping(value = "/subscription/validate", method = RequestMethod.GET)
+	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
 		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription == null)
@@ -62,14 +63,14 @@ public class SubscriptionRestController {
 		return status;
 	}
 
-	@RequestMapping(value = "/subscription", method = RequestMethod.DELETE)
+	@RequestMapping(method = RequestMethod.DELETE)
 	private void delete() {
 		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription != null)
 			subscriptionService.delete(subscription);
 	}
 
-	@RequestMapping(value = "/subscription/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo) throws SubscriptionCreateException {
 		Product product = productService.findByName(subscriptionInfo.getProductName());
 		if (product == null)

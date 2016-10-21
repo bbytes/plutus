@@ -6,7 +6,7 @@ import com.bbytes.plutus.model.SubscriptionInfo;
 import com.bbytes.plutus.response.ProductStatsRestResponse;
 import com.bbytes.plutus.response.SubscriptionRegisterRestResponse;
 import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
-import com.bbytes.plutus.util.GlobalConstant;
+import com.bbytes.plutus.util.URLMapping;
 
 public class PlutusClient extends AbstractClient {
 
@@ -24,26 +24,26 @@ public class PlutusClient extends AbstractClient {
 	}
 
 	public SubscriptionStatusRestResponse validateSubscription() throws PlutusClientException {
-		SubscriptionStatusRestResponse response = get(GlobalConstant.BASE_API_URL + "/subscription/validate",
+		SubscriptionStatusRestResponse response = get(URLMapping.BASE_API_URL + "/subscription/validate",
 				SubscriptionStatusRestResponse.class);
 		return response;
 	}
 
 	public ProductStatsRestResponse sendStats(ProductPlanStats planStats) throws PlutusClientException {
 		// set your entity to send
-		ProductStatsRestResponse response = post(GlobalConstant.BASE_API_URL + "/product/stats/create", planStats,
+		ProductStatsRestResponse response = post(URLMapping.BASE_API_URL + "/product/stats/create", planStats,
 				ProductStatsRestResponse.class);
 		return response;
 	}
 
 	public SubscriptionRegisterRestResponse register(SubscriptionInfo subscriptionInfo) throws PlutusClientException {
 		// set your entity to send
-		SubscriptionRegisterRestResponse response = post(GlobalConstant.BASE_API_URL + "/subscription/register",
+		SubscriptionRegisterRestResponse response = post(URLMapping.BASE_API_URL + "/subscription/register",
 				subscriptionInfo, SubscriptionRegisterRestResponse.class);
 		return response;
 	}
 
 	public void deleteSubscription() throws PlutusClientException {
-		delete(GlobalConstant.BASE_API_URL + "/subscription");
+		delete(URLMapping.BASE_API_URL + "/subscription");
 	}
 }

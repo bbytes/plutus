@@ -1,8 +1,8 @@
 package com.bbytes.plutus.util;
 
-public class GlobalConstant {
+public final class GlobalConstant {
 
-	public final static String BASE_API_URL = "/v1/api";
+
 
 	public final static String AUTH_TOKEN_HEADER = "auth-token";
 

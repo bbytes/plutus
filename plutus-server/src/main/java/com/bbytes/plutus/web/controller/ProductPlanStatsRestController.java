@@ -16,17 +16,17 @@ import com.bbytes.plutus.response.ProductStatsRestResponse;
 import com.bbytes.plutus.service.ProductPlanStatsService;
 import com.bbytes.plutus.service.ProductStatsException;
 import com.bbytes.plutus.util.RequestContextHolder;
+import com.bbytes.plutus.util.URLMapping;
 
 @RestController
-@RequestMapping("v1/api/product/stats")
+@RequestMapping(URLMapping.PROD_STATS_URL)
 public class ProductPlanStatsRestController {
 
 	@Autowired
 	private ProductPlanStatsService productPlanStatsService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	ProductStatsRestResponse validateSubscription(@RequestBody ProductPlanStats productPlanStats)
-			throws ProductStatsException {
+	ProductStatsRestResponse validateSubscription(@RequestBody ProductPlanStats productPlanStats) throws ProductStatsException {
 		try {
 			if (productPlanStats != null) {
 				productPlanStats.setSubscriptionKey(RequestContextHolder.getSubscriptionKey());

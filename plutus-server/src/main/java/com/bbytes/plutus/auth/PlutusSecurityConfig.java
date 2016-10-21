@@ -49,7 +49,7 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().and().servletApi().and().authorizeRequests()
 
 				// Allow logins urls
-				.antMatchers("/auth/**").permitAll().antMatchers("/api/**").authenticated().and()
+				.antMatchers("/auth/**").permitAll().and()
 				// Custom Token based authentication based on the header
 				// previously given to the client
 				.addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService()),
