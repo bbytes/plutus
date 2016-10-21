@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +91,7 @@ public class SubscriptionRestController {
 		subscription.setId(UUID.randomUUID().toString());
 		subscription.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
 		subscription.setTenantId(subscriptionInfo.getTenantId());
+		subscription.setValidTill(DateTime.now().plusYears(10).toDate());
 
 		ProductPlan productPlan = new ProductPlan();
 		productPlan.setId(UUID.randomUUID().toString());

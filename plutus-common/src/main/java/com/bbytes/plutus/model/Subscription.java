@@ -31,7 +31,7 @@ import lombok.ToString;
 @Document
 public class Subscription extends BaseEntity {
 
-	private boolean enable;
+	private boolean enable=true;
 
 	private double billingAmount;
 	
