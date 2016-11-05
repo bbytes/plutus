@@ -18,17 +18,26 @@ import lombok.ToString;
 @Document
 public class Customer extends BaseEntity {
 
+	// main mobile contact info for this customer
 	private String contactNo;
 
+	// main email contact info for this customer
 	@Indexed(unique = true)
 	private String email;
 
+	// customer website if any ..not very important information
 	private String website;
 
+	// customer billing address to send invoice hard copy if required
 	private String billingAddress;
 
+	// the list of email address to which the bill amount and invoice soft copy
+	// has to be sent.
 	private List<String> billingEmails = new ArrayList<>();
 
+	// cross link the customer to their list of subscriptions if they have
+	// signed up for more than one proeduct with same contant info. For eg they
+	// might be customer of statusnap , recruiz , errZero etc
 	@DBRef
 	private List<Subscription> subscriptions;
 

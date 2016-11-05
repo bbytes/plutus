@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -16,10 +17,16 @@ import lombok.ToString;
 @Document
 public class Product extends BaseEntity {
 
+	// product desc
 	private String desc;
 
-	private List<String> productTeamEmails = new ArrayList<>();
+	@Indexed(unique=true)
+	private String name;
 	
+	// all the emails to which  any communication about this product like
+	// feature request , issues etc has to be sent
+	private List<String> productTeamEmails = new ArrayList<>();
+
 	public void addProductTeamEmails(String... emails) {
 		productTeamEmails.addAll(Arrays.asList(emails));
 	}

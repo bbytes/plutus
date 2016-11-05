@@ -37,5 +37,9 @@ public class SubscriptionStatusRestResponse extends PlutusRestResponse {
 	public SubscriptionStatusRestResponse(String message, boolean success) {
 		super(message, success);
 	}
+	
+	public SubscriptionStatusRestResponse(boolean success,Object data) {
+		super(success, data);
+	}
 
 }

@@ -15,7 +15,7 @@ import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.model.Customer;
 import com.bbytes.plutus.model.Product;
-import com.bbytes.plutus.model.ProductPlan;
+import com.bbytes.plutus.model.PricingPlan;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.util.BillingConstant;
 
@@ -25,7 +25,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 
 	private Customer customer;
 
-	private ProductPlan productPlan;
+	private PricingPlan productPlan;
 
 	private Product product;
 
@@ -48,7 +48,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		product.addProductTeamEmails("statusnap@bbytes.com");
 		
 
-		productPlan = new ProductPlan();
+		productPlan = new PricingPlan();
 		productPlan.setName("TEST");
 		productPlan.setBillingCycle(BillingCycle.Monthy);
 		productPlan.setCurrency(Currency.INR);
@@ -84,7 +84,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 
 		subscription = subscriptionService.save(subscription);
 		
-		ProductPlan plan = productPlanService.findOne(subscription.getProductPlan().getId());
+		PricingPlan plan = productPlanService.findOne(subscription.getPricingPlan().getId());
 		Assert.assertNotNull(plan);
 
 		subscription = subscriptionService.findOne(plan.getSubscription().getId());
@@ -92,7 +92,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		Assert.assertNotNull(subscription.getSupportPeriodInterval());
 		System.out.println(subscription.getTrialPeriodInterval().getEndMillis());
 
-		ProductPlan plan2 = productPlanService.findOne("dont exist id");
+		PricingPlan plan2 = productPlanService.findOne("dont exist id");
 		Assert.assertNull(plan2);
 	}
 

@@ -18,6 +18,8 @@ public class PlutusRestResponse implements Serializable {
 	protected boolean success = false;
 
 	protected String message = null;
+	
+	protected Object data;
 
 	public PlutusRestResponse() {
 		// empty constructor
@@ -25,6 +27,11 @@ public class PlutusRestResponse implements Serializable {
 
 	public PlutusRestResponse(String message, boolean success) {
 		this.message = message;
+		this.success = success;
+	}
+	
+	public PlutusRestResponse(boolean success, Object data) {
+		this.data = data;
 		this.success = success;
 	}
 

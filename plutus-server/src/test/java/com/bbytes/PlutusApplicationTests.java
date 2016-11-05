@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bbytes.plutus.PlutusWebApplication;
-import com.bbytes.plutus.service.ProductPlanService;
+import com.bbytes.plutus.service.PricingPlanService;
 import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.service.SubscriptionService;
 
@@ -19,7 +19,7 @@ public class PlutusApplicationTests {
 	protected SubscriptionService subscriptionService;
 
 	@Autowired
-	protected ProductPlanService productPlanService;
+	protected PricingPlanService productPlanService;
 	
 	@Autowired
 	protected ProductService productService;

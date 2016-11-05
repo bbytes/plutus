@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,13 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.Customer;
 import com.bbytes.plutus.model.Product;
-import com.bbytes.plutus.model.ProductPlan;
+import com.bbytes.plutus.model.PricingPlan;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.model.SubscriptionInfo;
+import com.bbytes.plutus.response.PlutusRestResponse;
 import com.bbytes.plutus.response.SubscriptionRegisterRestResponse;
 import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
 import com.bbytes.plutus.service.BillingService;
 import com.bbytes.plutus.service.CustomerService;
+import com.bbytes.plutus.service.PlutusException;
 import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.service.SubscriptionCreateException;
 import com.bbytes.plutus.service.SubscriptionInvalidException;
@@ -47,6 +50,19 @@ public class SubscriptionRestController {
 	@Autowired
 	private BillingService billingService;
 
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	private PlutusRestResponse getAll() throws PlutusException {
+		PlutusRestResponse status = new PlutusRestResponse(true,subscriptionService.findAll());
+		return status;
+	}
+	
+	@RequestMapping(value = "/{productName}", method = RequestMethod.GET)
+	private PlutusRestResponse getByProductName(@PathVariable String productName) throws PlutusException {
+		PlutusRestResponse status = new PlutusRestResponse(true,subscriptionService.findByProductName(productName));
+		return status;
+	}
+	
+
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
 		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
@@ -58,7 +74,7 @@ public class SubscriptionRestController {
 		}
 
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse("Subscription check done", true,
-				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getProductPlan().getCurrency());
+				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getPricingPlan().getCurrency());
 
 		return status;
 	}
@@ -91,10 +107,11 @@ public class SubscriptionRestController {
 		subscription.setCustomer(customer);
 		subscription.setId(UUID.randomUUID().toString());
 		subscription.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
+		subscription.setProductName(subscriptionInfo.getProductName());
 		subscription.setTenantId(subscriptionInfo.getTenantId());
 		subscription.setValidTill(DateTime.now().plusYears(10).toDate());
 
-		ProductPlan productPlan = new ProductPlan();
+		PricingPlan productPlan = new PricingPlan();
 		productPlan.setId(UUID.randomUUID().toString());
 		productPlan.setAppProfile(subscriptionInfo.getAppProfile());
 		productPlan.setBillingCycle(subscriptionInfo.getBillingCycle());

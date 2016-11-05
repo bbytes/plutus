@@ -21,4 +21,8 @@ public class SubscriptionService extends AbstractService<Subscription, String> {
 		return subscriptionRepository.findBySubscriptionKey(subscriptionKey);
 	}
 
+	public Subscription findByProductName(String productName) {
+		return subscriptionRepository.findByProductName(productName);
+	}
+
 }

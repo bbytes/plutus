@@ -18,12 +18,15 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Document
-public class ProductPlan extends BaseEntity {
+public class PricingPlan extends BaseEntity {
 
+	// the reference to product object that contain info like product name ,
+	// desc etc
 	@DBRef
 	@CascadeSave
 	private Product product;
-	
+
+	// the reference to subscription
 	@DBRef
 	private Subscription subscription;
 
@@ -32,11 +35,19 @@ public class ProductPlan extends BaseEntity {
 	// like charge per user 3$ etc
 	private Map<String, Number> productPlanItemToCost;
 
+	// the current option of the customer for this subscription , currently only
+	// USD and INR supported
 	private Currency currency;
 
+	// the app profile it is running in and possible values enterprise, saas,
+	// enterpriceSaas
 	private AppProfile appProfile;
 
+	// the cycle when invoice or collection of money has to happen . Possible
+	// values Monthy, Quarterly, HalfYearly, Annually, Perpetual
 	private BillingCycle billingCycle;
 
+	// any discount that needs to be applied to this subscription every billing
+	// cycle . if we need to stop discount then this value has to be made null
 	private Discount discount;
 }

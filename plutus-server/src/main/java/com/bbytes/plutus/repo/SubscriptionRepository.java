@@ -7,6 +7,10 @@ import com.bbytes.plutus.model.Subscription;
 public interface SubscriptionRepository extends MongoRepository<Subscription, String> {
 
 	Subscription findBySubscriptionKey(String subscriptionKey);
+	
+	Subscription findByProductName(String productName);
 
 	Subscription findBySubscriptionKeyAndTenantId(String subscriptionKey, String tenantId);
+	
+	
 }

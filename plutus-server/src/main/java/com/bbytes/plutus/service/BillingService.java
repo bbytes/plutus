@@ -32,9 +32,9 @@ public class BillingService {
 	private void calculateDailyBillingForStatusap(Subscription subscription, ProductPlanStats productPlanStats) {
 		if (DateUtil.isNotToday(subscription.getAmountUpdatedTimeStamp())) {
 			Double currentBillingAmt = subscription.getBillingAmount();
-			Number userCostPerMonth = subscription.getProductPlan().getProductPlanItemToCost()
+			Number userCostPerMonth = subscription.getPricingPlan().getProductPlanItemToCost()
 					.get(BillingConstant.STATUSNAP_USER_COST);
-			Number projectCostPerMonth = subscription.getProductPlan().getProductPlanItemToCost()
+			Number projectCostPerMonth = subscription.getPricingPlan().getProductPlanItemToCost()
 					.get(BillingConstant.STATUSNAP_PROJECT_COST);
 			
 			double costPerUserPerDay = userCostPerMonth.doubleValue() / 30;
@@ -57,7 +57,7 @@ public class BillingService {
 	}
 
 	private boolean isStatusnap(Subscription subscription) {
-		return ProductName.Statusnap.toString().equalsIgnoreCase(subscription.getProductPlan().getProduct().getName());
+		return ProductName.Statusnap.toString().equalsIgnoreCase(subscription.getPricingPlan().getProduct().getName());
 	}
 
 	public Map<String, Number> getProductCostMap(String productName) {

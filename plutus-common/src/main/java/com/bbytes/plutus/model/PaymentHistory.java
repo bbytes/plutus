@@ -16,12 +16,17 @@ import lombok.ToString;
 @Document
 public class PaymentHistory extends BaseEntity {
 
+	// amount paid during a cycle
 	private double amount;
 
+	// payment date
 	private Date paymentDate;
 
+	// payment mode , possible values PAYMENT_GATEWAY, NEFT, CHEQUE, CASH
 	private PaymentMode paymentMode;
-	
+
+	// The invoice copy create for this payment. Contains amount,template
+	// to create pdf and data to fill the pdf
 	private Invoice invoice;
 
 }

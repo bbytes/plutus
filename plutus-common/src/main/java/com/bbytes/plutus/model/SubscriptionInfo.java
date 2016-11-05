@@ -6,6 +6,10 @@ import com.bbytes.plutus.enums.Currency;
 
 import lombok.Data;
 
+/**
+ * Used to send the actula values from DB object  back to ui , used as DTO
+ * This object is not stored in DB 
+ */
 @Data
 public class SubscriptionInfo {
 

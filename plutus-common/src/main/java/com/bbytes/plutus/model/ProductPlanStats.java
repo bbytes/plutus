@@ -19,6 +19,7 @@ import lombok.ToString;
 @Document
 public class ProductPlanStats extends BaseEntity {
 
+	// the date on which a stat entry was created in db 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private Date entryDate;
 
@@ -26,6 +27,7 @@ public class ProductPlanStats extends BaseEntity {
 	// that is sent from the client. Billing happens based on these nos
 	private Map<String, Number> stats = new HashMap<String, Number>();
 
+	// the stat for which subscription is refered here
 	@Indexed
 	private String subscriptionKey;
 
