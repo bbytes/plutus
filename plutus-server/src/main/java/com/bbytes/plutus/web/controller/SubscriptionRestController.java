@@ -79,11 +79,15 @@ public class SubscriptionRestController {
 		return status;
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	private void delete() {
-		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
-		if (subscription != null)
-			subscriptionService.delete(subscription);
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	private PlutusRestResponse delete(@PathVariable String id) throws PlutusException {
+		if (id == null)
+			throw new PlutusException("Subscription id is empty or null");
+
+		subscriptionService.delete(id);
+
+		PlutusRestResponse status = new PlutusRestResponse("Subscription deleted", true);
+		return status;
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -136,6 +140,12 @@ public class SubscriptionRestController {
 
 	}
 
+	@ExceptionHandler(PlutusException.class)
+	public ResponseEntity<PlutusRestResponse> exception(HttpServletRequest req, PlutusException e) {
+		PlutusRestResponse status = new PlutusRestResponse(e.getMessage(), false);
+		return new ResponseEntity<PlutusRestResponse>(status, HttpStatus.OK);
+	}
+	
 	@ExceptionHandler(SubscriptionCreateException.class)
 	public ResponseEntity<SubscriptionStatusRestResponse> exceptionCreate(HttpServletRequest req, Exception e) {
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(e.getMessage(), false);

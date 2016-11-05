@@ -50,6 +50,12 @@ public class TestProductController extends PlutusApplicationWebTests {
 	}
 
 	@Test
+	public void testGetProductNames() throws Exception {
+		mockMvc.perform(get("/" + URLMapping.PRODUCT_URL + "/names")
+				.header(GlobalConstant.AUTH_TOKEN_HEADER, getAuthToken())).andExpect(status().is2xxSuccessful()).andDo(print());
+	}
+	
+	@Test
 	public void testDeleteProduct() throws Exception {
 		mockMvc.perform(delete("/" + URLMapping.PRODUCT_URL + "/" + pricingPlanService.findAll().get(0).getId())
 				.header(GlobalConstant.AUTH_TOKEN_HEADER, getAuthToken())).andExpect(status().is2xxSuccessful()).andDo(print());

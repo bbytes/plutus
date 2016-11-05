@@ -1,5 +1,6 @@
 package com.bbytes.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -60,6 +61,25 @@ public class TestSubscriptionController extends PlutusApplicationWebTests {
 		mockMvc.perform(post("/" + URLMapping.SUBSCRIPTION_URL + "/register").content(requestBody).contentType(APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andExpect(status().is2xxSuccessful()).andDo(print());
 
+	}
+	
+	
+	@Test
+	public void testDeleteSubscription() throws Exception {
+		mockMvc.perform(delete("/" + URLMapping.SUBSCRIPTION_URL + "/" + subscriptionService.findAll().get(0).getId())
+				.header(GlobalConstant.AUTH_TOKEN_HEADER, getAuthToken())).andExpect(status().is2xxSuccessful()).andDo(print());
+	}
+
+	@Test
+	public void getAllSubscription() throws Exception {
+		mockMvc.perform(get("/" + URLMapping.SUBSCRIPTION_URL + "/all")
+				.header(GlobalConstant.AUTH_TOKEN_HEADER, getAuthToken())).andExpect(status().is2xxSuccessful()).andDo(print());
+	}
+	
+	@Test
+	public void getAllSubscriptionForProduct() throws Exception {
+		mockMvc.perform(get("/" + URLMapping.SUBSCRIPTION_URL + "/"+productService.findAll().get(0).getName())
+				.header(GlobalConstant.AUTH_TOKEN_HEADER, getAuthToken())).andExpect(status().is2xxSuccessful()).andDo(print());
 	}
 
 }

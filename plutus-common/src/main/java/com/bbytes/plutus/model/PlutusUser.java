@@ -2,6 +2,7 @@ package com.bbytes.plutus.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,10 +39,22 @@ public class PlutusUser {
 
 	@LastModifiedDate
 	private Date lastModified;
+	
+	@CreatedBy
+	private String createdBy;
+
+	public PlutusUser() {
+	}
 
 	public PlutusUser(String name, String email) {
 		this.name = name;
 		this.email = email;
+	}
+
+	public PlutusUser(String name, String email, String role) {
+		this.name = name;
+		this.email = email;
+		this.userRole = role;
 	}
 
 }

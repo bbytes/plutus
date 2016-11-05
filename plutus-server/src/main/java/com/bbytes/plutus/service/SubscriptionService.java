@@ -1,5 +1,7 @@
 package com.bbytes.plutus.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class SubscriptionService extends AbstractService<Subscription, String> {
 		return subscriptionRepository.findBySubscriptionKey(subscriptionKey);
 	}
 
-	public Subscription findByProductName(String productName) {
+	public List<Subscription> findByProductName(String productName) {
 		return subscriptionRepository.findByProductName(productName);
 	}
 

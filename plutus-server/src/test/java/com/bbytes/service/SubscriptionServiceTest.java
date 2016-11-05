@@ -34,7 +34,6 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		customer = new Customer();
 		customer.setBillingAddress("Test address");
 		customer.addBillingEmails("test@bbytes.com");
-		customer.setCreationDate(DateTime.now());
 		customer.setId("Test customer");
 		customer.setName("Test customer");
 		customer.setWebsite("www.example.com");
