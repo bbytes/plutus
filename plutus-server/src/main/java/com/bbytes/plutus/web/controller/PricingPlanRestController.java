@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +32,13 @@ public class PricingPlanRestController {
 		return status;
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE ,method = RequestMethod.POST)
 	private PlutusRestResponse create(@RequestBody PricingPlan pricingPlan) throws PlutusException {
 
 		if (pricingPlan == null)
 			throw new PlutusException("Pricing Plan request object is empty or null");
 
-		if (pricingPlan.getId() != null) {
+		if (pricingPlanService.exists(pricingPlan.getId())) {
 			throw new PlutusException("Pricing Plan object with given id exist in DB");
 		}
 
@@ -53,6 +54,9 @@ public class PricingPlanRestController {
 		if (pricingPlan == null)
 			throw new PlutusException("Pricing Plan request object is empty or null");
 
+		if (!pricingPlanService.exists(pricingPlan.getId())) {
+			throw new PlutusException("Pricing Plan object cannot be new object");
+		}
 
 		pricingPlan = pricingPlanService.save(pricingPlan);
 

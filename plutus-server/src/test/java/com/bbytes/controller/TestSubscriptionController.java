@@ -16,11 +16,12 @@ import com.bbytes.plutus.enums.ProductName;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.model.SubscriptionInfo;
+import com.bbytes.plutus.util.GlobalConstant;
+import com.bbytes.plutus.util.URLMapping;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TestSubscriptionController extends PlutusApplicationWebTests {
 
-	
 	@Before
 	public void setup() throws Exception {
 
@@ -31,13 +32,14 @@ public class TestSubscriptionController extends PlutusApplicationWebTests {
 		product.addProductTeamEmails("purple@beyondbytes.co.in");
 		productService.save(product);
 	}
-	
+
 	@Test
 	public void testSubscriptionValidity() throws Exception {
-
 		Subscription subscription = subscriptionService.findAll().get(0);
-		mockMvc.perform(get("/v1/api/subscription/validate/" + subscription.getSubscriptionKey()))
-				.andExpect(status().is2xxSuccessful()).andDo(print());
+		mockMvc.perform(get("/" + URLMapping.SUBSCRIPTION_URL + "/validate").header(GlobalConstant.SUBSCRIPTION_KEY_HEADER,
+				subscription.getSubscriptionKey()).header(GlobalConstant.APP_PROFILE_HEADER,
+						AppProfile.saas).header(GlobalConstant.AUTH_TOKEN_HEADER,
+								getAuthToken(subscription.getSubscriptionSecret()))).andExpect(status().is2xxSuccessful()).andDo(print());
 	}
 
 	@Test
@@ -55,7 +57,7 @@ public class TestSubscriptionController extends PlutusApplicationWebTests {
 
 		String requestBody = new ObjectMapper().writeValueAsString(subscriptionInfo);
 
-		mockMvc.perform(post("/v1/api/subscription/register").content(requestBody).contentType(APPLICATION_JSON_UTF8))
+		mockMvc.perform(post("/" + URLMapping.SUBSCRIPTION_URL + "/register").content(requestBody).contentType(APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andExpect(status().is2xxSuccessful()).andDo(print());
 
 	}

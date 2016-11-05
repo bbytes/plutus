@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.bbytes.plutus.mongo.CascadeSave;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -65,6 +66,7 @@ public class Subscription extends BaseEntity {
 	// restrictions for a plan
 	@DBRef
 	@CascadeSave
+	@JsonManagedReference
 	private PricingPlan pricingPlan;
 
 	// the date till which the Subscription is valid after which the billing

@@ -11,6 +11,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+
+
 public class PlutusApplicationWebTests extends PlutusApplicationTests {
 
 	@Autowired
@@ -26,7 +30,10 @@ public class PlutusApplicationWebTests extends PlutusApplicationTests {
 
 	@Before
 	public void setUp() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(context).dispatchOptions(true).addFilters(filterChainProxy)
+//		mockMvc = MockMvcBuilders.webAppContextSetup(context).dispatchOptions(true)/*.addFilters(filterChainProxy)*/
+//				.apply(springSecurity()).build();
+		
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(context).dispatchOptions(true).apply(springSecurity())
 				.build();
 	}
 

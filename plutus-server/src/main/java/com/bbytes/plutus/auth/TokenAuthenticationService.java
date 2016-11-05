@@ -15,7 +15,6 @@ import com.bbytes.plutus.service.SubscriptionService;
 import com.bbytes.plutus.util.GlobalConstant;
 import com.bbytes.plutus.util.RequestContextHolder;
 
-
 public class TokenAuthenticationService {
 
 	private TokenHandler tokenHandler;
@@ -41,13 +40,23 @@ public class TokenAuthenticationService {
 	public Authentication getAuthentication(HttpServletRequest request) {
 		final String token = request.getHeader(GlobalConstant.AUTH_TOKEN_HEADER);
 		String subscriptionKey = RequestContextHolder.getSubscriptionKey();
-		Subscription subscription = subscriptionService.findBySubscriptionKey(subscriptionKey);
+		User user = null;
 
-		if (token == null || subscription == null) {
-			throw new InsufficientAuthenticationException("Auth token missing or subscription key incorrect");
+		if (token == null) {
+			throw new InsufficientAuthenticationException("Auth token missing");
+		}
+		
+		if (subscriptionKey != null) {
+			Subscription subscription = subscriptionService.findBySubscriptionKey(subscriptionKey);
+			if (subscription != null) {
+				user = tokenHandler.parseUserFromToken(token, subscription.getSubscriptionSecret());
+			}
 		}
 
-		final User user = tokenHandler.parseUserFromToken(token, subscription.getSubscriptionSecret());
+		if (user == null) {
+			user = tokenHandler.parseUserFromToken(token, PlutusSecurityConfig.SECRET_KEY);
+		}
+
 		if (user == null) {
 			throw new UsernameNotFoundException("Given user not found in system");
 		}

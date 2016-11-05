@@ -5,10 +5,11 @@ import java.util.Map;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
-import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.mongo.CascadeSave;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,7 @@ public class PricingPlan extends BaseEntity {
 
 	// the reference to subscription
 	@DBRef
+	@JsonBackReference
 	private Subscription subscription;
 
 	// usually Map of items that is considered for the product plan like

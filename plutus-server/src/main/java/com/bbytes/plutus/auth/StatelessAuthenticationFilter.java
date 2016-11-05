@@ -32,24 +32,24 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	// profile info in header
 	protected RequestMatcher ignoreRequestMatcher;
 
+	protected RequestMatcher headerContextRequestMatcher;
+
 	public StatelessAuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
 		Assert.notNull(tokenAuthenticationService);
 		this.tokenAuthenticationService = tokenAuthenticationService;
-		ignoreRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL+"/subscription/register","POST");
+		ignoreRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/register", "POST");
+		headerContextRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/**");
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		if (!ignoreRequestMatcher.matches((HttpServletRequest) request)) {
 			setRequestContext((HttpServletRequest) request);
 			try {
-				Authentication authentication = tokenAuthenticationService
-						.getAuthentication((HttpServletRequest) request);
+				Authentication authentication = tokenAuthenticationService.getAuthentication((HttpServletRequest) request);
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			} catch (SignatureException ex) {
-				throw new AuthenticationServiceException(
-						"Auth failed : Signature does not match locally computed signature");
+				throw new AuthenticationServiceException("Auth failed : Signature does not match locally computed signature");
 			} catch (Exception e) {
 				throw new AuthenticationServiceException("Auth failed");
 			}
@@ -66,6 +66,10 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	 * @param request
 	 */
 	private void setRequestContext(HttpServletRequest request) {
+		if (!headerContextRequestMatcher.matches((HttpServletRequest) request)) {
+			return;
+		}
+
 		String appProfileValue = request.getHeader(GlobalConstant.APP_PROFILE_HEADER);
 		if (appProfileValue == null) {
 			throw new InsufficientAuthenticationException("App profile information missing in header");

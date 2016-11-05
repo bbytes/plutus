@@ -25,7 +25,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 
 	private Customer customer;
 
-	private PricingPlan productPlan;
+	private PricingPlan pricingPlan;
 
 	private Product product;
 
@@ -48,19 +48,19 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		product.addProductTeamEmails("statusnap@bbytes.com");
 		
 
-		productPlan = new PricingPlan();
-		productPlan.setName("TEST");
-		productPlan.setBillingCycle(BillingCycle.Monthy);
-		productPlan.setCurrency(Currency.INR);
-		productPlan.setAppProfile(AppProfile.saas);
-		productPlan.setDiscount(null);
-		productPlan.setId("TEST");
-		productPlan.setProduct(product);
+		pricingPlan = new PricingPlan();
+		pricingPlan.setName("TEST");
+		pricingPlan.setBillingCycle(BillingCycle.Monthy);
+		pricingPlan.setCurrency(Currency.INR);
+		pricingPlan.setAppProfile(AppProfile.saas);
+		pricingPlan.setDiscount(null);
+		pricingPlan.setId("TEST");
+		pricingPlan.setProduct(product);
 
 		Map<String, Number> productPlanItemToCost = new HashMap<>();
 		productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 120);
 		productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 100);
-		productPlan.setProductPlanItemToCost(productPlanItemToCost);
+		pricingPlan.setProductPlanItemToCost(productPlanItemToCost);
 
 		subscription = new Subscription();
 		subscription.setBillingAmount(0);
@@ -68,7 +68,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		subscription.setDeactivate(false);
 		subscription.setDeactivateReason("none");
 		subscription.setEnable(true);
-		subscription.setProductPlan(productPlan);
+		subscription.setProductPlan(pricingPlan);
 		subscription.setSubscriptionKey("TEST");
 		subscription.setSubscriptionSecret("TEST");
 		subscription.setId("TEST");
@@ -84,7 +84,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 
 		subscription = subscriptionService.save(subscription);
 		
-		PricingPlan plan = productPlanService.findOne(subscription.getPricingPlan().getId());
+		PricingPlan plan = pricingPlanService.findOne(subscription.getPricingPlan().getId());
 		Assert.assertNotNull(plan);
 
 		subscription = subscriptionService.findOne(plan.getSubscription().getId());
@@ -92,7 +92,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		Assert.assertNotNull(subscription.getSupportPeriodInterval());
 		System.out.println(subscription.getTrialPeriodInterval().getEndMillis());
 
-		PricingPlan plan2 = productPlanService.findOne("dont exist id");
+		PricingPlan plan2 = pricingPlanService.findOne("dont exist id");
 		Assert.assertNull(plan2);
 	}
 
