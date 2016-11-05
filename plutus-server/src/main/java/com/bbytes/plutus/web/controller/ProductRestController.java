@@ -50,7 +50,7 @@ public class ProductRestController {
 		if (product == null)
 			throw new PlutusException("Product request is empty or null");
 
-		if (product.getId() != null) {
+		if (productService.exists(product.getId())) {
 			throw new PlutusException("Product with id exist in DB");
 		}
 
@@ -66,6 +66,9 @@ public class ProductRestController {
 		if (product == null)
 			throw new PlutusException("Product request is empty or null");
 
+		if (!productService.exists(product.getId())) {
+			throw new PlutusException("Product cannot be new for update");
+		}
 		product = productService.save(product);
 
 		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);
