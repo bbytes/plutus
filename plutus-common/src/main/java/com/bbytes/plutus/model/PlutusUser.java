@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -21,15 +23,8 @@ public class PlutusUser {
 
 	private String status;
 
+//	@JsonIgnore
 	private String password;
-
-	private boolean accountInitialise;
-
-	private String timeZone;
-
-	private String timePreference;
-
-	private boolean emailNotificationState = true;
 
 	// embedded
 	private String userRole = "Normal";
@@ -39,7 +34,7 @@ public class PlutusUser {
 
 	@LastModifiedDate
 	private Date lastModified;
-	
+
 	@CreatedBy
 	private String createdBy;
 

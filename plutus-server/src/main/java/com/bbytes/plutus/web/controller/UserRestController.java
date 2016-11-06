@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.PlutusUser;
@@ -43,7 +44,7 @@ public class UserRestController {
 			throw new PlutusException("User with id exist in DB");
 		}
 
-		user = userService.save(user);
+		user = userService.create(user);
 
 		PlutusRestResponse status = new PlutusRestResponse("User save success", true);
 		return status;
@@ -56,9 +57,22 @@ public class UserRestController {
 			throw new PlutusException("User request is empty or null");
 
 		if (!userService.exists(user.getEmail())) {
-			throw new PlutusException("Product cannot be new for update");
+			throw new PlutusException("User cannot be new for update");
 		}
-		user = userService.save(user);
+		user = userService.update(user);
+
+		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);
+		return status;
+	}
+	
+	@RequestMapping(value = "/updatePassword/{email}", method = RequestMethod.POST)
+	private PlutusRestResponse updatePassword(@PathVariable String email, @RequestParam("password") String newPassword ) throws PlutusException {
+
+		if (!userService.exists(email)) {
+			throw new PlutusException("User does not exist");
+		}
+		
+		userService.updatePassword(email, newPassword);
 
 		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);
 		return status;
