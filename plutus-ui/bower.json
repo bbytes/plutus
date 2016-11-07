@@ -1,9 +1,7 @@
 {
   "name": "Plutus-ui",
   "homepage": "https://github.com/bbytes/plutus",
-  "authors": [
-    "Jayashree <jayashree@beyondbytes.co.in>"
-  ],
+  "authors": "Beyond Bytes",
   "description": "",
   "main": "",
   "license": "MIT",
