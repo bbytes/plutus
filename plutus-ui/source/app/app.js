@@ -94,6 +94,7 @@ rootApp.config([
 
         }).state('home', {
             url: '/home',
+            redirectTo: 'products',
             views: {
                 '': {
                     templateUrl: 'app/partials/home.html'
@@ -102,10 +103,78 @@ rootApp.config([
                     templateUrl: 'app/partials/home-header.html'
                 },
                 'main@home': {
-                    templateUrl: 'app/partials/home-main.html',
+                    templateUrl: 'app/partials/product.html',
                     controller: 'homeCtrl',
                 },
                 'footer@home': {
+                    templateUrl: 'app/partials/home-footer.html'
+                }
+            }
+        }).state('products', {
+            url: '/products',
+            views: {
+                '': {
+                    templateUrl: 'app/partials/home.html'
+                },
+                'header@products': {
+                    templateUrl: 'app/partials/home-header.html'
+                },
+                'main@products': {
+                    templateUrl: 'app/partials/product.html',
+                    controller: 'productCtrl',
+                },
+                'footer@products': {
+                    templateUrl: 'app/partials/home-footer.html'
+                }
+            }
+        }).state('pricing-plans', {
+            url: '/pricing-plans',
+            views: {
+                '': {
+                    templateUrl: 'app/partials/home.html'
+                },
+                'header@pricing-plans': {
+                    templateUrl: 'app/partials/home-header.html'
+                },
+                'main@pricing-plans': {
+                    templateUrl: 'app/partials/pricingPlans.html',
+                    controller: 'pricingPlansCtrl',
+                },
+                'footer@pricing-plans': {
+                    templateUrl: 'app/partials/home-footer.html'
+                }
+            }
+        }).state('subscription', {
+            url: '/subscription',
+            views: {
+                '': {
+                    templateUrl: 'app/partials/home.html'
+                },
+                'header@subscription': {
+                    templateUrl: 'app/partials/home-header.html'
+                },
+                'main@subscription': {
+                    templateUrl: 'app/partials/subscriptionInfo.html',
+                    controller: 'subscriptionInfoCtrl',
+                },
+                'footer@subscription': {
+                    templateUrl: 'app/partials/home-footer.html'
+                }
+            }
+        }).state('admin', {
+            url: '/admin',
+            views: {
+                '': {
+                    templateUrl: 'app/partials/home.html'
+                },
+                'header@admin': {
+                    templateUrl: 'app/partials/home-header.html'
+                },
+                'main@admin': {
+                    templateUrl: 'app/partials/admin.html',
+                    controller: 'adminCtrl',
+                },
+                'footer@admin': {
                     templateUrl: 'app/partials/home-footer.html'
                 }
             }
