@@ -21,7 +21,7 @@ public class AppInitService {
 		PlutusUser plutusUser2 = new PlutusUser("admin", "admin@admin.com", "admin");
 		plutusUser2.setPassword("admin");
 
-		userService.save(plutusUser1);
-		userService.save(plutusUser2);
+		userService.create(plutusUser1);
+		userService.create(plutusUser2);
 	}
 }
