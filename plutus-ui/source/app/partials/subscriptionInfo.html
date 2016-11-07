@@ -1,0 +1,88 @@
+<div class="tab-content">
+    <nav class="navbar navbar-admin">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="col-md-6">
+                <div class="section group">
+
+                    <div class="col span_1_of_3">
+                        <div class="form-group">                                     
+                            <select class="form-control" ng-model="product" placeholder='Type of billing'>
+                                <option value="">Select Product</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="section group">
+
+                    <div class="col span_1_of_3">
+                        <ul>
+                            <li><a  href="javascript://" ng-click="get('product')" >Get Details</a></li>
+
+
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col span_1_of_3">
+                <div class="right-inner-addon ">
+                    <i class="fa fa-search"></i> <input ng-model="searchText"
+                                                        class="form-control" placeholder="Search...">
+                </div>
+            </div>
+            <div class="project-table" ng-init="initUser()">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>                             
+                            <th>Plan</th>
+                            <th>Renewal date</th>
+                            <th>Status</th>
+                            <th>Pending invoice($)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic</td>
+                            <td>Basic</td>
+                            <td>Basic</td>
+                            <td><button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                                        ng-click="saveChanges(myForm.$valid)">Edit</button>
+                                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                                        ng-click="clear(myForm.$valid)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls
+                    max-size="0"
+                    direction-links="true"
+                    boundary-links="true" >
+                </dir-pagination-controls>   
+
+                <div class="main-title">
+                    <h4>Status</h4>  
+                </div>                                        
+
+                <div class="collapse navbar-collapse" id="adminNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a  href="javascript://" ng-click="setAdminTab('registration')" >Registration date</a></li>
+                        <li><a href="javascript://" ng-click="setAdminTab('logged')">Last logged in date</a></li>
+                        <li><a  href="javascript://" ng-click="setAdminTab('users')">no of users </a></li>    
+                        <li><a  href="javascript://" ng-click="setAdminTab('projects')">no of projects</a></li> 
+                        <li><a href="javascript://" ng-click="setAdminTab('positions')">no of positions</a></li>
+                        <li><a href="javascript://" ng-click="setAdminTab('candidates')">no of candidates</a></li>
+
+                    </ul>
+                </div>
+            </div>
+    </nav>
+
+    <div ui-view></div>
+</div>
