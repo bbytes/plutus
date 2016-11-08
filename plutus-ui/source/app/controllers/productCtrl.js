@@ -1,33 +1,25 @@
 
 
 angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter) {
-
-
     $scope.emails = [];
     $scope.update = false;
-
+//loading products
     $scope.init = function () {
-
+        $scope.update = false;
         productService.getProduct().then(function (response) {
             if (response.success) {
                 $scope.product = response.data;
-//                $scope.allprojects.unshift($scope.project);
-//                $scope.project = '';
-//                $scope.newList = '';
                 appNotifyService.info("success ");
-
             }
         });
-
     }
-
+//adding products
     $scope.createProduct = function (product) {
         if (!product) {
             appNotifyService.error('Please enter a valid product name');
             return false;
         }
         angular.forEach($scope.email, function (item) {
-
             $scope.emails.push(item.text);
         });
 
@@ -40,8 +32,8 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
 
         productService.add(input).then(function (response) {
             if (response.success) {
-             $scope.init();
-             $scope.clear();
+                $scope.init();
+                $scope.clear();
                 appNotifyService.info("success ");
 
             } else {
@@ -51,15 +43,20 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             appNotifyService.error('Error while creating project.');
         });
     };
-
+//clear scope values
     $scope.clear = function () {
-
-        $scope.productName = '';
-        $scope.description = '';
-        $scope.email = '';
-        $scope.billingType = '';
-
+        if ($scope.update == true) {
+            $scope.description = '';
+            $scope.email = '';
+            $scope.billingType = '';
+        } else {
+            $scope.productName = '';
+            $scope.description = '';
+            $scope.email = '';
+            $scope.billingType = '';
+        }
     };
+    //edit product
     $scope.edit = function (productId) {
         $scope.update = true;
         $scope.email = [];
@@ -67,22 +64,20 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             if (item.id == productId) {
                 $scope.productName = item.name;
                 $scope.description = item.desc;
-
                 angular.forEach(item.productTeamEmails, function (value) {
                     $scope.email.push(value);
                 });
 
             }
         });
-
     };
-     $scope.updateProduct = function (product) {
+    //update product
+    $scope.updateProduct = function (product) {
         if (!product) {
             appNotifyService.error('Please enter a valid product name');
             return false;
         }
         angular.forEach($scope.email, function (item) {
-
             $scope.emails.push(item.text);
         });
 
@@ -94,8 +89,8 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
         };
         productService.updatePro(input).then(function (response) {
             if (response.success) {
- $scope.init();
- $scope.clear();
+                $scope.init();
+                $scope.clear();
                 appNotifyService.info("success ");
 
             } else {
@@ -105,13 +100,13 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             appNotifyService.error('Error while creating project.');
         });
     };
-    
-     $scope.delete = function (productId) {
-      
+    //delete product  
+    $scope.delete = function (productId) {
+
         productService.deleteProduct(productId).then(function (response) {
             if (response.success) {
-              
- $scope.init();
+
+                $scope.init();
                 appNotifyService.info("success ");
 
             } else {
