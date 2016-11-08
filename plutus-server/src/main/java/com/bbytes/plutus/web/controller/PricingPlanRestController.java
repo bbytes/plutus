@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.PricingPlan;
+import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.response.PlutusRestResponse;
 import com.bbytes.plutus.service.PlutusException;
 import com.bbytes.plutus.service.PricingPlanService;
+import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.util.URLMapping;
 
 @RestController
@@ -25,10 +27,20 @@ public class PricingPlanRestController {
 
 	@Autowired
 	private PricingPlanService pricingPlanService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	private PlutusRestResponse getAll() throws PlutusException {
 		PlutusRestResponse status = new PlutusRestResponse(true,pricingPlanService.findAll());
+		return status;
+	}
+	
+	@RequestMapping(value = "/{productName}", method = RequestMethod.GET)
+	private PlutusRestResponse getPricingPlanForProduct(@PathVariable String productName) throws PlutusException {
+		Product product = productService.findByName(productName);
+		PlutusRestResponse status = new PlutusRestResponse(true,pricingPlanService.findByProduct(product));
 		return status;
 	}
 	

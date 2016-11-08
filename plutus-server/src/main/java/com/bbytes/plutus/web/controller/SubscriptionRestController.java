@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bbytes.plutus.model.BillingInfo;
 import com.bbytes.plutus.model.Customer;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.PricingPlan;
@@ -52,16 +53,15 @@ public class SubscriptionRestController {
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	private PlutusRestResponse getAll() throws PlutusException {
-		PlutusRestResponse status = new PlutusRestResponse(true,subscriptionService.findAll());
+		PlutusRestResponse status = new PlutusRestResponse(true, subscriptionService.findAll());
 		return status;
 	}
-	
+
 	@RequestMapping(value = "/{productName}", method = RequestMethod.GET)
 	private PlutusRestResponse getByProductName(@PathVariable String productName) throws PlutusException {
-		PlutusRestResponse status = new PlutusRestResponse(true,subscriptionService.findByProductName(productName));
+		PlutusRestResponse status = new PlutusRestResponse(true, subscriptionService.findByProductName(productName));
 		return status;
 	}
-	
 
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
@@ -74,7 +74,7 @@ public class SubscriptionRestController {
 		}
 
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse("Subscription check done", true,
-				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getPricingPlan().getCurrency());
+				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getPricingPlan().getCurrency(),subscription.getPricingPlan());
 
 		return status;
 	}
@@ -87,6 +87,20 @@ public class SubscriptionRestController {
 		subscriptionService.delete(id);
 
 		PlutusRestResponse status = new PlutusRestResponse("Subscription deleted", true);
+		return status;
+	}
+	
+	@RequestMapping(value = "/paymentHistory", method = RequestMethod.GET)
+	private PlutusRestResponse getPaymentHistory(@PathVariable String id) throws SubscriptionInvalidException {
+		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
+		if (subscription == null)
+			throw new SubscriptionInvalidException("Subscription Key invalid ");
+
+		if (!subscription.isEnable() || subscription.isExpired() || subscription.isDeactivate()) {
+			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
+		}
+
+		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistory());
 		return status;
 	}
 
@@ -140,12 +154,30 @@ public class SubscriptionRestController {
 
 	}
 
+	@RequestMapping(value = "/billingInfo", method = RequestMethod.POST)
+	private PlutusRestResponse updateBillingInfo(@RequestBody BillingInfo billingInfo) throws SubscriptionCreateException {
+		Customer customer = customerService.findByEmail(billingInfo.getEmail());
+		if (customer == null)
+			throw new SubscriptionCreateException("Customer with email '" + billingInfo.getEmail() + "'  not found");
+
+		customer.setId(billingInfo.getEmail());
+		customer.setName(billingInfo.getName());
+		customer.setBillingAddress(billingInfo.getBillingAddress());
+		customer.setContactNo(billingInfo.getContactNo());
+		customer.setEmail(billingInfo.getEmail());
+		customerService.save(customer);
+
+		PlutusRestResponse status = new PlutusRestResponse("Billing information saved successfully,", true);
+		return status;
+
+	}
+
 	@ExceptionHandler(PlutusException.class)
 	public ResponseEntity<PlutusRestResponse> exception(HttpServletRequest req, PlutusException e) {
 		PlutusRestResponse status = new PlutusRestResponse(e.getMessage(), false);
 		return new ResponseEntity<PlutusRestResponse>(status, HttpStatus.OK);
 	}
-	
+
 	@ExceptionHandler(SubscriptionCreateException.class)
 	public ResponseEntity<SubscriptionStatusRestResponse> exceptionCreate(HttpServletRequest req, Exception e) {
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse(e.getMessage(), false);

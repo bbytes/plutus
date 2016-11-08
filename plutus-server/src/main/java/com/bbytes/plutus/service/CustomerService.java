@@ -20,4 +20,8 @@ public class CustomerService extends AbstractService<Customer, String> {
 	public Customer findByName(String name) {
 		return customerRepository.findByName(name);
 	}
+	
+	public Customer findByEmail(String email){
+		return customerRepository.findByEmail(email);
+	}
 }

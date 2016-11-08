@@ -1,6 +1,7 @@
 package com.bbytes.plutus.client;
 
 import com.bbytes.plutus.enums.AppProfile;
+import com.bbytes.plutus.model.BillingInfo;
 import com.bbytes.plutus.model.ProductPlanStats;
 import com.bbytes.plutus.model.SubscriptionInfo;
 import com.bbytes.plutus.response.ProductStatsRestResponse;
@@ -30,8 +31,25 @@ public class PlutusClient extends AbstractClient {
 	}
 
 	public ProductStatsRestResponse sendStats(ProductPlanStats planStats) throws PlutusClientException {
-		// set your entity to send
 		ProductStatsRestResponse response = post(URLMapping.BASE_API_URL + "/product/stats/create", planStats,
+				ProductStatsRestResponse.class);
+		return response;
+	}
+	
+	public ProductStatsRestResponse getPricingPlans(String productName) throws PlutusClientException {
+		ProductStatsRestResponse response = get(URLMapping.BASE_API_URL + "/pricingPlan/"+productName,
+				ProductStatsRestResponse.class);
+		return response;
+	}
+	
+	public ProductStatsRestResponse saveBillingInfo(BillingInfo billingInfo) throws PlutusClientException {
+		ProductStatsRestResponse response = post(URLMapping.BASE_API_URL + "/subscription/billingInfo", billingInfo,
+				ProductStatsRestResponse.class);
+		return response;
+	}
+	
+	public ProductStatsRestResponse getPaymentHistory() throws PlutusClientException {
+		ProductStatsRestResponse response = get(URLMapping.BASE_API_URL + "/subscription/paymentHistory",
 				ProductStatsRestResponse.class);
 		return response;
 	}

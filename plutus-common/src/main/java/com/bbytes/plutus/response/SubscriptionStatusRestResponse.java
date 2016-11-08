@@ -1,6 +1,9 @@
 package com.bbytes.plutus.response;
 
+import org.springframework.beans.factory.config.ProviderCreatingFactoryBean;
+
 import com.bbytes.plutus.enums.Currency;
+import com.bbytes.plutus.model.PricingPlan;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -21,17 +24,20 @@ public class SubscriptionStatusRestResponse extends PlutusRestResponse {
 	private Double billingAmount = null;
 
 	private Currency currency = null;
+	
+	private PricingPlan currentPlan;
 
 	public SubscriptionStatusRestResponse() {
 		super();
 	}
 
 	public SubscriptionStatusRestResponse(String message, boolean success, String validTill, double billingAmount,
-			Currency currency) {
+			Currency currency, PricingPlan currentPlan) {
 		super(message, success);
 		this.validTill = validTill;
 		this.billingAmount = billingAmount;
 		this.currency = currency;
+		this.currentPlan = currentPlan;
 	}
 
 	public SubscriptionStatusRestResponse(String message, boolean success) {
