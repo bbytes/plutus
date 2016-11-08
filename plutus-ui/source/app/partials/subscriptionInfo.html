@@ -1,10 +1,9 @@
 <div class="tab-content" ng-init="init()">
-    <nav class="navbar navbar-admin">
         <div class="col-md-offset-2 col-md-8">
             <div class="col-md-6">
                 <div class="row col span_1_of_3">
 
-                        <div class="elements">                                     
+                     <div class="form-group">                                                                     
                             <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()"placeholder='Type of billing'>
                                 <option ng-repeat="product in producList" value="{{product.metricName}}">{{product.metricDisplayName}}</option>
                             </select>
@@ -61,11 +60,11 @@
                 <table st-table="displayedCollection" st-safe-src="subscriptionsList" class="table table-striped table-fixed sTable table-responsive">
                                 <thead>
                                     <tr>
-                                        <th st-ratio="41" st-sort="sourceName">{{ 'lable.monitorSource' | translate}}</th>
-                                        <th st-ratio="13" st-sort="model">{{ 'lable.modalType' | translate}}</th>
-                                        <th st-ratio="12" st-sort="metricName">{{ 'lable.monitorType' | translate}}</th>
-                                        <th st-ratio="20" st-sort="creationDate">{{ 'lable.cDate' | translate}}</th>
-                                        <th st-ratio="15">{{ 'lable.action' | translate}}</th>
+                                        <th st-ratio="41" st-sort="sourceName">Customer Name</th>
+                                        <th st-ratio="13" st-sort="model">Plan</th>
+                                        <th st-ratio="12" st-sort="metricName">Renewal Date</th>
+                                        <th st-ratio="20" st-sort="creationDate">Status</th>
+                                        <th st-ratio="15">Pending Invoice ($)</th>
                                         <th st-width="17"></th>
                                     </tr>
                                 </thead>
@@ -76,18 +75,11 @@
                                         <td st-ratio="12">{{row.metricName}}</td>
                                         <td st-ratio="20">{{row.creationDate}}</td>
                                         <td st-ratio="15" class="action-icon" colspan="2">
-                                            <div class="marginl2" reveal-feature-permission="Monitor_Edit">
-                                                <a class="table_icon_edit" title="{{'lable.edit'| translate}}" ng-click="editMonitor(row, $event)"></a>
-                                            </div>
-                                            <div class="marginl2" reveal-feature-permission="Monitor_Start_Stop">
-                                                <a class="table_icon_stop" ng-if="row.state == 'Running'" title="{{'lable.stop'| translate}}" ng-click="agentStartStop(row, $event)"></a>
-                                                <a class="table_icon_start" ng-if="row.state == 'Stopped'" title="{{'lable.start'| translate}}" ng-click="agentStartStop(row, $event)"></a>
-                                            </div>
-                                            <div class="marginl2" reveal-feature-permission="Monitor_Delete">
-                                                <a class="table_icon_delete" title="{{'lable.delete'| translate}}" ng-click="monitorInfoDialog('delete', row, $event)"></a>
-                                            </div>
                                             <div class="marginl2">
-                                                <a class="table_icon_information" title="{{'lable.info'| translate}}" ng-click="monitorInfoDialog('info', row, $event)"></a>
+                                                <a class="table_icon_edit" title="{{'lable.edit'| translate}}" ng-click="editMonitor(row, $event)">Edit</a>
+                                            </div>       
+                                            <div class="marginl2">
+                                                <a class="table_icon_information" title="{{'lable.info'| translate}}" ng-click="monitorInfoDialog('info', row, $event)">Delete</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -121,5 +113,4 @@
                     </ul>
                 </div>
             </div>
-    </nav>
 </div>

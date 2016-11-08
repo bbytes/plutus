@@ -38,7 +38,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 		Assert.notNull(tokenAuthenticationService);
 		this.tokenAuthenticationService = tokenAuthenticationService;
 		ignoreRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/register", "POST");
-		headerContextRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/validate");
+		headerContextRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/**");
 	}
 
 	@Override
