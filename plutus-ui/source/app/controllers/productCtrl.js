@@ -9,6 +9,7 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
         productService.getProduct().then(function (response) {
             if (response.success) {
                 $scope.product = response.data;
+               
                 appNotifyService.info("success ");
             }
         });
