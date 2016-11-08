@@ -4,7 +4,8 @@
                 <br><br><br>
                 <div class="create-project">
                     <form name="myForm">
-                        <div class="row">                        
+                        <div class="row"> 
+                          
                             <div class="col-md-6">
                                 <div class="form-group">
                                        <label for="comment" class="settings">Product Name</label>
@@ -59,18 +60,43 @@
                             
                         </div> 
                 </div>
-                <button type="button" class="btn btn-default create" 
+                <button type="button" class="btn btn-default create" ng-disabled='update==true'
                         ng-click="createProduct(myForm.$valid)">ADD</button>
-                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                <button type="button" class="btn btn-default create" ng-disabled='update==true'
                         ng-click="clear(myForm.$valid)">CLEAR</button>
+                
+                <button type="button" class="btn btn-default create" ng-disabled='update==false'
+                        ng-click="updateProduct(myForm.$valid)">UPDATE</button>
+       
 
                 </form>
                 <div class="main-title">
                     <h4>PRODUCTS</h4>
-
-                    <div class="upload ">
+                    <div class="upload ">  
                     </div>
-                    </nav>
-                    
-                    <div ui-view></div>
+                        <div class="project-table" ng-init="init()">
+                <table style="width:170%;">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;>Name</th>                             
+                            <th style="width:30%;">Description</th>
+                            <th style="width:30%;">Itemised Details</th>
+                            <th style="width:20%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pro in product">                        
+                            <td style="width:20%;">{{pro.name}}</td>
+                           <td style="width:30%;">{{pro.desc}}</td>
+                           <td style="width:30%;">{{pro.productTeamEmails}}</td>
+                            <td style="width:10%;"><button type="button" class="btn btn-default create"
+                                                           ng-click="edit(pro.id)">Edit</button></td>
+                              <td style="width:10%;">  <button type="button" class="btn btn-default create" 
+                                        ng-click="delete(myForm.$valid)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
                 </div>
+                </div>
+ </div>

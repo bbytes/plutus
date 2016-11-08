@@ -33,6 +33,7 @@ angular.module('rootApp').controller('loginCtrl', function ($scope, $rootScope, 
                 $sessionStorage.userInfo = userInfo;
                 $rootScope.showWelcomeMessage = true;
                 $state.go('products');
+
       
         }else {
                 //Login failed. Showing error notification
@@ -40,18 +41,19 @@ angular.module('rootApp').controller('loginCtrl', function ($scope, $rootScope, 
                 $scope.loginButtonText = 'Login';
                 $scope.loginButtonEnabled = true;
             }
+
         }, function (error) {
             appNotifyService.error('Invalid Username or Password');
         });
     };
 
-    $scope.logout = function () {
-        delete $window.sessionStorage.token;
-
-        $sessionStorage.remove('userInfo');
-        loginService.logout().then(function (response) {
-
-            $location.path("login");
-        });
-    };
+//    $scope.logout = function () {
+//        delete $window.sessionStorage.token;
+//
+//        $sessionStorage.remove('userInfo');
+//        loginService.logout().then(function (response) {
+//
+//            $location.path("login");
+//        });
+//    };
 });
