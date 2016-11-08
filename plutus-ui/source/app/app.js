@@ -23,7 +23,8 @@ var rootApp = angular.module('rootApp',
             'angular.chosen',
             'ui.bootstrap.datetimepicker',
             'hm.readmore',
-            'angularUtils.directives.dirPagination'
+            'angularUtils.directives.dirPagination',
+            'ngTagsInput'
         ]);
 
 // Defining global variables
@@ -93,24 +94,6 @@ rootApp.config([
             controller: 'loginCtrl',
             templateUrl: 'app/partials/login.html'
 
-        }).state('home', {
-            url: '/home',
-            redirectTo: 'products',
-            views: {
-                '': {
-                    templateUrl: 'app/partials/home.html'
-                },
-                'header@home': {
-                    templateUrl: 'app/partials/home-header.html'
-                },
-                'main@home': {
-                    templateUrl: 'app/partials/product.html',
-                    controller: 'homeCtrl',
-                },
-                'footer@home': {
-                    templateUrl: 'app/partials/home-footer.html'
-                }
-            }
         }).state('products', {
             url: '/products',
             views: {
