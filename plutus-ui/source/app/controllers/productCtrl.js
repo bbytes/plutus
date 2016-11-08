@@ -40,10 +40,8 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
 
         productService.add(input).then(function (response) {
             if (response.success) {
-                $scope.product = response;
-//                $scope.allprojects.unshift($scope.project);
-//                $scope.project = '';
-//                $scope.newList = '';
+             $scope.init();
+             $scope.clear();
                 appNotifyService.info("success ");
 
             } else {
@@ -96,10 +94,8 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
         };
         productService.updatePro(input).then(function (response) {
             if (response.success) {
-              
-//                $scope.allprojects.unshift($scope.project);
-//                $scope.project = '';
-//                $scope.newList = '';
+ $scope.init();
+ $scope.clear();
                 appNotifyService.info("success ");
 
             } else {
@@ -115,9 +111,7 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
         productService.deleteProduct(productId).then(function (response) {
             if (response.success) {
               
-//                $scope.allprojects.unshift($scope.project);
-//                $scope.project = '';
-//                $scope.newList = '';
+ $scope.init();
                 appNotifyService.info("success ");
 
             } else {
