@@ -8,7 +8,6 @@ var rootApp = angular.module('rootApp',
             'toaster',
             'ngStorage',
             'angular-md5',
-            'smart-table',
             'angular-hmac-sha512',
             'angularModalService',
             'ngLetterAvatar',
@@ -36,7 +35,7 @@ rootApp.run([
 
         $rootScope.bodyClass = '';
         $rootScope.baseUrl = BASE_URL;
-        $rootScope.apiUrl = '/api/v1';
+        $rootScope.apiUrl = 'api/v1';
         $rootScope.loggedStatus = false;
         $rootScope.authToken = '';
         $rootScope.currentState = '';
