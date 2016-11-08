@@ -1,0 +1,131 @@
+<div class="tab-content">
+    <nav class="navbar navbar-admin">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="main-title">
+                <h4>Current Invoice</h4>
+            </div>
+            <div class="row-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">                                     
+                        <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                            <option value="">Select Product</option>
+                        </select>
+                    </div>
+                </div> 
+
+                <div class="col-md-4">
+                    <div class="form-group">                                       
+                        <input type="text" ng-model="planName" name="planName" placeholder='Plan Name' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                        <span style="color: red" ng-show="!isSubmitted && myForm.planName.$dirty && myForm.planName.$error.required">The
+                            name is required.
+                        </span> 
+                        <span style="color: red" ng-show="myForm.planName.$dirty && myForm.planName.$error.pattern">Product Name is invalid
+                        </span>
+                    </div>
+                </div>  
+                <div class="col-md-4">
+                    <div class="form-group">                                     
+                        <select class="form-control" ng-model="currencyName" placeholder='Currency Name'>
+                            <option value="">Currency Name</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-md-12">
+                    <div class="form-group">                                       
+                        <input type="text" ng-model="description" name="description" placeholder='Description' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                        <span style="color: red" ng-show="!isSubmitted && myForm.description.$dirty && myForm.description.$error.required">The
+                            name is required.
+                        </span> 
+                        <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid
+                        </span>
+                    </div>
+                </div>             
+            </div>
+            <div class="main-title">
+                <h4>Metering Details</h4>
+            </div>
+            <div class="row-md-12">
+                <div class="col-md-3">
+                    <div class="form-group">                                     
+                        <select class="form-control" ng-model="billingType">
+                            <option value="">Cost Per User</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-md-3">
+                    <div class="form-group">                                     
+                        <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">                                       
+                        <input type="text" ng-model="trialPeriod" name="trialPeriod" placeholder='Trial Period' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                        <span style="color: red" ng-show="!isSubmitted && myForm.trialPeriod.$dirty && myForm.trialPeriod.$error.required">The
+                            name is required.
+                        </span> 
+                        <span style="color: red" ng-show="myForm.trialPeriod.$dirty && myForm.trialPeriod.$error.pattern">Product Name is invalid
+                        </span>
+                    </div>
+                </div>   
+                <div class="col-md-3">
+                    <div class="form-group">                                     
+                        <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div> 
+
+            </div> 
+            <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                    ng-click="saveChanges(myForm.$valid)">SAVE</button>
+            <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                    ng-click="clear(myForm.$valid)">CLEAR ALL</button>
+
+
+            <div class="main-title">
+                <div class="section group">
+                    <div class="col span_1_of_3">
+                        <h4>Select Product</h4>
+                    </div>
+
+                    <div class="col span_1_of_3">
+                        <div class="form-group">                                     
+                            <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="project-table" ng-init="initUser()">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>                             
+                            <th>Description</th>
+                            <th>Itemised Details</th>
+                            <th style="text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Basic</td>
+                            <td>Basic</td>
+                            <td>Basic</td>
+                            <td><button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                                        ng-click="saveChanges(myForm.$valid)">Edit</button>
+                                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                                        ng-click="clear(myForm.$valid)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </nav>
+
+    <div ui-view></div>
+</div>

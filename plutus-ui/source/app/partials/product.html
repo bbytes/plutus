@@ -1,0 +1,67 @@
+ <div class="tab-content">
+        <nav class="navbar navbar-admin">
+            <div class="col-md-offset-2 col-md-8">
+                <div></div>
+                <br><br><br>
+                <div class="create-project">
+                    <form name="myForm">
+                        <div class="row">                        
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!--label for="comment" class="settings" >Customer Name</label-->
+                                    <input type="text" ng-model="productName" name="productName"
+                                           placeholder='Product Name' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                                    <span style="color: red"
+                                          ng-show="!isSubmitted && myForm.customer.$dirty && myForm.customer.$error.required">The
+                                        name is required.</span> <span style="color: red" ng-show="myForm.customer.$dirty && myForm.customer.$error.pattern">Product Name is invalid</span>
+                                </div>
+                            </div>                                                   
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!--label for="comment" class="settings" >Customer Name</label-->
+                                    <input type="text" ng-model="description" name="description"
+                                           placeholder='Description' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                                    <span style="color: red"
+                                          ng-show="!isSubmitted && description.customer.$dirty && myForm.description.$error.required">The
+                                        Description Name is required.</span> <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid</span>
+                                </div>
+                            </div>                          
+                        </div>  
+                        <div class="row">                        
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input
+                                        type="email" placeholder='Email' name="email" ng-model="email"
+                                        class="form-control" required> <span style="color: red"
+                                        ng-show="myForm.email.$dirty && myForm.email.$invalid"> <span
+                                            ng-show=" !isSubmitted && myForm.email.$error.required">Email is required.</span>
+                                        <span ng-show="myForm.email.$error.email">Invalid email
+                                            address.</span>
+                                    </span>
+                                </div>
+                            </div>                                                   
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                                        <option value="">Type of billing</option>
+                                    </select>
+                                </div>
+                            </div>                          
+                        </div> 
+                </div>
+                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                        ng-click="saveChanges(myForm.$valid)">ADD</button>
+                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
+                        ng-click="clear(myForm.$valid)">CLEAR</button>
+
+                </form>
+                <div class="main-title">
+                    <h4>PRODUCTS</h4>
+
+                    <div class="upload ">
+                    </div>
+                    </nav>
+                    
+                    <div ui-view></div>
+                </div>
