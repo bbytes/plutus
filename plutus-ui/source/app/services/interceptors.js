@@ -6,7 +6,7 @@ angular.module('rootApp').factory('authInterceptor', function ($rootScope, $q, $
         request: function (config) {
             config.headers = config.headers || {};
             if ($rootScope.authToken) {
-                config.headers['x-auth-token'] = $rootScope.authToken;
+                config.headers['auth-token'] = $rootScope.authToken;
             }
             if (!$rootScope.authToken && $sessionStorage.userInfo) {
                 var userInfo = $sessionStorage.userInfo;

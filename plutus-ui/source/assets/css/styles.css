@@ -4276,3 +4276,6 @@ tabs-left, .tabs-right {
 .mega-dropdown-menu .form-group {
   margin-bottom: 3px;
 }
+.row > .elements:first-child {
+    float: center;
+}

@@ -1,52 +1,47 @@
+angular.module('rootApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope, $uibModal, subscriptionService, appNotifyService) {
 
-
-angular.module('rootApp').controller('subscriptionInfoCtrl', ['$scope', '$rootScope', '$location', '$state', function ($scope, $rootScope, $location, $state, cfpLoadingBar, $fancyModal) {
-
-        $scope.isActive = function (viewLocation) {
-            var active = (viewLocation === $location.path());
-            return active;
-
-        };
-
-
-        $scope.setAdminTab = function (section) {
-            if (section == 'billinginfo') {
-                $rootScope.adminTab = 'billinginfo';
-                $state.go('billinginfo');
-            } else if (section == 'invoicedetails') {
-
-                $rootScope.adminTab = 'invoicedetails';
-
-            } else {
-                $rootScope.adminTab = 'productplans';
+    $scope.init = function () {
+        subscriptionService.getSubscriptions().then(function (response) {
+            if (response.success) {
+                $scope.subscriptionsList = response.data;
             }
-        };
-        $scope.activeAdminTab = function (section) {
-            return (section === $rootScope.adminTab) ? true : false;
-        };
+        });
+    };
 
-
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown();
+    $scope.getSubscriptionsForProd = function () {
+        subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {
+            if (response && response.success) {
+                  $scope.productSubscriptions = response.data;
+            }
+          
         });
 
+    };
 
-        $scope.open = function () {
-
-            var modalInstance = $modal.open({
-                templateUrl: 'app/partials/feedback.html',
-                controller: 'feedbackCtrl',
-                resolve: {
-                    items: function () {
-                        return $scope.items;
-                    }
+    $scope.deleteSubscription = function (index) {
+        var shift = $scope.rowShiftCollection[index];
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/admin-shift-add-modal.html',
+            controller: 'addShiftModalInstanceCtrl',
+            backdrop: 'static',
+            resolve: {
+                options: function () {
+                    return {
+                        "action": 'delete',
+                        "data": shift
+                    };
                 }
-            });
+            }
+        });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-            });
-        };
-
-    }]);
+        uibModalInstance.result.then(function (status) {
+            if (status) {
+                $scope.rowShiftCollection.splice(index, 1);
+                appNotifyService.success('message.shiftDeleteConfirm');
+            } else {
+                appNotifyService.error('message.shiftDeleteError');
+            }
+        });
+    };
+});

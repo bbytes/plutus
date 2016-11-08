@@ -15,16 +15,16 @@ angular.module('rootApp').controller('loginCtrl', function ($scope, $rootScope, 
         }
         // Calling login service
         loginService.login($scope.username, $scope.password).then(function (response) {
-    
-                $window.sessionStorage.token = response.headers["x-auth-token"];
+                if (response.headers["auth-token"]) {
+                $rootScope.authToken = response.headers["auth-token"];
                 $rootScope.loggedStatus = true;
                 $rootScope.loggedInUser = $scope.username;
                 $rootScope.userRole = response.data.userRole;
                 $rootScope.userName = response.data.email;
-                $rootScope.authToken = response.headers["x-auth-token"];             
+                $rootScope.authToken = response.headers["auth-token"];             
 
                 var userInfo = {
-                    accessToken: response.headers["x-auth-token"],
+                    accessToken: response.headers["auth-token"],
                     email: $rootScope.loggedInUser,
                     name: $rootScope.userName,
                     userRoles: $rootScope.userRole,                 
@@ -32,8 +32,14 @@ angular.module('rootApp').controller('loginCtrl', function ($scope, $rootScope, 
 
                 $sessionStorage.userInfo = userInfo;
                 $rootScope.showWelcomeMessage = true;
-                $state.go('home');
+                $state.go('products');
       
+        }else {
+                //Login failed. Showing error notification
+             
+                $scope.loginButtonText = 'Login';
+                $scope.loginButtonEnabled = true;
+            }
         }, function (error) {
             appNotifyService.error('Invalid Username or Password');
         });
