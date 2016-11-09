@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.enums.BillingCycle;
+import com.bbytes.plutus.enums.BillingType;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.enums.PaymentMode;
 import com.bbytes.plutus.enums.SubscriptionType;
@@ -37,6 +38,12 @@ public class DropDownRestController {
 	@RequestMapping(value = "/subscriptionType", method = RequestMethod.GET)
 	private PlutusRestResponse getSubscriptionType() throws PlutusException {
 		PlutusRestResponse status = new PlutusRestResponse(true, SubscriptionType.values());
+		return status;
+	}
+	
+	@RequestMapping(value = "/billingType", method = RequestMethod.GET)
+	private PlutusRestResponse getBillingType() throws PlutusException {
+		PlutusRestResponse status = new PlutusRestResponse(true, BillingType.values());
 		return status;
 	}
 
