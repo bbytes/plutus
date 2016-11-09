@@ -1,6 +1,6 @@
 
 
-angular.module('rootApp').controller('adminCtrl', ['$scope', '$rootScope', '$location', '$state', function ($scope, $rootScope, $location, $state, cfpLoadingBar, $fancyModal) {
+angular.module('plutusApp').controller('adminCtrl', ['$scope', '$rootScope', '$location', '$state', function ($scope, $rootScope, $location, $state, cfpLoadingBar, $fancyModal) {
 
         $scope.isActive = function (viewLocation) {
             var active = (viewLocation === $location.path());

@@ -1,4 +1,4 @@
-angular.module('rootApp').controller('homeCtrl', function ($rootScope, $scope, $state) {
+angular.module('plutusApp').controller('homeCtrl', function ($rootScope, $scope, $state) {
 
  
     $scope.partTypes = [];

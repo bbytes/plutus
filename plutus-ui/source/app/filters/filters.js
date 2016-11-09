@@ -1,4 +1,4 @@
-angular.module('rootApp').filter('orderObjectBy', function () {
+angular.module('plutusApp').filter('orderObjectBy', function () {
     return function (items, field, reverse) {
         var filtered = [];
         angular.forEach(items, function (item) {
@@ -13,7 +13,7 @@ angular.module('rootApp').filter('orderObjectBy', function () {
     };
 });
 
-angular.module('rootApp').filter('removeSpaces', [function () {
+angular.module('plutusApp').filter('removeSpaces', [function () {
         return function (string) {
             if (!angular.isString(string)) {
                 return string;
@@ -22,7 +22,7 @@ angular.module('rootApp').filter('removeSpaces', [function () {
         };
     }]);
 
-angular.module('rootApp').filter('remGreaterHex', [function () {
+angular.module('plutusApp').filter('remGreaterHex', [function () {
         return function (string) {
             if (!angular.isString(string)) {
                 return string;
@@ -31,21 +31,21 @@ angular.module('rootApp').filter('remGreaterHex', [function () {
         };
     }]);
 
-angular.module('rootApp').filter('split', function () {
+angular.module('plutusApp').filter('split', function () {
     return function (input, splitChar, splitIndex) {
         // do some bounds checking here to ensure it has that index
         return input.split(splitChar)[splitIndex];
     }
 });
 
-angular.module('rootApp').filter('clearHtmlFilt', function () {
+angular.module('plutusApp').filter('clearHtmlFilt', function () {
     return function (html) {
         var filtered = angular.element('<div>').html(html).text();
         return filtered;
     }
 });
 
-angular.module('rootApp').filter('utcdate', ['$filter', function ($filter) {
+angular.module('plutusApp').filter('utcdate', ['$filter', function ($filter) {
 
         return function (input, format) {
             if (!angular.isDefined(format)) {
@@ -61,7 +61,7 @@ angular.module('rootApp').filter('utcdate', ['$filter', function ($filter) {
 
 // code for drilldown popup page pagination
 
-   angular.module('rootApp').filter('paginate', function(Paginator) {
+   angular.module('plutusApp').filter('paginate', function(Paginator) {
         return function(input, rowsPerPage) {
             if (!input) {
                 return input;
@@ -77,7 +77,7 @@ angular.module('rootApp').filter('utcdate', ['$filter', function ($filter) {
         }
     });
 
-  angular.module('rootApp').filter('forLoop', function() {
+  angular.module('plutusApp').filter('forLoop', function() {
         return function(input, start, end) {
             input = new Array(end - start);
             for (var i = 0; start < end; start++, i++) {

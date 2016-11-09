@@ -1,7 +1,7 @@
 /*
  * Product Service
  */
-angular.module('rootApp').service('productService', function ($rootScope, $http, $q) {
+angular.module('plutusApp').service('productService', function ($rootScope, $http, $q) {
 
     // This method is used to Add Product
     this.add = function (input) {

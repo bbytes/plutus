@@ -1,6 +1,6 @@
 
-
-angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter) {
+/* Product controller*/
+angular.module('plutusApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter,toaster) {
     $scope.emails = [];
     $scope.update = false;
 //loading products
@@ -8,9 +8,8 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
         $scope.update = false;
         productService.getProduct().then(function (response) {
             if (response.success) {
-                $scope.product = response.data;
+                $scope.product = response.data;  
                
-                appNotifyService.info("success ");
             }
         });
     }
@@ -35,13 +34,13 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             if (response.success) {
                 $scope.init();
                 $scope.clear();
-                appNotifyService.info("success ");
+                appNotifyService.success("Product Added Successfully");
 
             } else {
                 appNotifyService.error(response.message);
             }
         }, function (error) {
-            appNotifyService.error('Error while creating project.');
+            appNotifyService.error('Error while creating Product.');
         });
     };
 //clear scope values
@@ -92,13 +91,13 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             if (response.success) {
                 $scope.init();
                 $scope.clear();
-                appNotifyService.info("success ");
+               appNotifyService.success("Product Updated Successfully");
 
             } else {
                 appNotifyService.error(response.message);
             }
         }, function (error) {
-            appNotifyService.error('Error while creating project.');
+            appNotifyService.error('Error while creating product.');
         });
     };
     //delete product  
@@ -108,13 +107,13 @@ angular.module('rootApp').controller('productCtrl', function ($scope, $rootScope
             if (response.success) {
 
                 $scope.init();
-                appNotifyService.info("success ");
+               appNotifyService.success("Product Deleted Successfully");
 
             } else {
                 appNotifyService.error(response.message);
             }
         }, function (error) {
-            appNotifyService.error('Error while creating project.');
+            appNotifyService.error('Error while creating product.');
         });
     };
 });

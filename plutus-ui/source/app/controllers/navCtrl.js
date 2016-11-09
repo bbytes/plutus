@@ -1,6 +1,6 @@
 
 
-angular.module('rootApp').controller('navCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, $window, $location) {
+angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, $window, $location) {
 
     $scope.isActive = function (viewLocation) {
         var active = (viewLocation === $location.path());

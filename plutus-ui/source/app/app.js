@@ -1,5 +1,5 @@
 // Define Angular Module with dependencies 
-var rootApp = angular.module('rootApp',
+var plutusApp = angular.module('plutusApp',
         [
             'ui.router',
             'ui.bootstrap',
@@ -27,7 +27,7 @@ var rootApp = angular.module('rootApp',
         ]);
 
 // Defining global variables
-rootApp.run([
+plutusApp.run([
     '$rootScope',
     '$state',
     'BASE_URL',
@@ -75,7 +75,7 @@ rootApp.run([
     }]);
 
 // Angular ui-router route definitions
-rootApp.config([
+plutusApp.config([
     '$stateProvider',
     '$urlRouterProvider',
     '$locationProvider',
@@ -194,4 +194,7 @@ rootApp.config([
             }
         })
     }]);
-		
+
+	
+
+

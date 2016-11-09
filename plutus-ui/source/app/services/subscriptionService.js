@@ -1,4 +1,4 @@
-angular.module('rootApp').service('subscriptionService', function ($rootScope, $http, $q, appConfig) {
+angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q, appConfig) {
 
     this.getSubscriptions = function () {
 

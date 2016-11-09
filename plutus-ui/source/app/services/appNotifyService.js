@@ -1,4 +1,4 @@
-rootApp.service('appNotifyService', function (toaster) {
+plutusApp.service('appNotifyService', function (toaster) {
 
     this.error = function (msg, title, stayFor, clear) {
 

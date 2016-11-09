@@ -1,7 +1,7 @@
 /*
  *  Login Controller
  */
-angular.module('rootApp').controller('loginCtrl', function ($scope, $rootScope, $state, loginService, appNotifyService, $sessionStorage, $window, $filter) {
+angular.module('plutusApp').controller('loginCtrl', function ($scope, $rootScope, $state, loginService, appNotifyService, $sessionStorage, $window, $filter) {
 
     $rootScope.bodyClass = 'body-standalone';
     $rootScope.feedbackClass = 'feedback-log';

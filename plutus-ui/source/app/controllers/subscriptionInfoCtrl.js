@@ -1,4 +1,4 @@
-angular.module('rootApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope, $uibModal, subscriptionService, appNotifyService) {
+angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope, $uibModal, subscriptionService, appNotifyService) {
 
     $scope.init = function () {
         subscriptionService.getSubscriptions().then(function (response) {

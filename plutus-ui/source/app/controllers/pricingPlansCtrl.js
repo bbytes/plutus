@@ -1,6 +1,6 @@
 
 
-angular.module('rootApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter) {
+angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter) {
     $scope.emails = [];
     $scope.update = false;
 //loading products
