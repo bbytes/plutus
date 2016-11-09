@@ -26,6 +26,8 @@ public class PricingPlan extends BaseEntity {
 	@DBRef
 	@CascadeSave
 	private Product product;
+	
+	private String pricingPlanName;
 
 	// the reference to subscription
 	@DBRef

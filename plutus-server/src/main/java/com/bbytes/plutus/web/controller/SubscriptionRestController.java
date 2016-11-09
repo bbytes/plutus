@@ -140,7 +140,7 @@ public class SubscriptionRestController {
 		productPlan.setCurrency(subscriptionInfo.getCurrency());
 		productPlan.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
 		productPlan.setProduct(product);
-		productPlan.setProductPlanItemToCost(billingService.getProductCostMap(product.getName()));
+		productPlan.setProductPlanItemToCost(billingService.getProductCostMap(product.getName(),product.getBillingType()));
 		subscription.setProductPlan(productPlan);
 		subscription.setSubscriptionKey(KeyUtil.getSubscriptionKey());
 		subscription.setSubscriptionSecret(KeyUtil.getSubscriptionSecret());
