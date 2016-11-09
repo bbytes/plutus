@@ -33,7 +33,9 @@ public class AbstractClient {
 
 	private RestTemplate restTemplate;
 
-	private String baseURL;
+	protected String baseURL;
+	
+	protected String subscriptionKey;
 
 	public AbstractClient(String baseUrl, String subscriptionKey, String subscriptionSecret, AppProfile appProfile) {
 		List<HttpMessageConverter<?>> messageConverters = getMessageConverters();
