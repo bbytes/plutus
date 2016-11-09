@@ -1,4 +1,4 @@
-angular.module('rootApp').controller('headerCtrl', function ($rootScope, $scope, $state) {
+angular.module('plutusApp').controller('headerCtrl', function ($rootScope, $scope, $state) {
 
     $scope.currentLocale = $translate.proposedLanguage() || $translate.use();
     $scope.partTypes = [];

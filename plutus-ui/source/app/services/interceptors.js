@@ -1,7 +1,7 @@
 /* 
  * Interceptor declaration Service 
  */
-angular.module('rootApp').factory('authInterceptor', function ($rootScope, $q, $sessionStorage, $injector, $location, appNotifyService) {
+angular.module('plutusApp').factory('authInterceptor', function ($rootScope, $q, $sessionStorage, $injector, $location, appNotifyService) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -120,6 +120,6 @@ angular.module('rootApp').factory('authInterceptor', function ($rootScope, $q, $
     };
 });
 
-angular.module('rootApp').config(['$httpProvider', function ($httpProvider) {
+angular.module('plutusApp').config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
     }]);

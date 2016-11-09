@@ -160,11 +160,12 @@ public class SubscriptionRestController {
 		if (customer == null)
 			throw new SubscriptionCreateException("Customer with email '" + billingInfo.getEmail() + "'  not found");
 
-		customer.setId(billingInfo.getEmail());
+		//customer.setId(billingInfo.getEmail());
 		customer.setName(billingInfo.getName());
 		customer.setBillingAddress(billingInfo.getBillingAddress());
 		customer.setContactNo(billingInfo.getContactNo());
-		customer.setEmail(billingInfo.getEmail());
+		//customer.setEmail(billingInfo.getEmail());
+		
 		customerService.save(customer);
 
 		PlutusRestResponse status = new PlutusRestResponse("Billing information saved successfully,", true);

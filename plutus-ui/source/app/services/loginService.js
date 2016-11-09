@@ -2,7 +2,7 @@
  * Login Service
  */
 
-angular.module('rootApp').service('loginService', function ($rootScope, $http, $q) {
+angular.module('plutusApp').service('loginService', function ($rootScope, $http, $q) {
 
     return {
         login: function (userName, Passwd) {

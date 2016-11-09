@@ -1,4 +1,4 @@
-angular.module('rootApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope, $uibModal, subscriptionService, appNotifyService) {
+angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope,productService, $uibModal, subscriptionService, appNotifyService) {
 
     $scope.init = function () {
         subscriptionService.getSubscriptions().then(function (response) {
@@ -6,7 +6,15 @@ angular.module('rootApp').controller('subscriptionInfoCtrl', function ($scope, $
                 $scope.subscriptionsList = response.data;
             }
         });
+         productService.getProduct().then(function (response) {
+            if (response.success) {
+                $scope.products = response.data;
+               
+                appNotifyService.info("success ");
+            }
+        });
     };
+    
 
     $scope.getSubscriptionsForProd = function () {
         subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {

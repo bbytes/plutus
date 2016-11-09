@@ -1,5 +1,5 @@
 // Define Angular Module with dependencies 
-var rootApp = angular.module('rootApp',
+var plutusApp = angular.module('plutusApp',
         [
             'ui.router',
             'ui.bootstrap',
@@ -8,7 +8,6 @@ var rootApp = angular.module('rootApp',
             'toaster',
             'ngStorage',
             'angular-md5',
-            'smart-table',
             'angular-hmac-sha512',
             'angularModalService',
             'ngLetterAvatar',
@@ -23,11 +22,12 @@ var rootApp = angular.module('rootApp',
             'angular.chosen',
             'ui.bootstrap.datetimepicker',
             'hm.readmore',
-            'angularUtils.directives.dirPagination'
+            'angularUtils.directives.dirPagination',
+            'ngTagsInput'
         ]);
 
 // Defining global variables
-rootApp.run([
+plutusApp.run([
     '$rootScope',
     '$state',
     'BASE_URL',
@@ -35,7 +35,7 @@ rootApp.run([
 
         $rootScope.bodyClass = '';
         $rootScope.baseUrl = BASE_URL;
-        $rootScope.apiUrl = '/api/v1';
+        $rootScope.apiUrl = 'api/v1';
         $rootScope.loggedStatus = false;
         $rootScope.authToken = '';
         $rootScope.currentState = '';
@@ -75,7 +75,7 @@ rootApp.run([
     }]);
 
 // Angular ui-router route definitions
-rootApp.config([
+plutusApp.config([
     '$stateProvider',
     '$urlRouterProvider',
     '$locationProvider',
@@ -93,24 +93,6 @@ rootApp.config([
             controller: 'loginCtrl',
             templateUrl: 'app/partials/login.html'
 
-        }).state('home', {
-            url: '/home',
-            redirectTo: 'products',
-            views: {
-                '': {
-                    templateUrl: 'app/partials/home.html'
-                },
-                'header@home': {
-                    templateUrl: 'app/partials/home-header.html'
-                },
-                'main@home': {
-                    templateUrl: 'app/partials/product.html',
-                    controller: 'homeCtrl',
-                },
-                'footer@home': {
-                    templateUrl: 'app/partials/home-footer.html'
-                }
-            }
         }).state('products', {
             url: '/products',
             views: {
@@ -212,4 +194,7 @@ rootApp.config([
             }
         })
     }]);
-		
+
+	
+
+

@@ -1,14 +1,16 @@
-<div class="tab-content">
+<div class="tab-content" ng-init='init()'>
     <nav class="navbar navbar-admin">
         <div class="col-md-offset-2 col-md-8">
             <div class="main-title">
                 <h4>Current Invoice</h4>
             </div>
+            
             <div class="row-md-12">
                 <div class="col-md-4">
-                    <div class="form-group">                                     
-                        <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="productName" placeholder='Type of billing'>
                             <option value="">Select Product</option>
+                             <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
                         </select>
                     </div>
                 </div> 
@@ -16,28 +18,30 @@
                 <div class="col-md-4">
                     <div class="form-group">                                       
                         <input type="text" ng-model="planName" name="planName" placeholder='Plan Name' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
-                        <span style="color: red" ng-show="!isSubmitted && myForm.planName.$dirty && myForm.planName.$error.required">The
+                        <!--span style="color: red" ng-show="!isSubmitted && myForm.planName.$dirty && myForm.planName.$error.required">The
                             name is required.
                         </span> 
                         <span style="color: red" ng-show="myForm.planName.$dirty && myForm.planName.$error.pattern">Product Name is invalid
-                        </span>
+                        </span-->
                     </div>
                 </div>  
                 <div class="col-md-4">
                     <div class="form-group">                                     
                         <select class="form-control" ng-model="currencyName" placeholder='Currency Name'>
                             <option value="">Currency Name</option>
+                            <option value="INR">INR</option>
+                            <option value="USD">USD</option>
                         </select>
                     </div>
                 </div> 
                 <div class="col-md-12">
                     <div class="form-group">                                       
                         <input type="text" ng-model="description" name="description" placeholder='Description' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
-                        <span style="color: red" ng-show="!isSubmitted && myForm.description.$dirty && myForm.description.$error.required">The
+                        <!--span style="color: red" ng-show="!isSubmitted && myForm.description.$dirty && myForm.description.$error.required">The
                             name is required.
                         </span> 
                         <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid
-                        </span>
+                        </span-->
                     </div>
                 </div>             
             </div>
@@ -79,7 +83,7 @@
 
             </div> 
             <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
-                    ng-click="saveChanges(myForm.$valid)">SAVE</button>
+                    ng-click="createPricing(myForm.$valid)">SAVE</button>
             <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
                     ng-click="clear(myForm.$valid)">CLEAR ALL</button>
 

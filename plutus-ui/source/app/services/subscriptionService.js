@@ -1,4 +1,4 @@
-angular.module('rootApp').service('subscriptionService', function ($rootScope, $http, $q, appConfig) {
+angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q) {
 
     this.getSubscriptions = function () {
 
@@ -6,7 +6,7 @@ angular.module('rootApp').service('subscriptionService', function ($rootScope, $
 
         $http({
             method: 'GET',
-            url: $rootScope.baseUrl + $rootScope.apiUrl + 'subscription/all',
+            url: $rootScope.baseUrl + 'api/v1/subscription/all',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -25,7 +25,7 @@ angular.module('rootApp').service('subscriptionService', function ($rootScope, $
         
         $http({
             method: 'GET',
-            url: $rootScope.baseUrl + $rootScope.apiUrl + 'subscription' +product,
+            url: $rootScope.baseUrl + 'api/v1/subscription/' + product,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -56,13 +56,5 @@ angular.module('rootApp').service('subscriptionService', function ($rootScope, $
 
         return deferred.promise;
     };
-
-   
-
-   
-
-    
-   
-
    
 });

@@ -1,0 +1,45 @@
+{
+    "message": {
+        "editClient": "Updated Successfully",
+        "candidateLocErr": "No Location Result Found",
+        "changeRole": "User Role Changed Successfully.",
+        "addRole": "New Role Created Successfully.",
+        "roleExist": "Role Already Exists. Please check back again!",
+        "deleteRole": "User Role has been sucessfully deleted.",
+        "updateRole": "Role Updated Successfully.",
+        "deletePosition": "Position is deleted successfully",
+        "saveFeedback": "Your Feedback has been successfully sent..!!!",
+        "saveFeedbackError": "Error while saving feedback. Please check back again!",
+        "addClient": "Client is added successfully",
+        "validation": "Fill all mandatory fields",
+        "addPosition": "Position is added successfully",
+        "editPosition": "Position is updated successfully",
+        "addCandidate": "Candidate  Information sucessfully Saved",
+        "addCandidateError": "Error while Saving. Please check back again!",
+        "uploadFile": "Please upload the file",
+        "parsed": "Candidate resume sucessfully parsed",
+        "editCandidate": "Candidate information updated sucessfully",
+        "editCandidateError": "Error while Saving. Please check back again!",
+        "interviewCancel": "Interview has been cancelled successfully",
+        "interviewCancelError": "Something went wrong while Canceling the Interview",
+        "posDeleteErr": "You Dont have permission to delete this position",
+        "posEditErr": "You Dont have permission to edit this position",
+        "ctcErr": "No matched results found for this search"
+    },
+     "lable": {
+        "homeLabel":"HOME",
+        "clientsLabel":"CLIENTS",
+        "positionsLabel":"POSITIONS",
+        "candidatesLabel":"CANDIDATES",
+        "calendarLabel":"CALENDAR"
+    },
+    "title": {
+        "boardLabel":"Board",
+        "clientlistLabel":"Client List",
+        "positionlistLabel":"Position List",
+        "calendarLabel":"Calendar",
+        "dashboardLabel":"Dashboard"
+       
+    },
+    "directives.language-select.Language": "Language"
+}
