@@ -32,22 +32,21 @@ public class BillingService {
 	private void calculateDailyBillingForStatusap(Subscription subscription, ProductPlanStats productPlanStats) {
 		if (DateUtil.isNotToday(subscription.getAmountUpdatedTimeStamp())) {
 			Double currentBillingAmt = subscription.getBillingAmount();
-			Number userCostPerMonth = subscription.getPricingPlan().getProductPlanItemToCost()
-					.get(BillingConstant.STATUSNAP_USER_COST);
+			Number userCostPerMonth = subscription.getPricingPlan().getProductPlanItemToCost().get(BillingConstant.STATUSNAP_USER_COST);
 			Number projectCostPerMonth = subscription.getPricingPlan().getProductPlanItemToCost()
 					.get(BillingConstant.STATUSNAP_PROJECT_COST);
-			
+
 			double costPerUserPerDay = userCostPerMonth.doubleValue() / 30;
 
 			Number userCountToday = productPlanStats.getStats().get(BillingConstant.STATUSNAP_USER_COUNT);
 			Number projectCountToday = productPlanStats.getStats().get(BillingConstant.STATUSNAP_PROJECT_COUNT);
-			
+
 			Double billAmtForUserToday = userCountToday.intValue() * costPerUserPerDay;
 			currentBillingAmt = currentBillingAmt + billAmtForUserToday;
-			
+
 			double costPerProjectPerDay = projectCostPerMonth.doubleValue() / 30;
-			
-			Double billAmtForProjectToday =  projectCountToday.intValue() * costPerProjectPerDay;
+
+			Double billAmtForProjectToday = projectCountToday.intValue() * costPerProjectPerDay;
 			currentBillingAmt = currentBillingAmt + billAmtForProjectToday;
 
 			subscription.setBillingAmount(currentBillingAmt);
@@ -65,6 +64,8 @@ public class BillingService {
 		if (ProductName.Statusnap.toString().equalsIgnoreCase(productName)) {
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 0);
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 3);
+		} else if (ProductName.Recruiz.toString().equalsIgnoreCase(productName)) {
+			productPlanItemToCost.put(BillingConstant.RECRUIZ_USER_COST, 49);
 		}
 		return productPlanItemToCost;
 	}
