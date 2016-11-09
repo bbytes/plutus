@@ -5,7 +5,8 @@
 
                      <div class="form-group">                                                                     
                             <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()"placeholder='Type of billing'>
-                                <option ng-repeat="product in producList" value="{{product.metricName}}">{{product.metricDisplayName}}</option>
+                                  <option value="">Select Product</option>
+                                <option ng-repeat="product in products" value="{{product.id}}">{{product.name}}</option>
                             </select>
 
 
@@ -33,60 +34,36 @@
                                                         class="form-control" placeholder="Search...">
                 </div>
             </div>
-            <div class="project-table" >
-                <!--<table>
+            <div class="main-title">        
+            <div class="upload ">  
+            </div>
+            <div class="project-table">
+                <table style="width:170%;">
                     <thead>
                         <tr>
-                            <th>Customer Name</th>                             
-                            <th>Plan</th>
-                            <th>Renewal date</th>
-                            <th>Status</th>
-                            <th>Pending invoice($)</th>
-
+                            <th style="width:20%;">Customer Name</th>                             
+                            <th style="width:15%;">Plan</th>
+                            <th style="width:15%;">Renewal Date</th>
+                            <th style="width:15%;">Status</th>
+                             <th style="width:15%;">Pending Invoice ($)</th>
+                             <th style="width:20%;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Basic</td>
-                            <td>Basic</td>
-                            <td>Basic</td>
-                            <td><button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
-                                        ng-click="saveChanges(myForm.$valid)">Edit</button>
-                                <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
-                                        ng-click="clear(myForm.$valid)">Delete</button></td>
+                        <tr ng-repeat="subscription in subscriptionsList | filter:searchText">                        
+                            <td style="width:20%;">{{pro.name}}</td>
+                            <td style="width:20%;">{{pro.desc}}</td>
+                            <td style="width:15%;"><sapan ng-repeat="pEmails in pro.productTeamEmails">{{pEmails}},</span></td>
+                            <td style="width:15%;">{{pro.name}}</td>
+                            <td style="width:15%;">{{pro.desc}}</td>
+                        <td style="width:15%;"><button type="button"  style="width:60%;" class="btn btn-default create" ng-click="edit(pro.id)">Edit</button></td>
+                        <td style="width:15%;"><button type="button" style="width:90%;" class="btn btn-default create" ng-click="delete(pro.id)">Delete</button></td>
                         </tr>
-                    </tbody>
-                </table>-->
-                <table st-table="displayedCollection" st-safe-src="subscriptionsList" class="table table-striped table-fixed sTable table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th st-ratio="41" st-sort="sourceName">Customer Name</th>
-                                        <th st-ratio="13" st-sort="model">Plan</th>
-                                        <th st-ratio="12" st-sort="metricName">Renewal Date</th>
-                                        <th st-ratio="20" st-sort="creationDate">Status</th>
-                                        <th st-ratio="15">Pending Invoice ($)</th>
-                                        <th st-width="17"></th>
-                                    </tr>
-                                </thead>
-                                <tbody lr-infinite-scroll="loadMoreMonitors">
-                                    <tr st-select-row="row" ng-repeat="row in displayedCollection| filter:searchText" ng-click="onSelect(row)">
-                                        <td st-ratio="41">{{row.sourceName}}</td>
-                                        <td st-ratio="13">{{row.model}}</td>
-                                        <td st-ratio="12">{{row.metricName}}</td>
-                                        <td st-ratio="20">{{row.creationDate}}</td>
-                                        <td st-ratio="15" class="action-icon" colspan="2">
-                                            <div class="marginl2">
-                                                <a class="table_icon_edit" title="{{'lable.edit'| translate}}" ng-click="editMonitor(row, $event)">Edit</a>
-                                            </div>       
-                                            <div class="marginl2">
-                                                <a class="table_icon_information" title="{{'lable.info'| translate}}" ng-click="monitorInfoDialog('info', row, $event)">Delete</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                           
-                        </div>
+
+                        </tbody>
+                </table>
+            </div>
+        </div>
                   
                 
                         
