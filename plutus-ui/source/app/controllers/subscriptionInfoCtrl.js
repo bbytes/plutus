@@ -4,22 +4,32 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
         subscriptionService.getSubscriptions().then(function (response) {
             if (response.success) {
                 $scope.subscriptionsList = response.data;
-            }
-        });
+                   angular.forEach($scope.subscriptionsList, function (value) {
+                    $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
+                    $scope.custStatus=value.deactivate;
+                   });
+                
+            };
+     
          productService.getProduct().then(function (response) {
             if (response.success) {
                 $scope.products = response.data;
                
-                appNotifyService.info("success ");
+                //appNotifyService.info("success ");
             }
         });
-    };
+    });
+}
     
 
     $scope.getSubscriptionsForProd = function () {
         subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {
             if (response && response.success) {
                   $scope.subscriptionsList = response.data;
+                   angular.forEach($scope.subscriptionsList, function (value) {
+                    $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
+                    $scope.custStatus=value.deactivate;
+                   });
             }
           
         });
