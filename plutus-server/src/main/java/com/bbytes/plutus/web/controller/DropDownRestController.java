@@ -15,6 +15,7 @@ import com.bbytes.plutus.enums.BillingType;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.enums.PaymentMode;
 import com.bbytes.plutus.enums.SubscriptionType;
+import com.bbytes.plutus.enums.TimePeriod;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.response.PlutusRestResponse;
 import com.bbytes.plutus.service.BillingService;
@@ -53,6 +54,12 @@ public class DropDownRestController {
 	@RequestMapping(value = "/subscriptionType", method = RequestMethod.GET)
 	private PlutusRestResponse getSubscriptionType() throws PlutusException {
 		PlutusRestResponse status = new PlutusRestResponse(true, SubscriptionType.values());
+		return status;
+	}
+	
+	@RequestMapping(value = "/timePeriod", method = RequestMethod.GET)
+	private PlutusRestResponse getTimePeriods() throws PlutusException {
+		PlutusRestResponse status = new PlutusRestResponse(true, TimePeriod.values());
 		return status;
 	}
 

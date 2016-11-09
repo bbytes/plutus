@@ -22,5 +22,9 @@ public class ProductStatsRestResponse extends PlutusRestResponse {
 	public ProductStatsRestResponse(String message, boolean success) {
 		super(message, success);
 	}
+	
+	public ProductStatsRestResponse(boolean success, Object data) {
+		super(success, data);
+	}
 
 }

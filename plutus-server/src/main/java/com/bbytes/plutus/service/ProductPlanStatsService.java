@@ -37,7 +37,7 @@ public class ProductPlanStatsService extends AbstractService<ProductPlanStats, S
 		return productPlanStatsRepository.findByEntryDateBetween(startDate, endDate);
 	}
 
-	List<ProductPlanStats> findByEntryDateBetweenAndSubscriptionKey(Date startDate, Date endDate,String subscriptionKey){
+	public List<ProductPlanStats> findByEntryDateBetweenAndSubscriptionKey(Date startDate, Date endDate,String subscriptionKey){
 		return productPlanStatsRepository.findByEntryDateBetweenAndSubscriptionKey(startDate, endDate, subscriptionKey);
 	}
 }
