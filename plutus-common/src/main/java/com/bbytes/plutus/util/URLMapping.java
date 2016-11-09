@@ -12,6 +12,8 @@ public final class URLMapping {
 	
 	public final static String PRODUCT_URL = REST_API_BASE_URL+"/product";
 	
+	public final static String DROP_DOWN_URL = REST_API_BASE_URL+"/dropdown";
+	
 	public final static String PROD_STATS_URL = PRODUCT_URL+ "/stats";
 	
 	public final static String PRICING_PLAN_URL = REST_API_BASE_URL+"/pricingPlan";
