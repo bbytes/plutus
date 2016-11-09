@@ -12,6 +12,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.bbytes.plutus.enums.BillingType;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -28,6 +30,8 @@ public class Product {
 
 	@Indexed(unique = true)
 	private String name;
+	
+	private BillingType billingType;
 
 	@CreatedDate
 	private DateTime creationDate;

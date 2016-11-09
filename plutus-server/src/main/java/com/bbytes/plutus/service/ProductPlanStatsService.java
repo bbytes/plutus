@@ -1,5 +1,6 @@
 package com.bbytes.plutus.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -11,10 +12,12 @@ import com.bbytes.plutus.repo.ProductPlanStatsRepository;
 
 @Service
 public class ProductPlanStatsService extends AbstractService<ProductPlanStats, String> {
+	private ProductPlanStatsRepository productPlanStatsRepository;
 
 	@Autowired
 	public ProductPlanStatsService(ProductPlanStatsRepository productPlanStatsRepository) {
 		super(productPlanStatsRepository);
+		this.productPlanStatsRepository = productPlanStatsRepository;
 	}
 
 	public <S extends ProductPlanStats> List<S> save(Iterable<S> entites) {
@@ -27,7 +30,14 @@ public class ProductPlanStatsService extends AbstractService<ProductPlanStats, S
 	public <S extends ProductPlanStats> S save(S productPlanStats) {
 		if (productPlanStats.getId() == null)
 			productPlanStats.setId(DateTime.now().toLocalDate() + ":" + productPlanStats.getSubscriptionKey());
-		return mongoRepository.save(productPlanStats);
+		return productPlanStatsRepository.save(productPlanStats);
 	}
 
+	public List<ProductPlanStats> findByEntryDateBetween(Date startDate, Date endDate) {
+		return productPlanStatsRepository.findByEntryDateBetween(startDate, endDate);
+	}
+
+	List<ProductPlanStats> findByEntryDateBetweenAndSubscriptionKey(Date startDate, Date endDate,String subscriptionKey){
+		
+	}
 }

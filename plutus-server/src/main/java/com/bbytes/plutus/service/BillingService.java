@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bbytes.plutus.enums.BillingType;
 import com.bbytes.plutus.enums.ProductName;
 import com.bbytes.plutus.model.ProductPlanStats;
 import com.bbytes.plutus.model.Subscription;
@@ -59,12 +60,12 @@ public class BillingService {
 		return ProductName.Statusnap.toString().equalsIgnoreCase(subscription.getPricingPlan().getProduct().getName());
 	}
 
-	public Map<String, Number> getProductCostMap(String productName) {
+	public Map<String, Number> getProductCostMap(String productName, BillingType billingType) {
 		Map<String, Number> productPlanItemToCost = new HashMap<String, Number>();
-		if (ProductName.Statusnap.toString().equalsIgnoreCase(productName)) {
+		if (ProductName.Statusnap.toString().equalsIgnoreCase(productName) && BillingType.Metered.equals(billingType)) {
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_PROJECT_COST, 0);
 			productPlanItemToCost.put(BillingConstant.STATUSNAP_USER_COST, 3);
-		} else if (ProductName.Recruiz.toString().equalsIgnoreCase(productName)) {
+		} else if (ProductName.Recruiz.toString().equalsIgnoreCase(productName) && BillingType.Metered.equals(billingType)) {
 			productPlanItemToCost.put(BillingConstant.RECRUIZ_USER_COST, 49);
 		}
 		return productPlanItemToCost;

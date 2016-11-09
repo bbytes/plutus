@@ -15,9 +15,11 @@ import com.bbytes.plutus.enums.BillingType;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.enums.PaymentMode;
 import com.bbytes.plutus.enums.SubscriptionType;
+import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.response.PlutusRestResponse;
 import com.bbytes.plutus.service.BillingService;
 import com.bbytes.plutus.service.PlutusException;
+import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.util.URLMapping;
 
 @RestController
@@ -26,6 +28,9 @@ public class DropDownRestController {
 
 	@Autowired
 	private BillingService billingService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = "/billingCycle", method = RequestMethod.GET)
 	private PlutusRestResponse getBillingCycle() throws PlutusException {
@@ -59,11 +64,12 @@ public class DropDownRestController {
 
 	@RequestMapping(value = "/billingParams/{productName}", method = RequestMethod.GET)
 	private PlutusRestResponse getBillingType(@PathVariable String productName) throws PlutusException {
-		Map<String, Number> getProductCostMap = billingService.getProductCostMap(productName);
+		Product product = productService.findByName(productName);
+		Map<String, Number> getProductCostMap = billingService.getProductCostMap(product.getName(),product.getBillingType());
 		Set<String> productParams = new HashSet<>();
 		
 		if (getProductCostMap != null)
-			productParams = billingService.getProductCostMap(productName).keySet();
+			productParams = getProductCostMap.keySet();
 
 		PlutusRestResponse status = new PlutusRestResponse(true, productParams);
 		return status;
