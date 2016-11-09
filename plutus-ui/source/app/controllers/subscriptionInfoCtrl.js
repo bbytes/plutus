@@ -19,7 +19,7 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     $scope.getSubscriptionsForProd = function () {
         subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {
             if (response && response.success) {
-                  $scope.productSubscriptions = response.data;
+                  $scope.subscriptionsList = response.data;
             }
           
         });

@@ -49,7 +49,7 @@ public class PlutusClient extends AbstractClient {
 	}
 	
 	public ProductStatsRestResponse getPaymentHistory() throws PlutusClientException {
-		ProductStatsRestResponse response = get(URLMapping.BASE_API_URL + "/subscription/paymentHistory",
+		ProductStatsRestResponse response = get(URLMapping.BASE_API_URL + "/subscription/paymentHistory/"+subscriptionKey,
 				ProductStatsRestResponse.class);
 		return response;
 	}

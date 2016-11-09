@@ -32,13 +32,10 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	// profile info in header
 	protected RequestMatcher ignoreRequestMatcher;
 
-	protected RequestMatcher headerContextRequestMatcher;
-
 	public StatelessAuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
 		Assert.notNull(tokenAuthenticationService);
 		this.tokenAuthenticationService = tokenAuthenticationService;
 		ignoreRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/register", "POST");
-		headerContextRequestMatcher = new AntPathRequestMatcher(URLMapping.BASE_API_URL + "/subscription/**");
 	}
 
 	@Override
@@ -66,27 +63,15 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 	 * @param request
 	 */
 	private void setRequestContext(HttpServletRequest request) {
-		if (!headerContextRequestMatcher.matches((HttpServletRequest) request)) {
-			return;
-		}
-
 		String appProfileValue = request.getHeader(GlobalConstant.APP_PROFILE_HEADER);
-		if (appProfileValue == null) {
-			throw new InsufficientAuthenticationException("App profile information missing in header");
-		}
-
 		try {
 			AppProfile appProfile = AppProfile.valueOf(appProfileValue);
 			RequestContextHolder.setAppProfile(appProfile);
 		} catch (Throwable e) {
-			throw new InsufficientAuthenticationException("App profile value incorrect");
+			// do nothing
 		}
 
 		String subscriptionKey = request.getHeader(GlobalConstant.SUBSCRIPTION_KEY_HEADER);
-		if (subscriptionKey == null) {
-			throw new InsufficientAuthenticationException("Subscription key missing in header");
-		}
-
 		RequestContextHolder.setSubscriptionKey(subscriptionKey);
 
 	}
