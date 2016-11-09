@@ -1,4 +1,4 @@
-angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q, appConfig) {
+angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q) {
 
     this.getSubscriptions = function () {
 
@@ -56,13 +56,5 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-
-   
-
-   
-
-    
-   
-
    
 });
