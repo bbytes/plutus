@@ -2,13 +2,13 @@
     <nav class="navbar navbar-admin">
         <div class="col-md-offset-2 col-md-8">
             <div class="main-title">
-                <h4>Current Invoice</h4>
+                
             </div>
             
             <div class="row-md-12">
                 <div class="col-md-4">
                     <div class="form-group">                                   
-                        <select class="form-control" ng-model="productName" placeholder='Type of billing'>
+                        <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
                             <option value="">Select Product</option>
                              <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
                         </select>
@@ -24,13 +24,14 @@
                         <span style="color: red" ng-show="myForm.planName.$dirty && myForm.planName.$error.pattern">Product Name is invalid
                         </span-->
                     </div>
-                </div>  
+                </div> 
+           
+                {{pricingdetails}}
                 <div class="col-md-4">
-                    <div class="form-group">                                     
-                        <select class="form-control" ng-model="currencyName" placeholder='Currency Name'>
-                            <option value="">Currency Name</option>
-                            <option value="INR">INR</option>
-                            <option value="USD">USD</option>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="currency">
+                              <option value="">Select Currency</option>
+                             <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
                         </select>
                     </div>
                 </div> 
@@ -45,25 +46,39 @@
                     </div>
                 </div>             
             </div>
-            <div class="main-title">
+            <div class="main-title" ng-if="pricingdetails.length > 0">
                 <h4>Metering Details</h4>
             </div>
-            <div class="row-md-12">
-                <div class="col-md-3">
+            <div class="row-md-12" ng-if="pricingdetails.length > 0">
+                <table>
+                    <thead>
+                      
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pr in pricingdetails">
+                            <td style="width:50%;">{{pr}}</td>
+                            <td style="width:30%;"> <input type="text" ng-model="trialPeriod" name="trialPeriod"  ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></td>
+                            <td style="width:20%;"> <input type="text" ng-model="dalor" name="trialPeriod"  ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></td>
+                            
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <!--div class="col-md-4">
                     <div class="form-group">                                     
                         <select class="form-control" ng-model="billingType">
                             <option value="">Cost Per User</option>
                         </select>
                     </div>
                 </div> 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">                                     
                         <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
                             <option value="">Select</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">                                       
                         <input type="text" ng-model="trialPeriod" name="trialPeriod" placeholder='Trial Period' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
                         <span style="color: red" ng-show="!isSubmitted && myForm.trialPeriod.$dirty && myForm.trialPeriod.$error.required">The
@@ -72,18 +87,42 @@
                         <span style="color: red" ng-show="myForm.trialPeriod.$dirty && myForm.trialPeriod.$error.pattern">Product Name is invalid
                         </span>
                     </div>
-                </div>   
-                <div class="col-md-3">
-                    <div class="form-group">                                     
+                </div-->   
+                
+
+            </div> 
+                 <div class="main-title" ng-if="pricingdetails.length == []">
+                <h4>Fixed Details</h4>
+            </div>
+            <div class="row-md-12"  ng-if="pricingdetails.length == []">
+                <div class="col-md-4">
+                    <div class="form-group">
+                            
+                            <input type="text" ng-model="hh" name="productName" placeholder="Üpto 25 User"
+                                   class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                           
+                        </div>
+                </div> 
+                <div class="col-md-4">
+                    <div class="form-group"> 
+                        
                         <select class="form-control" ng-model="billingType" placeholder='Type of billing'>
-                            <option value="">Select</option>
+                            <option value="">select</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
                         </select>
                     </div>
-                </div> 
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">                                       
+                         <label for="comment" class="settings">$</label>
+                    </div>
+                </div>   
+                
 
             </div> 
             <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
-                    ng-click="createPricing(myForm.$valid)">SAVE</button>
+                    ng-click="createPricing()">SAVE</button>
             <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
                     ng-click="clear(myForm.$valid)">CLEAR ALL</button>
 

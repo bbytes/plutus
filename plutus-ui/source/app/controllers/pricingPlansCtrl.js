@@ -1,6 +1,6 @@
 
 
-angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter) {
+angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter,pricingService) {
     $scope.emails = [];
     $scope.update = false;
 //loading products
@@ -9,32 +9,66 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         productService.getProduct().then(function (response) {
             if (response.success) {
                 $scope.product = response.data;
-                appNotifyService.info("success ");
+            }
+        });
+        pricingService.getCurrency().then(function (response) {
+            if (response.success) {
+                $scope.currencys = response.data;
+                // $scope.selectedTimePeriod =  $scope.currency[0];
+            }
+        });
+         pricingService.getPricingCycle().then(function (response) {
+            if (response.success) {
+                $scope.PricingCycle = response.data;
+                // $scope.selectedTimePeriod =  $scope.currency[0];
+            }
+        });
+         pricingService.getPaymentMode().then(function (response) {
+            if (response.success) {
+                $scope.paymentMode = response.data;
+                // $scope.selectedTimePeriod =  $scope.currency[0];
             }
         });
     }
-//adding products
-    $scope.createPricing = function (product) {
-        if (!product) {
-            appNotifyService.error('Please enter a valid product name');
-            return false;
-        }
-        angular.forEach($scope.email, function (item) {
-            $scope.emails.push(item.text);
+    
+    //adding products
+    $scope.selectPricingDetails = function () {
+        
+     $scope.productId=$scope.productName;
+        pricingService.getPricingdetailsById($scope.productId).then(function (response) {
+            if (response.success) {
+                $scope.pricingdetails=response.data;
+
+            } else {
+                appNotifyService.error(response.message);
+            }
+        }, function (error) {
+            appNotifyService.error('Error while creating project.');
+        });
+    };
+//adding Pricing
+    $scope.createPricing = function () {
+        $scope.productDetails=[];
+       
+        angular.forEach($scope.product, function (item) {
+            if($scope.productName==item.id)
+            $scope.productDetails=item;
         });
 
         input = {
-            "id": $scope.productName,
-            "name": $scope.productName,
-            "desc": $scope.description,
-            "productTeamEmails": $scope.emails
+            "id": $scope.planName,
+            "name": $scope.planName,
+            "product": $scope.productDetails,
+            "productPlanItemToCost": {},
+            "currency":$scope.currency,
+            "appProfile":null,
+            "billingCycle":null,
+            "discount":null
         };
 
-        productService.add(input).then(function (response) {
+        pricingService.addPricing(input).then(function (response) {
             if (response.success) {
-                $scope.init();
-                $scope.clear();
-                appNotifyService.info("success ");
+               appNotifyService.success("Pricing Added Successfully");
 
             } else {
                 appNotifyService.error(response.message);

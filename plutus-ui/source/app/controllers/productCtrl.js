@@ -8,8 +8,14 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
         $scope.update = false;
         productService.getProduct().then(function (response) {
             if (response.success) {
-                $scope.product = response.data;  
-               
+                $scope.product = response.data;     
+            }
+        });
+        
+         productService.getBillingType().then(function (response) {
+            if (response.success) {
+                $scope.billingTypes = response.data;
+                // $scope.selectedTimePeriod =  $scope.currency[0];
             }
         });
     }
@@ -27,7 +33,8 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             "id": $scope.productName,
             "name": $scope.productName,
             "desc": $scope.description,
-            "productTeamEmails": $scope.emails
+            "productTeamEmails": $scope.emails,
+            "billingType":$scope.billingType,
         };
 
         productService.add(input).then(function (response) {
@@ -80,14 +87,13 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
         angular.forEach($scope.email, function (item) {
             $scope.emails.push(item.text);
         });
-
         input = {
             "id": $scope.productName,
             "name": $scope.productName,
             "desc": $scope.description,
             "productTeamEmails": $scope.emails
         };
-        productService.updatePro(input).then(function (response) {
+       productService.updatePro(input).then(function (response) {
             if (response.success) {
                 $scope.init();
                 $scope.clear();
