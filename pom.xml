@@ -37,10 +37,13 @@
 
 
 	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshot.repo.bbytes.co</id>
+			<url>s3://repo.bbytes.co/snapshot</url>
+		</snapshotRepository>
 		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
+			<id>release.repo.bbytes.co</id>
+			<url>s3://repo.bbytes.co/release</url>
 		</repository>
 	</distributionManagement>
 

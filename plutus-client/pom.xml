@@ -22,19 +22,24 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>release.repo.bbytes.co</id>
+			<id>snapshot.repo.bbytes.co</id>
 			<url>s3://repo.bbytes.co/snapshot</url>
 		</snapshotRepository>
 		<repository>
-			<id>snapshot.repo.bbytes.co</id>
+			<id>release.repo.bbytes.co</id>
 			<url>s3://repo.bbytes.co/release</url>
 		</repository>
 	</distributionManagement>
 
+
 	<repositories>
 		<repository>
-			<id>repo.bbytes.co</id>
+			<id>release.repo.bbytes.co</id>
 			<url>s3://repo.bbytes.co/release</url>
+		</repository>
+		<repository>
+			<id>snapshot.repo.bbytes.co</id>
+			<url>s3://repo.bbytes.co/snapshot</url>
 		</repository>
 	</repositories>
 
