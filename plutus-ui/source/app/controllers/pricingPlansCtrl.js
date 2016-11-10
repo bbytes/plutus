@@ -30,8 +30,17 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             }
         });
     }
-    
-    //adding products
+    $scope.selectLabel = function () {
+        $scope.cur=$scope.currency;
+       if($scope.cur==="USD")
+       {
+            $scope.symbol='$';
+       }else if($scope.cur==="INR")
+       {
+          $scope.symbol='Rs';
+       }
+    }
+   //adding products
     $scope.selectPricingDetails = function () {
         
      $scope.productId=$scope.productName;
@@ -52,8 +61,12 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
        
         angular.forEach($scope.product, function (item) {
             if($scope.productName==item.id)
+            {
             $scope.productDetails=item;
+        }
         });
+        $scope.test=$scope.pricingdetails;
+         
 
         input = {
             "id": $scope.planName,

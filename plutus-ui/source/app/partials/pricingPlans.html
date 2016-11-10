@@ -26,10 +26,10 @@
                     </div>
                 </div> 
            
-                {{pricingdetails}}
+               
                 <div class="col-md-4">
                     <div class="form-group">                                   
-                        <select class="form-control" ng-model="currency">
+                        <select class="form-control" ng-model="currency" ng-change="selectLabel()">
                               <option value="">Select Currency</option>
                              <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
                         </select>
@@ -38,11 +38,7 @@
                 <div class="col-md-12">
                     <div class="form-group">                                       
                         <input type="text" ng-model="description" name="description" placeholder='Description' class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
-                        <!--span style="color: red" ng-show="!isSubmitted && myForm.description.$dirty && myForm.description.$error.required">The
-                            name is required.
-                        </span> 
-                        <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid
-                        </span-->
+                      
                     </div>
                 </div>             
             </div>
@@ -54,11 +50,13 @@
                     <thead>
                       
                     </thead>
+                    {{pricingdetails}}
                     <tbody>
                         <tr ng-repeat="pr in pricingdetails">
                             <td style="width:50%;">{{pr}}</td>
-                            <td style="width:30%;"> <input type="text" ng-model="trialPeriod" name="trialPeriod"  ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></td>
-                            <td style="width:20%;"> <input type="text" ng-model="dalor" name="trialPeriod"  ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></td>
+                            <td style="width:30%;"> <input type="text" ng-model="dollar" name="trialPeriod"  required></td>
+                            <td style="width:20%;"> <label for="comment" class="settings">{{symbol}}</label></td>
+                            
                             
                             
                         </tr>
