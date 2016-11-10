@@ -1,5 +1,6 @@
 package com.bbytes.plutus.web.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
 import com.bbytes.plutus.service.BillingService;
 import com.bbytes.plutus.service.CustomerService;
 import com.bbytes.plutus.service.PlutusException;
+import com.bbytes.plutus.service.PricingPlanService;
 import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.service.SubscriptionCreateException;
 import com.bbytes.plutus.service.SubscriptionInvalidException;
@@ -44,6 +46,9 @@ public class SubscriptionRestController {
 
 	@Autowired
 	private CustomerService customerService;
+
+	@Autowired
+	private PricingPlanService pricingPlanService;
 
 	@Autowired
 	private ProductService productService;
@@ -115,8 +120,7 @@ public class SubscriptionRestController {
 
 		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistoryList());
 		return status;
-		
-		
+
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -144,15 +148,11 @@ public class SubscriptionRestController {
 		subscription.setTenantId(subscriptionInfo.getTenantId());
 		subscription.setValidTill(DateTime.now().plusYears(10).toDate());
 
-		PricingPlan productPlan = new PricingPlan();
-		productPlan.setId(UUID.randomUUID().toString());
-		productPlan.setAppProfile(subscriptionInfo.getAppProfile());
-		productPlan.setBillingCycle(subscriptionInfo.getBillingCycle());
-		productPlan.setCurrency(subscriptionInfo.getCurrency());
-		productPlan.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
-		productPlan.setProduct(product);
-		productPlan.setProductPlanItemToCost(billingService.getProductCostMap(product.getName(), product.getBillingType()));
-		subscription.setProductPlan(productPlan);
+		List<PricingPlan> pricingPlanList = pricingPlanService.findByProduct(product);
+		if (pricingPlanList != null && !pricingPlanList.isEmpty())
+			subscription.setPricingPlan(pricingPlanList.get(0));
+
+
 		subscription.setSubscriptionKey(KeyUtil.getSubscriptionKey());
 		subscription.setSubscriptionSecret(KeyUtil.getSubscriptionSecret());
 

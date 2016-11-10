@@ -107,9 +107,6 @@ public class Subscription extends BaseEntity {
 	@Transient
 	private Interval supportPeriodInterval;
 
-	public void setProductPlan(PricingPlan productPlan) {
-		this.pricingPlan = productPlan;
-	}
 
 	public void setTrialPeriodInterval(Interval trialPeriodInterval) {
 		this.trialPeriodInterval = trialPeriodInterval;

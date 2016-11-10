@@ -66,7 +66,7 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		subscription.setDeactivate(false);
 		subscription.setDeactivateReason("none");
 		subscription.setEnable(true);
-		subscription.setProductPlan(pricingPlan);
+		subscription.setPricingPlan(pricingPlan);
 		subscription.setSubscriptionKey("TEST");
 		subscription.setSubscriptionSecret("TEST");
 		subscription.setId("TEST");
