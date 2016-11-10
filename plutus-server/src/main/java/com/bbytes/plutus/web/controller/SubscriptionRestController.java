@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bbytes.plutus.model.BillingInfo;
 import com.bbytes.plutus.model.Customer;
-import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.PricingPlan;
+import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.Subscription;
 import com.bbytes.plutus.model.SubscriptionInfo;
 import com.bbytes.plutus.response.PlutusRestResponse;
@@ -113,8 +113,10 @@ public class SubscriptionRestController {
 			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
 		}
 
-		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistory());
+		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistoryList());
 		return status;
+		
+		
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

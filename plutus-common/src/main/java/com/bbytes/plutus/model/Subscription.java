@@ -1,6 +1,7 @@
 package com.bbytes.plutus.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,9 +54,9 @@ public class Subscription extends BaseEntity {
 	// tenant id if the product is saas based
 	@Indexed
 	private String tenantId;
-	
+
 	private String hardwareId;
-	
+
 	// store product Name
 	private String productName;
 
@@ -85,7 +86,8 @@ public class Subscription extends BaseEntity {
 
 	// all the payment made by the customer for this product Subscription
 	@DBRef
-	private List<PaymentHistory> paymentHistory;
+	@JsonManagedReference
+	private List<PaymentHistory> paymentHistoryList = new ArrayList<>();
 
 	// string form stored in db but converted during runtime
 	@Getter(AccessLevel.NONE)
@@ -107,7 +109,6 @@ public class Subscription extends BaseEntity {
 
 	public void setProductPlan(PricingPlan productPlan) {
 		this.pricingPlan = productPlan;
-		this.pricingPlan.setSubscription(this);
 	}
 
 	public void setTrialPeriodInterval(Interval trialPeriodInterval) {
@@ -121,6 +122,10 @@ public class Subscription extends BaseEntity {
 
 	public Interval getSupportPeriodInterval() {
 		return new Interval(supportPeriod);
+	}
+
+	public void addPaymentHistory(PaymentHistory paymentHistory) {
+		paymentHistoryList.add(paymentHistory);
 	}
 
 	public void setSupportPeriodInterval(Interval supportPeriodInterval) {

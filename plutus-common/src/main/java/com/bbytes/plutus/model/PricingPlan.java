@@ -9,7 +9,6 @@ import com.bbytes.plutus.enums.AppProfile;
 import com.bbytes.plutus.enums.BillingCycle;
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.mongo.CascadeSave;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,11 +28,6 @@ public class PricingPlan extends BaseEntity {
 	
 	private String pricingPlanName;
 
-	// the reference to subscription
-	@DBRef
-	@JsonBackReference
-	private Subscription subscription;
-
 	// usually Map of items that is considered for the product plan like
 	// no of users , no of projects , no of candidates allowed to its cost
 	// like charge per user 3$ etc
@@ -50,8 +44,4 @@ public class PricingPlan extends BaseEntity {
 	// the cycle when invoice or collection of money has to happen . Possible
 	// values Monthy, Quarterly, HalfYearly, Annually, Perpetual
 	private BillingCycle billingCycle;
-
-	// any discount that needs to be applied to this subscription every billing
-	// cycle . if we need to stop discount then this value has to be made null
-	private Discount discount;
 }

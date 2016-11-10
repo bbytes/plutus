@@ -23,5 +23,7 @@ public class Invoice extends BaseEntity {
 	private Map<String, Object> invoiceData;
 
 	private String invoiceTemplate;
+	
+	private Discount discount;
 
 }

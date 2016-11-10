@@ -52,7 +52,6 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		pricingPlan.setBillingCycle(BillingCycle.Monthy);
 		pricingPlan.setCurrency(Currency.INR);
 		pricingPlan.setAppProfile(AppProfile.saas);
-		pricingPlan.setDiscount(null);
 		pricingPlan.setId("TEST");
 		pricingPlan.setProduct(product);
 
@@ -86,7 +85,6 @@ public class SubscriptionServiceTest extends PlutusApplicationTests {
 		PricingPlan plan = pricingPlanService.findOne(subscription.getPricingPlan().getId());
 		Assert.assertNotNull(plan);
 
-		subscription = subscriptionService.findOne(plan.getSubscription().getId());
 		Assert.assertNotNull(subscription);
 		Assert.assertNotNull(subscription.getSupportPeriodInterval());
 		System.out.println(subscription.getTrialPeriodInterval().getEndMillis());

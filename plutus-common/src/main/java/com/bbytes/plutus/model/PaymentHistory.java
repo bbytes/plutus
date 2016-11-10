@@ -2,9 +2,11 @@ package com.bbytes.plutus.model;
 
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.bbytes.plutus.enums.PaymentMode;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +20,10 @@ public class PaymentHistory extends BaseEntity {
 
 	// amount paid during a cycle
 	private double amount;
+	
+	@DBRef
+	@JsonBackReference
+	private Subscription subscription;
 
 	// payment date
 	private Date paymentDate;
