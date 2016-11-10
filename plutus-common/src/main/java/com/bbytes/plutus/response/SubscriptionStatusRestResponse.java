@@ -1,7 +1,5 @@
 package com.bbytes.plutus.response;
 
-import org.springframework.beans.factory.config.ProviderCreatingFactoryBean;
-
 import com.bbytes.plutus.enums.Currency;
 import com.bbytes.plutus.model.PricingPlan;
 import com.fasterxml.jackson.annotation.JsonInclude;
