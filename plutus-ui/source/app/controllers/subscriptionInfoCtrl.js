@@ -1,6 +1,15 @@
 angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope,productService, $uibModal, subscriptionService, appNotifyService) {
     /*declare variables */
     $scope.showStats = false;
+    
+//  Variales for pagination
+    $scope.gap = 5;
+    
+    $scope.filteredItems = [];
+    $scope.groupedItems = [];
+    $scope.itemsPerPage = 5;
+    $scope.pagedItems = [];
+    $scope.currentPage = 0;
     $scope.init = function () {
         subscriptionService.getSubscriptions().then(function (response) {
             if (response.success) {

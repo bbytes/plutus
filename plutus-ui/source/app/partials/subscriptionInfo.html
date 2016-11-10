@@ -50,9 +50,9 @@
                              <th style="width:15%;">Pending Invoice ($)</th>
                              <th style="width:20%;">Action</th>
                         </tr>
-                    </thead>
+                    </thead>                  
                     <tbody>
-                        <tr ng-repeat="subscription in subscriptionsList | filter:searchText">                        
+                        <tr dir-paginate="subscription in subscriptionsList | filter:searchText | itemsPerPage:5">                        
                             <td style="width:20%;"><a href="#" ng-click="getCustomerDetails(subscription.subscriptionKey)">{{subscription.customer.name}}</a></td>
                             <td style="width:15%;"  data-toggle="modal" data-target="#myModal"><a href="#">CurrentPlan</a></td>
                             <td style="width:15%;"><sapan ng-repeat="pEmails in pro.productTeamEmails">{{pEmails}},</span></td>
@@ -69,12 +69,8 @@
                      <h3>No customers to show</h3>
             </div>
         </div>
-                  
-                
-                        
-                 
                 <dir-pagination-controls
-                    max-size="0"
+                    max-size="5"
                     direction-links="true"
                     boundary-links="true" >
                 </dir-pagination-controls>   
