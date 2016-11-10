@@ -50,7 +50,7 @@ angular.module('plutusApp').service('productService', function ($rootScope, $htt
         var deferred = $q.defer();
         $http({
             method: 'POST',
-            url: $rootScope.baseUrl + 'api/v1//product/update',
+            url: $rootScope.baseUrl + 'api/v1/product/update',
             data: input,
             headers: {
                 'Content-Type': 'application/json'
