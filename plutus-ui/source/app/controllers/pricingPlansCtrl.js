@@ -3,7 +3,9 @@
 angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter,pricingService) {
     $scope.emails = [];
     $scope.update = false;
-//loading products
+     $scope.pricingArray=[]
+     $scope.newObject = {};
+//loading Products and currency
     $scope.init = function () {
         $scope.update = false;
         productService.getProduct().then(function (response) {
@@ -14,22 +16,16 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         pricingService.getCurrency().then(function (response) {
             if (response.success) {
                 $scope.currencys = response.data;
-                // $scope.selectedTimePeriod =  $scope.currency[0];
             }
         });
-         pricingService.getPricingCycle().then(function (response) {
+       
+        pricingService.getAllPricingPlans().then(function (response) {
             if (response.success) {
-                $scope.PricingCycle = response.data;
-                // $scope.selectedTimePeriod =  $scope.currency[0];
-            }
-        });
-         pricingService.getPaymentMode().then(function (response) {
-            if (response.success) {
-                $scope.paymentMode = response.data;
-                // $scope.selectedTimePeriod =  $scope.currency[0];
+                $scope.allPricingPlans = response.data;
             }
         });
     }
+    //dispalying symbol for corresponding currency
     $scope.selectLabel = function () {
         $scope.cur=$scope.currency;
        if($scope.cur==="USD")
@@ -40,14 +36,22 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
           $scope.symbol='Rs';
        }
     }
-   //adding products
+   //displaying pricing Details based on product
     $scope.selectPricingDetails = function () {
-        
+        $scope.pricingArray=[];
      $scope.productId=$scope.productName;
         pricingService.getPricingdetailsById($scope.productId).then(function (response) {
             if (response.success) {
                 $scope.pricingdetails=response.data;
-
+                
+                 var priceObject = {};
+        angular.forEach($scope.pricingdetails, function (val) {
+                    priceObject = {
+                        "type": val,
+                        "cost":0.0,
+                    }
+                    $scope.pricingArray.push(priceObject);
+                    });
             } else {
                 appNotifyService.error(response.message);
             }
@@ -57,6 +61,24 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     };
 //adding Pricing
     $scope.createPricing = function () {
+        $scope.item={};
+       if($scope.pricingdetails.length>0){
+          angular.forEach($scope.pricingArray, function (value,key) {
+            var type=value.type;
+           var cost=value.cost;
+            
+           $scope.item[type] = cost;
+    
+        });
+    }else{
+       
+        $scope.type=$scope.pricingType;
+         $scope.cost=$scope.priceCost;
+        
+            
+           $scope.item[$scope.type] = $scope.cost;
+    }
+       
         $scope.productDetails=[];
        
         angular.forEach($scope.product, function (item) {
@@ -65,14 +87,11 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             $scope.productDetails=item;
         }
         });
-        $scope.test=$scope.pricingdetails;
-         
-
         input = {
             "id": $scope.planName,
             "name": $scope.planName,
             "product": $scope.productDetails,
-            "productPlanItemToCost": {},
+            "productPlanItemToCost": $scope.item,
             "currency":$scope.currency,
             "appProfile":null,
             "billingCycle":null,
@@ -81,6 +100,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
 
         pricingService.addPricing(input).then(function (response) {
             if (response.success) {
+                $scope.init();
+                 $scope.clear();
                appNotifyService.success("Pricing Added Successfully");
 
             } else {
@@ -92,53 +113,49 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     };
 //clear scope values
     $scope.clear = function () {
-        if ($scope.update == true) {
-            $scope.description = '';
-            $scope.email = '';
-            $scope.billingType = '';
-        } else {
-            $scope.productName = '';
-            $scope.description = '';
-            $scope.email = '';
-            $scope.billingType = '';
-        }
+           $scope.planName = "";
+                $scope.productName="";
+                $scope.description ="";
+                $scope.currency="";  
     };
-    //edit product
-    $scope.edit = function (productId) {
+    //edit pricing
+    $scope.edit = function (pricingId,productId) {
         $scope.update = true;
         $scope.email = [];
-        angular.forEach($scope.product, function (item) {
-            if (item.id == productId) {
-                $scope.productName = item.name;
-                $scope.description = item.desc;
-                angular.forEach(item.productTeamEmails, function (value) {
-                    $scope.email.push(value);
-                });
+        angular.forEach($scope.allPricingPlans, function (item) {
+            if (item.id == pricingId) {
+                $scope.planName = item.name;
+                $scope.productName=item.product.name;
+                $scope.description = item.product.desc;
+                $scope.currency=item.currency;  
 
             }
         });
     };
-    //update product
-    $scope.updateProduct = function (product) {
-        if (!product) {
-            appNotifyService.error('Please enter a valid product name');
-            return false;
+    //update pricing
+    $scope.updatePricing = function () {
+        angular.forEach($scope.product, function (item) {
+            if($scope.productName==item.id)
+            {
+            $scope.productDetails=item;
         }
-        angular.forEach($scope.email, function (item) {
-            $scope.emails.push(item.text);
         });
-
+      
         input = {
-            "id": $scope.productName,
-            "name": $scope.productName,
-            "desc": $scope.description,
-            "productTeamEmails": $scope.emails
+            "id": $scope.planName,
+            "name": $scope.planName,
+            "product": $scope.productDetails,
+            "productPlanItemToCost":{},
+            "currency":$scope.currency,
+            "appProfile":null,
+            "billingCycle":null,
+            "discount":null
         };
-        productService.updatePro(input).then(function (response) {
+        pricingService.updatePri(input).then(function (response) {
             if (response.success) {
                 $scope.init();
                 $scope.clear();
-                appNotifyService.info("success ");
+                appNotifyService.success("Pricing Updated Successfully");
 
             } else {
                 appNotifyService.error(response.message);
@@ -147,14 +164,14 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
-    //delete product  
+    //delete pricing by id  
     $scope.delete = function (productId) {
 
-        productService.deleteProduct(productId).then(function (response) {
+        pricingService.deletePricing(productId).then(function (response) {
             if (response.success) {
 
                 $scope.init();
-                appNotifyService.info("success ");
+             appNotifyService.success("Pricing Deleted Successfully");
 
             } else {
                 appNotifyService.error(response.message);
@@ -163,4 +180,6 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
+    
+  
 });
