@@ -40,7 +40,7 @@ public class PricingPlan extends BaseEntity {
 	private Currency currency;
 
 	// the app profile it is running in and possible values enterprise, saas,
-	// enterpriceSaas
+	// enterprise Saas
 	private AppProfile appProfile;
 
 	// the cycle when invoice or collection of money has to happen . Possible
