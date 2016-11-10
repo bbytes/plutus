@@ -27,6 +27,8 @@ public class PricingPlan extends BaseEntity {
 	private Product product;
 	
 	private String pricingPlanName;
+	
+	private String desc;
 
 	// usually Map of items that is considered for the product plan like
 	// no of users , no of projects , no of candidates allowed to its cost
