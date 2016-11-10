@@ -36,17 +36,16 @@
                             </tags-input>
                         </div>
 
-                    </div>                                                   
+                    </div>           
+              
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="comment" class="settings">Billing Type</label>
-
-                            <select class="form-control" ng-model="billingType" >
-                                <option value="">Type of billing</option>
-                                <option value="meter">Meter</option>
-                                <option value="fixed">Fixed</option>
-                            </select>
-                        </div>
+                            <label for="comment" class="settings">Billing Type</label>                                                           
+                        <select class="form-control" ng-model="billingType" ng-change="selectPricingDetails()">
+                            <option value="">Select Product</option>
+                             <option ng-repeat='bill in billingTypes' value='{{bill}}'>{{bill}}</option>
+                        </select>
+                    </div>
                     </div>  
 
 

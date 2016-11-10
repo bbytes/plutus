@@ -1,14 +1,14 @@
 /*
  * Product Service
  */
-angular.module('plutusApp').service('productService', function ($rootScope, $http, $q) {
+angular.module('plutusApp').service('pricingService', function ($rootScope, $http, $q) {
 
     // This method is used to Add Product
-    this.add = function (input) {
+    this.addPricing = function (input) {
         var deferred = $q.defer();
         $http({
             method: 'POST',
-            url: $rootScope.baseUrl + 'api/v1/product/create',
+            url: $rootScope.baseUrl + 'api/v1/pricingPlan/create',
             data: input,
             headers: {
                 'Content-Type': 'application/json'
@@ -23,13 +23,57 @@ angular.module('plutusApp').service('productService', function ($rootScope, $htt
         return deferred.promise;
     };
     // This method is used to Get all Product
-    this.getProduct = function () {
+    this.getCurrency = function () {
 
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: $rootScope.baseUrl + 'api/v1/product/all',
+            url: $rootScope.baseUrl + 'api/v1/dropdown/currency',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+            deferred.resolve(response);
+        }).error(function () {
+            deferred.reject({
+                'success': false,
+                'msg': 'Oops! Something went wrong. Please try again later.'
+            });
+        });
+
+        return deferred.promise;
+    };
+    
+     this.getPricingCycle = function () {
+
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: $rootScope.baseUrl + 'api/v1/dropdown/billingCycle',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+            deferred.resolve(response);
+        }).error(function () {
+            deferred.reject({
+                'success': false,
+                'msg': 'Oops! Something went wrong. Please try again later.'
+            });
+        });
+
+        return deferred.promise;
+    };
+    
+     this.getPricingdetailsById = function (id) {
+
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: $rootScope.baseUrl + 'api/v1/dropdown//billingParams/' + id,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -64,7 +108,47 @@ angular.module('plutusApp').service('productService', function ($rootScope, $htt
 
         return deferred.promise;
     };
+this.getPaymentMode = function () {
 
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: $rootScope.baseUrl + 'api/v1/dropdown/paymentMode',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+            deferred.resolve(response);
+        }).error(function () {
+            deferred.reject({
+                'success': false,
+                'msg': 'Oops! Something went wrong. Please try again later.'
+            });
+        });
+
+        return deferred.promise;
+    };
+    // This method is used to Update Product 
+    this.updatePro = function (input) {
+
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: $rootScope.baseUrl + 'api/v1//product/update',
+            data: input,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+
+        return deferred.promise;
+    };
     // This method is used to delete Product based on Id
 
     this.deleteProduct = function (id) {
@@ -91,28 +175,6 @@ angular.module('plutusApp').service('productService', function ($rootScope, $htt
 
         return deferred.promise;
 
-    };
-    
-    this.getBillingType = function () {
-
-        var deferred = $q.defer();
-
-        $http({
-            method: 'GET',
-            url: $rootScope.baseUrl + 'api/v1/dropdown/billingType',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).success(function (response, status, headers, config) {
-            deferred.resolve(response);
-        }).error(function () {
-            deferred.reject({
-                'success': false,
-                'msg': 'Oops! Something went wrong. Please try again later.'
-            });
-        });
-
-        return deferred.promise;
     };
 
 });
