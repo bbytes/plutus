@@ -69,7 +69,6 @@ public class Subscription extends BaseEntity {
 	// restrictions for a plan
 	@DBRef
 	@CascadeSave
-	@JsonManagedReference
 	private PricingPlan pricingPlan;
 
 	// the date till which the Subscription is valid after which the billing
