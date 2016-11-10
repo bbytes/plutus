@@ -63,10 +63,21 @@ public class SubscriptionRestController {
 		return status;
 	}
 
+	@RequestMapping(value = "/status/{subscriptionKey}", method = RequestMethod.POST)
+	private PlutusRestResponse activateDeactivate(@PathVariable String subscriptionKey) throws SubscriptionInvalidException {
+		Subscription subscription = subscriptionService.findBySubscriptionKey(subscriptionKey);
+		if (subscription == null)
+			throw new SubscriptionInvalidException("Subscription Key invalid ");
+
+		subscription.setDeactivate(!subscription.isDeactivate());
+		subscription = subscriptionService.save(subscription);
+		PlutusRestResponse status = new PlutusRestResponse(true, subscription);
+		return status;
+	}
+
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	private SubscriptionStatusRestResponse validateSubscription() throws SubscriptionInvalidException {
-		Subscription subscription = subscriptionService
-				.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
+		Subscription subscription = subscriptionService.findBySubscriptionKey(RequestContextHolder.getSubscriptionKey());
 		if (subscription == null)
 			throw new SubscriptionInvalidException("Subscription Key invalid ");
 
@@ -75,8 +86,8 @@ public class SubscriptionRestController {
 		}
 
 		SubscriptionStatusRestResponse status = new SubscriptionStatusRestResponse("Subscription check done", true,
-				subscription.getValidTill().toString(), subscription.getBillingAmount(),
-				subscription.getPricingPlan().getCurrency(), subscription.getPricingPlan());
+				subscription.getValidTill().toString(), subscription.getBillingAmount(), subscription.getPricingPlan().getCurrency(),
+				subscription.getPricingPlan());
 
 		return status;
 	}
@@ -93,8 +104,7 @@ public class SubscriptionRestController {
 	}
 
 	@RequestMapping(value = "/paymentHistory/{subscriptionKey}", method = RequestMethod.GET)
-	private PlutusRestResponse getPaymentHistory(@PathVariable String subscriptionKey)
-			throws SubscriptionInvalidException {
+	private PlutusRestResponse getPaymentHistory(@PathVariable String subscriptionKey) throws SubscriptionInvalidException {
 		Subscription subscription = subscriptionService.findBySubscriptionKey(subscriptionKey);
 		if (subscription == null)
 			throw new SubscriptionInvalidException("Subscription Key invalid ");
@@ -108,8 +118,7 @@ public class SubscriptionRestController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo)
-			throws SubscriptionCreateException {
+	private SubscriptionRegisterRestResponse create(@RequestBody SubscriptionInfo subscriptionInfo) throws SubscriptionCreateException {
 		Product product = productService.findByName(subscriptionInfo.getProductName());
 		if (product == null)
 			throw new SubscriptionCreateException("Subscription registration failed , product name not available");
@@ -140,7 +149,7 @@ public class SubscriptionRestController {
 		productPlan.setCurrency(subscriptionInfo.getCurrency());
 		productPlan.setName(subscriptionInfo.getProductName() + ":" + customer.getName());
 		productPlan.setProduct(product);
-		productPlan.setProductPlanItemToCost(billingService.getProductCostMap(product.getName(),product.getBillingType()));
+		productPlan.setProductPlanItemToCost(billingService.getProductCostMap(product.getName(), product.getBillingType()));
 		subscription.setProductPlan(productPlan);
 		subscription.setSubscriptionKey(KeyUtil.getSubscriptionKey());
 		subscription.setSubscriptionSecret(KeyUtil.getSubscriptionSecret());
@@ -151,16 +160,15 @@ public class SubscriptionRestController {
 			throw new SubscriptionCreateException("Failed to save subscription info to storage");
 		}
 		SubscriptionRegisterRestResponse status = new SubscriptionRegisterRestResponse(
-				"Subscription created with key " + subscription.getSubscriptionKey(), true,
-				subscription.getSubscriptionKey(), subscription.getSubscriptionSecret());
+				"Subscription created with key " + subscription.getSubscriptionKey(), true, subscription.getSubscriptionKey(),
+				subscription.getSubscriptionSecret());
 
 		return status;
 
 	}
 
 	@RequestMapping(value = "/billingInfo", method = RequestMethod.POST)
-	private PlutusRestResponse updateBillingInfo(@RequestBody BillingInfo billingInfo)
-			throws SubscriptionCreateException {
+	private PlutusRestResponse updateBillingInfo(@RequestBody BillingInfo billingInfo) throws SubscriptionCreateException {
 		Customer customer = customerService.findByEmail(billingInfo.getEmail());
 		if (customer == null)
 			throw new SubscriptionCreateException("Customer with email '" + billingInfo.getEmail() + "'  not found");

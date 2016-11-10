@@ -54,6 +54,8 @@ public class Subscription extends BaseEntity {
 	@Indexed
 	private String tenantId;
 	
+	private String hardwareId;
+	
 	// store product Name
 	private String productName;
 
