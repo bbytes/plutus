@@ -76,29 +76,14 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
         });
     }
 
-    $scope.deleteSubscription = function (index) {
-        var shift = $scope.rowShiftCollection[index];
-        var uibModalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: 'app/partials/admin-shift-add-modal.html',
-            controller: 'addShiftModalInstanceCtrl',
-            backdrop: 'static',
-            resolve: {
-                options: function () {
-                    return {
-                        "action": 'delete',
-                        "data": shift
-                    };
+    $scope.deActivateCust = function (subscriptionkey) {
+        subscriptionService.activateDeactivate(subscriptionkey).then(function(response) {
+            if (response && response.success) {
+                  $scope.customerStats = response.data;
+                  $scope.init();
                 }
-            }
-        });
-
-        uibModalInstance.result.then(function (status) {
-            if (status) {
-                $scope.rowShiftCollection.splice(index, 1);
-                appNotifyService.success('message.shiftDeleteConfirm');
-            } else {
-                appNotifyService.error('message.shiftDeleteError');
+            else{
+                    appNotifyService.error(response.message);
             }
         });
     };

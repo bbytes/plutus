@@ -56,10 +56,10 @@
                             <td style="width:20%;"><a href="#" ng-click="getCustomerDetails(subscription.subscriptionKey)">{{subscription.customer.name}}</a></td>
                             <td style="width:15%;"  data-toggle="modal" data-target="#myModal"><a href="#">CurrentPlan</a></td>
                             <td style="width:15%;"><sapan ng-repeat="pEmails in pro.productTeamEmails">{{pEmails}},</span></td>
-                            <td style="width:15%;" ng-if="custStatus == false">Active</td>
-                             <td style="width:15%;" ng-if="custStatus == true">InActive</td>
+                            <td style="width:15%;" ng-if="subscription.deactivate == false">Active</td>
+                             <td style="width:15%;" ng-if="subscription.deactivate == true">InActive</td>
                             <td style="width:15%;">{{subscription.billingAmount}}</td>
-                        <td style="width:20%;"><button type="button" style="width:90%;" class="btn btn-default create" ng-click="delete(pro.id)">Deactivate</button></td>
+                        <td style="width:20%;"><button type="button" ng-if="subscription.deactivate == false" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)">Deactivate</button><button type="button" ng-if="subscription.deactivate == true" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)">Activate</button></td>
                         </tr>
 
                         </tbody>
