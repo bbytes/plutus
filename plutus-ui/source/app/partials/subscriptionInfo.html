@@ -59,7 +59,7 @@
                             <td style="width:15%;" ng-if="subscription.deactivate == false">Active</td>
                              <td style="width:15%;" ng-if="subscription.deactivate == true">InActive</td>
                             <td style="width:15%;">{{subscription.billingAmount}}</td>
-                        <td style="width:20%;"><button type="button" ng-if="subscription.deactivate == false" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)">Deactivate</button><button type="button" ng-if="subscription.deactivate == true" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)">Activate</button></td>
+                        <td style="width:20%;"><button a href="#" type="button" ng-if="subscription.deactivate == false" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to deactivate the customer?">Deactivate</button><button type="button" ng-if="subscription.deactivate == true" style="width:90%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to activate the customer?">Activate</button></td>
                         </tr>
 
                         </tbody>
