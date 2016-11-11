@@ -1,7 +1,7 @@
 angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope,productService, $uibModal, subscriptionService, appNotifyService) {
     /*declare variables */
     $scope.showStats = false;
-    
+     $scope.pricingPlans=[];
 //  Variales for pagination
     $scope.gap = 5;
     
@@ -15,8 +15,10 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
             if (response.success) {
                 $scope.subscriptionsList = response.data;
                    angular.forEach($scope.subscriptionsList, function (value) {
-                    $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
-                    $scope.custStatus=value.deactivate;
+                    if(value.pricingPlan && value.pricingPlan.productPlanItemToCost){   
+                     $scope.pricingPlans=(value.pricingPlan.productPlanItemToCost);
+                    }
+                   
                    });
                 
             };
@@ -84,6 +86,28 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                 }
             else{
                     appNotifyService.error(response.message);
+            }
+        });
+    };
+    $scope.openWizard = function (pricingPlan,itemcost) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/wizard-modal.html',
+            controller: 'subCtrl',
+            backdrop: 'static',
+            size: 'lg',
+            resolve: {
+                options: function () {
+                    return {
+                        "title": 'Plans',
+                        "list": pricingPlan,
+                         "test": itemcost
+                    };
+                }
+            }
+        }).result.then(function (status) {
+            if (status) {
+
             }
         });
     };
