@@ -197,5 +197,28 @@ this.getPaymentMode = function () {
         return deferred.promise;
 
     };
+    
+      // This method is used to getting all billingPeriods
+    this.getAllBillings = function () {
+
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: $rootScope.baseUrl + 'api/v1/dropdown/billingCycle',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+            deferred.resolve(response);
+        }).error(function () {
+            deferred.reject({
+                'success': false,
+                'msg': 'Oops! Something went wrong. Please try again later.'
+            });
+        });
+
+        return deferred.promise;
+    };
 
 });

@@ -24,6 +24,12 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                 $scope.allPricingPlans = response.data;
             }
         });
+         //To get all billing Periods
+          pricingService.getAllBillings().then(function (response) {
+            if (response.success) {
+                $scope.billingPeriods = response.data;
+            }
+        });
     }
     //dispalying symbol for corresponding currency
     $scope.selectLabel = function () {
@@ -92,9 +98,10 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             "name": $scope.planName,
             "product": $scope.productDetails,
             "productPlanItemToCost": $scope.item,
+            "desc":$scope.description,
             "currency":$scope.currency,
             "appProfile":null,
-            "billingCycle":null,
+            "billingCycle":$scope.billing,
             "discount":null
         };
 
@@ -116,7 +123,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
            $scope.planName = "";
                 $scope.productName="";
                 $scope.description ="";
-                $scope.currency="";  
+                $scope.currency=""; 
+                $scope.billing="";
     };
     //edit pricing
     $scope.edit = function (pricingId,productId) {
@@ -180,6 +188,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
+    
+   
     
   
 });
