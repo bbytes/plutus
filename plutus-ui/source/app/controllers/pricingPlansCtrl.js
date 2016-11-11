@@ -134,8 +134,9 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             if (item.id == pricingId) {
                 $scope.planName = item.name;
                 $scope.productName=item.product.name;
-                $scope.description = item.product.desc;
-                $scope.currency=item.currency;  
+                $scope.description = item.desc;
+                $scope.currency=item.currency;
+                $scope.billing=item.billingCycle;
 
             }
         });
