@@ -10,7 +10,7 @@
                 <label for="comment" class="settings">Select Product</label>
                 <div class="form-group">                                   
                     <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
-                        <option value="">Select Product</option>
+                       <option value="" disabled>Select Product</option>
                         <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
                     </select>
                 </div>
@@ -26,7 +26,7 @@
                 <label for="comment" class="settings">Billing Period</label>
                 <div class="form-group">                                   
                     <select class="form-control" ng-model="billing" ng-change="selectBilling()">
-                        <option value="">Select Currency</option>
+                        <option value="" disabled>Select BillingCycle</option>
                         <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
                     </select>
                 </div>
@@ -36,7 +36,7 @@
                 <label for="comment" class="settings">Currency</label>
                 <div class="form-group">                                   
                     <select class="form-control" ng-model="currency" ng-change="selectLabel()">
-                        <option value="">Select Currency</option>
+                        <option value="" disabled>Select Currency</option>
                         <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
                     </select>
                 </div>
