@@ -1,52 +1,55 @@
+/*
+ * User Controller
+ */
+angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope, appNotifyService, adminService) {
 
 
-angular.module('plutusApp').controller('adminCtrl', ['$scope', '$rootScope', '$location', '$state', function ($scope, $rootScope, $location, $state, cfpLoadingBar, $fancyModal) {
-
-        $scope.isActive = function (viewLocation) {
-            var active = (viewLocation === $location.path());
-            return active;
-
-        };
-
-
-        $scope.setAdminTab = function (section) {
-            if (section == 'billinginfo') {
-                $rootScope.adminTab = 'billinginfo';
-                $state.go('billinginfo');
-            } else if (section == 'invoicedetails') {
-
-                $rootScope.adminTab = 'invoicedetails';
-
-            } else {
-                $rootScope.adminTab = 'productplans';
+//loading user details
+    $scope.init = function () {
+        $scope.update = false;
+        adminService.getAllUser().then(function (response) {
+            if (response.success) {
+                $scope.allUsers = response.data;
             }
-        };
-        $scope.activeAdminTab = function (section) {
-            return (section === $rootScope.adminTab) ? true : false;
-        };
-
-
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown();
         });
+    }
+    $scope.createUser = function (isValid) {
 
+        if (!isValid) {
+            appNotifyService.error('Please enter a valid email and username.');
+            return false;
+        }
+        if ($scope.admin === null) {
+            appNotifyService.error('Please enter a valid email and username.');
+        } else {
 
-        $scope.open = function () {
+            input = {
+                "email": $scope.email,
+                "name": $scope.name
+            };
+            adminService.addingUser(input).then(function (response) {
 
-            var modalInstance = $modal.open({
-                templateUrl: 'app/partials/feedback.html',
-                controller: 'feedbackCtrl',
-                resolve: {
-                    items: function () {
-                        return $scope.items;
-                    }
+                if (response.success) {
+                    appNotifyService.success('User created successfully');
+                    $scope.init();
                 }
+            }, function (error) {
+                appNotifyService.error('Error while adding users. Please check back again!');
             });
+        }
+    };
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-            });
-        };
 
-    }]);
+    $scope.deleteUser = function (email, index) {
+        adminService.deleteUserByEmail(email).then(function (response) {
+            if (response.success) {
+                $scope.allUsers.splice(index, 1);
+
+
+                appNotifyService.success('User has been sucessfully deleted.');
+            }
+        });
+    };
+
+
+});
