@@ -71,17 +71,12 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
        if($scope.pricingdetails.length>0){
           angular.forEach($scope.pricingArray, function (value,key) {
             var type=value.type;
-           var cost=value.cost;
-            
+           var cost=value.cost;   
            $scope.item[type] = cost;
-    
         });
-    }else{
-       
+    }else{ 
         $scope.type=$scope.pricingType;
          $scope.cost=$scope.priceCost;
-        
-            
            $scope.item[$scope.type] = $scope.cost;
     }
        
@@ -97,6 +92,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             "id": $scope.planName,
             "name": $scope.planName,
             "product": $scope.productDetails,
+            "desc": $scope.description,
             "productPlanItemToCost": $scope.item,
             "desc":$scope.description,
             "currency":$scope.currency,
@@ -143,6 +139,19 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     };
     //update pricing
     $scope.updatePricing = function () {
+        
+         if($scope.pricingdetails.length>0){
+          angular.forEach($scope.pricingArray, function (value,key) {
+            var type=value.type;
+           var cost=value.cost;   
+           $scope.item[type] = cost;
+        });
+    }else{ 
+        $scope.type=$scope.pricingType;
+         $scope.cost=$scope.priceCost;
+           $scope.item[$scope.type] = $scope.cost;
+    }
+       
         angular.forEach($scope.product, function (item) {
             if($scope.productName==item.id)
             {
@@ -154,7 +163,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             "id": $scope.planName,
             "name": $scope.planName,
             "product": $scope.productDetails,
-            "productPlanItemToCost":{},
+            "productPlanItemToCost":$scope.item,
             "currency":$scope.currency,
             "appProfile":null,
             "billingCycle":null,
