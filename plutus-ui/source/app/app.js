@@ -23,7 +23,8 @@ var plutusApp = angular.module('plutusApp',
             'ui.bootstrap.datetimepicker',
             'hm.readmore',
             'angularUtils.directives.dirPagination',
-            'ngTagsInput'
+            'ngTagsInput',
+            '720kb.tooltips'
         ]);
 
 // Defining global variables

@@ -131,9 +131,9 @@
 
                      <td style="width:30%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
                       <td style="width:10%;">
-                            <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"   title="Edit"></a> 
+                            <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"   tooltips tooltip-template="Edit"></a> 
                        
-                            <a href="#" ng-click="delete(pricing.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  title="Delete"></a>                           
+                            <a href="#" ng-click="delete(pricing.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                           
                         </td> 
              
                     </tr>
