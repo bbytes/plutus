@@ -2,13 +2,7 @@
 <div class="col-md-offset-2 col-md-8" ng-init="init()">
     <div class="main-title">
         <h4>ADD Users</h4>
-
-<div class="col-md-offset-2 col-md-8" ng-init="init()">
-    <div class="main-title">
-
-
-    </div>
-
+    </div>S
     <div class="create-project">
         <form name="myForm">
             <div class="row">
@@ -73,8 +67,9 @@
                             <td style="width:30%;">{{user.name}}</td>
                             <td style="width:30%;">{{user.email}}</td>
                             <td style="width:30%;">{{user.userRole}}</td>
-                            <td style="width:10%;"><button type="button" style="width:90%;" class="btn btn-default create" ng-click="deleteUser(user.email, allUsers.indexOf(user))">Delete</button></td>
-
+                            <td style="width:10%;">
+                                <a href="#" ng-click="deleteUser(user.email, allUsers.indexOf(user))" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                         
+                             
                         </tr>
 
                     </tbody>

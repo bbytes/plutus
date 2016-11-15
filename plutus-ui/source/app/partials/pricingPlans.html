@@ -27,7 +27,10 @@
                 <div class="form-group">                                   
                     <select class="form-control" ng-model="billing" ng-change="selectBilling()">
 
+
                         <option value="" disabled>Select BillingCycle</option>
+
+
                         <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
                     </select>
                 </div>
@@ -68,19 +71,19 @@
             <h4>Fixed Details</h4>
         </div>
         <div class="row-md-12"  ng-show="pricingdetails.length == []">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="form-group">                           
                     <input type="text" ng-model="pricingType" name="costType" placeholder="Number Of Users"
                            class="form-control"  required>  
                 </div>
             </div> 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="form-group">        
                     <input type="text" ng-model="priceCost"  
                            class="form-control" pattern="\d+" required>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">                                       
                     <label for="comment" class="settings">{{symbol}}</label>
                 </div>
@@ -111,6 +114,7 @@
                     </div>
                 </div>
             </div>
+           
             <table style="width:170%;">
                 <thead>
                     <tr>
@@ -125,13 +129,18 @@
                         <td style="width:20%;">{{pricing.name}}</td>
                         <td style="width:30%;">{{pricing.desc}}</td>
 
-                        <td style="width:30%;"><sapan ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
-                    <td style="width:10%;"><button type="button"  style="width:60%;" class="btn btn-default create" ng-click="edit(pricing.id, pricing.product.id)">Edit</button></td>
-                    <td style="width:10%;"><button type="button" style="width:90%;" class="btn btn-default create" ng-click="delete(pricing.id)">Delete</button></td>
+                     <td style="width:30%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
+                      <td style="width:10%;">
+                            <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"  tooltips tooltip-template="Edit"></a> 
+                       
+                            <a href="#" ng-click="delete(pricing.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                           
+                        </td> 
+             
                     </tr>
-
+  
                     </tbody>
             </table>
+            
         </div>
     </div>
 
