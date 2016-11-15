@@ -28,9 +28,6 @@
                     <select class="form-control" ng-model="billing" ng-change="selectBilling()">
 
                         <option value="" disabled>Select BillingCycle</option>
-
-                        <option value="">Select Billing Cycle</option>
-
                         <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
                     </select>
                 </div>
