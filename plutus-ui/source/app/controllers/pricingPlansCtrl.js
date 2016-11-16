@@ -10,7 +10,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         $scope.update = false;
         productService.getProduct().then(function (response) {
             if (response.success) {
-                $scope.product = response.data;
+                $scope.product = response.data;  
             }
         });
         pricingService.getCurrency().then(function (response) {
@@ -49,6 +49,13 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         pricingService.getPricingdetailsById($scope.productId).then(function (response) {
             if (response.success) {
                 $scope.pricingdetails=response.data;
+                 angular.forEach($scope.product, function (val) {
+                     if($scope.productId==val.id)
+                     {
+                   $scope.type=val.billingType;
+                   
+                     }
+                    });
                 
                  var priceObject = {};
         angular.forEach($scope.pricingdetails, function (val) {

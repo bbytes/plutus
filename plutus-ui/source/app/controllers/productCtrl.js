@@ -71,6 +71,7 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             if (item.id == productId) {
                 $scope.productName = item.name;
                 $scope.description = item.desc;
+                $scope.billingType=item.billingType;
                 angular.forEach(item.productTeamEmails, function (value) {
                     $scope.email.push(value);
                 });

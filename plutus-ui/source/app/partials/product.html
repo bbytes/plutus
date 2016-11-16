@@ -17,12 +17,11 @@
                     </div>                                                   
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="comment" class="settings" >Description</label>
-                            <textarea type="text" ng-model="description" name="description"
-                                      class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>
-                            <span style="color: red"
-                                  ng-show="!isSubmitted && description.customer.$dirty && myForm.description.$error.required">The
-                                Description Name is required.</span> <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid</span>
+                            <label for="comment" class="settings">Billing Type</label>                                                           
+                            <select class="form-control" ng-model="billingType" ng-change="selectPricingDetails()">
+                                <option value="">Select Product</option>
+                                <option ng-repeat='bill in billingTypes' value='{{bill}}'>{{bill}}</option>
+                            </select>
                         </div>
                     </div>                          
                 </div>  
@@ -31,21 +30,29 @@
                         <div class="form-group">
 
                             <label for="comment" class="settings">Product Team Emails</label>
-                            <tags-input ng-model="email">
+                            <tags-input ng-model="email" name="email">
                                 <auto-complete source="loadTags($query)"></auto-complete>
                             </tags-input>
+                            <span
+                                ng-show=" !isSubmitted && myForm.email.$error.required">Email is required.</span>
+                            <span ng-show="myForm.email.$error.email">Invalid email
+                                address.</span>
+                            </span>
                         </div>
 
                     </div>           
 
                     <div class="col-md-6">
+
                         <div class="form-group">
-                            <label for="comment" class="settings">Billing Type</label>                                                           
-                            <select class="form-control" ng-model="billingType" ng-change="selectPricingDetails()">
-                                <option value="">Select Product</option>
-                                <option ng-repeat='bill in billingTypes' value='{{bill}}'>{{bill}}</option>
-                            </select>
+                            <label for="comment" class="settings" >Description</label>
+                            <textarea type="text" ng-model="description" name="description"
+                                      class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>
+                            <span style="color: red"
+                                  ng-show="!isSubmitted && description.customer.$dirty && myForm.description.$error.required">The
+                                Description Name is required.</span> <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid</span>
                         </div>
+
                     </div>  
 
 
@@ -81,10 +88,10 @@
                             <td style="width:30%;">{{pro.desc}}</td>
                             <td style="width:30%;"><sapan ng-repeat="pEmails in pro.productTeamEmails">{{pEmails}},</span></td>
                         <td style="width:10%;">
-                            <a href="#" ng-click="edit(pro.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"  tooltips tooltip-template="Edit"></a> 
+                            <a href="#" ng-click="edit(pro.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"  tooltips tooltip-template="Edit"> <label>EDIT</label> </a> 
                         </td>
                         <td style="width:10%;">
-                            <a href="#" ng-click="delete(pro.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                           
+                            <a href="#" ng-click="delete(pro.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"> <label>DELETE</label> </a>                           
                         </td>  
                         </tr>
 

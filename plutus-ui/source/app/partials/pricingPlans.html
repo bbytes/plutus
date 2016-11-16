@@ -5,59 +5,61 @@
 
         </div>
 
-        <div class="row-md-16">
-            <div class="col-md-3">
-                <label for="comment" class="settings">Select Product</label>
-                <div class="form-group">                                   
-                    <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
-                       <option value="" disabled>Select Product</option>
-                        <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
-                    </select>
-                </div>
-            </div> 
+        <div class="row-md-12">
+            <div class="row-md-12">
+                <div class="col-md-4">
+                    <label for="comment" class="settings">Select Product</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
+                            <option value="" disabled>Select Product</option>
+                            <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
+                        </select>
+                    </div>
+                </div> 
 
-            <div class="col-md-3">
-                <label for="comment" class="settings">Plan Name</label>
-                <div class="form-group">                                       
-                    <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
-                </div>
-            </div> 
-             <div class="col-md-3">
-                <label for="comment" class="settings">Billing Period</label>
-                <div class="form-group">                                   
-                    <select class="form-control" ng-model="billing" ng-change="selectBilling()">
-
-
-                        <option value="" disabled>Select BillingCycle</option>
-
-
-                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
-                    </select>
-                </div>
-            </div> 
-
-            <div class="col-md-3">
-                <label for="comment" class="settings">Currency</label>
-                <div class="form-group">                                   
-                    <select class="form-control" ng-model="currency" ng-change="selectLabel()">
-                        <option value="" disabled>Select Currency</option>
-                        <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
-                    </select>
-                </div>
-            </div> 
-            <div class="col-md-16">
-                <label for="comment" class="settings">Description</label>
-                <div class="form-group">                                       
-                    <textarea type="text" ng-model="description" name="description"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>      
-                </div>
+                <div class="col-md-4">
+                    <label for="comment" class="settings">Plan Name</label>
+                    <div class="form-group">                                       
+                        <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
+                    </div>
+                </div> 
+                <div class="col-md-4">
+                    <label for="comment" class="settings">Billing Period</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="billing" ng-change="selectBilling()">
+                            <option value="" disabled>Select BillingCycle</option>
+                            <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
+                        </select>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label for="comment" class="settings">Currency</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="currency" ng-change="selectLabel()">
+                            <option value="" disabled>Select Currency</option>
+                            <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-md-8">
+                    <label for="comment" class="settings">Description</label>
+                    <div class="form-group">                                       
+                        <textarea type="text" ng-model="description" name="description"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>      
+                    </div>
+                </div>              
             </div> 
 
         </div>
-        <div class="main-title" ng-show="pricingdetails.length > 0">
+        {{type}}
+
+        {{pricingdetails}}
+        <div class="main-title" ng-show="type == 'Metered'">
             <h4>Metering Details</h4>
         </div>            
-        <div class="row-md-12" ng-show="pricingdetails.length > 0">
-            <table>               
+        <div class="row-md-12" ng-show="type == 'Metered'">
+            <table ng-show="type == 'Metered'">               
                 <tbody>
                     <tr ng-repeat="pri in pricingArray">
                         <td style="width:50%;"> {{pri.type}}</td>
@@ -67,10 +69,10 @@
                 </tbody>
             </table>
         </div> 
-        <div class="main-title" ng-show="pricingdetails.length == []">
+        <div class="main-title" ng-show="type == 'Fixed'">
             <h4>Fixed Details</h4>
         </div>
-        <div class="row-md-12"  ng-show="pricingdetails.length == []">
+        <div class="row-md-12"  ng-show="type == 'Fixed'">
             <div class="col-md-5">
                 <div class="form-group">                           
                     <input type="text" ng-model="pricingType" name="costType" placeholder="Number Of Users"
@@ -114,7 +116,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <table style="width:170%;">
                 <thead>
                     <tr>
@@ -128,19 +130,19 @@
                     <tr ng-repeat="pricing in allPricingPlans| filter:searchText">                        
                         <td style="width:20%;">{{pricing.name}}</td>
                         <td style="width:30%;">{{pricing.desc}}</td>
-
-                     <td style="width:30%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
-                      <td style="width:10%;">
-                            <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"   tooltips tooltip-template="Edit"></a> 
-                       
-                            <a href="#" ng-click="delete(pricing.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                           
+                        <td style="width:30%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
+                        <td style="width:10%;">
+                            <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.svg"  tooltips tooltip-template="Edit"><label>EDIT</label> </a> 
+                        </td>
+                        <td style="width:10%;">
+                            <a href="#" ng-click="delete(pricing.id)" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"><label>DELETE</label></a>                           
                         </td> 
-             
+
                     </tr>
-  
-                    </tbody>
+
+                </tbody>
             </table>
-            
+
         </div>
     </div>
 

@@ -3,6 +3,8 @@
     <div class="main-title">
         <h4>ADD Users</h4>
     </div>
+
+
     <div class="create-project">
         <form name="myForm">
             <div class="row">
@@ -52,6 +54,7 @@
                 </div>
 
             </div>
+
             <div class="project-table" ng-init="init()">
                 <table style="width:170%;">
                     <thead>
@@ -68,9 +71,11 @@
                             <td style="width:30%;">{{user.email}}</td>
                             <td style="width:30%;">{{user.userRole}}</td>
                             <td style="width:10%;">
-                                <a href="#" ng-click="deleteUser(user.email, allUsers.indexOf(user))" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete"></a>                         
-                             
-                        </tr>
+                                <a href="#" ng-click="deleteUser(user.email, allUsers.indexOf(user))" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete">
+                                    <label>DELETE</label> </a>  
+
+                            </td></tr>
+
 
                     </tbody>
                 </table>

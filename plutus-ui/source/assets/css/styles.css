@@ -4280,3 +4280,5 @@ tabs-left, .tabs-right {
 .row > .elements:first-child {
     float: center;
 }
+  table tr label { opacity:0; float:right }
+  table tr:hover label { opacity:1 }
