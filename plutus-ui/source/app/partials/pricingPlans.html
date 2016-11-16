@@ -6,51 +6,49 @@
         </div>
 
         <div class="row-md-12">
-            <div class="row-md-12">
-                <div class="col-md-4">
-                    <label for="comment" class="settings">Select Product</label>
-                    <div class="form-group">                                   
-                        <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
-                            <option value="" disabled>Select Product</option>
-                            <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
-                        </select>
-                    </div>
-                </div> 
 
-                <div class="col-md-4">
-                    <label for="comment" class="settings">Plan Name</label>
-                    <div class="form-group">                                       
-                        <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
-                    </div>
-                </div> 
-                <div class="col-md-4">
-                    <label for="comment" class="settings">Billing Period</label>
-                    <div class="form-group">                                   
-                        <select class="form-control" ng-model="billing" ng-change="selectBilling()">
-                            <option value="" disabled>Select BillingCycle</option>
-                            <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
-                        </select>
-                    </div>
-                </div> 
-            </div>
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <label for="comment" class="settings">Currency</label>
-                    <div class="form-group">                                   
-                        <select class="form-control" ng-model="currency" ng-change="selectLabel()">
-                            <option value="" disabled>Select Currency</option>
-                            <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
-                        </select>
-                    </div>
-                </div> 
-                <div class="col-md-8">
-                    <label for="comment" class="settings">Description</label>
-                    <div class="form-group">                                       
-                        <textarea type="text" ng-model="description" name="description"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>      
-                    </div>
-                </div>              
+            <div class="col-md-4">
+                <label for="comment" class="settings">Select Product</label>
+                <div class="form-group">                                   
+                    <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
+                        <option value="" disabled>Select Product</option>
+                        <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
+                    </select>
+                </div>
             </div> 
 
+            <div class="col-md-4">
+                <label for="comment" class="settings">Plan Name</label>
+                <div class="form-group">                                       
+                    <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
+                </div>
+            </div> 
+            <div class="col-md-4">
+                <label for="comment" class="settings">Billing Period</label>
+                <div class="form-group">                                   
+                    <select class="form-control" ng-model="billing" ng-change="selectBilling()">
+                        <option value="" disabled>Select BillingCycle</option>
+                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <label for="comment" class="settings">Currency</label>
+                <div class="form-group">                                   
+                    <select class="form-control" ng-model="currency" ng-change="selectLabel()">
+                        <option value="" disabled>Select Currency</option>
+                        <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
+                    </select>
+                </div>
+            </div> 
+            <div class="col-md-8">
+                <label for="comment" class="settings">Description</label>
+                <div class="form-group">                                       
+                    <textarea type="text" ng-model="description" name="description"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>      
+                </div>
+            </div>              
         </div>
         {{type}}
 
