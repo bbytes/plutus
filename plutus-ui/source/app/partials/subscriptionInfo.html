@@ -79,16 +79,24 @@
                     <h4>Stats</h4>  
                 </div>                                        
 
-            <div class="collapse navbar-collapse" id="adminNavbar" ng-repeat="stats in customerStats">
-                    <ul class="nav navbar-nav">
-                        <li><a  href="javascript://" ng-click="setAdminTab('registration')" >Registration date</a></li>
-                        <li><a href="javascript://" ng-click="setAdminTab('logged')">Last logged in date</a></li>
-                        <li><a  href="javascript://" ng-click="setAdminTab('users')">no of users </a></li>    
-                        <li><a  href="javascript://" ng-click="setAdminTab('projects')">no of projects</a></li> 
-                        <li><a href="javascript://" ng-click="setAdminTab('positions')">no of positions</a></li>
-                        <li><a href="javascript://" ng-click="setAdminTab('candidates')">no of candidates</a></li>
+            <div class="collapse navbar-collapse">
+                    <table style="width:170%;">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">Entry Date</th>                             
+                            <th style="width:15%;">Subscription Key</th>
+                             <th style="width:15%;">Stats</th>
+                        </tr>
+                    </thead>                  
+                    <tbody ng-repeat="stats in customerStats">
+                        <tr>                        
+                            <td style="width:20%;"><a href="#"> </a>{{stats.entryDate | date:'MM/dd/yyyy @ h:mma'}} </td>
+                               <td style="width:20%;"><a href="#"> </a>{{stats.subscriptionKey}} </td>
+                            <td style="width:15%;"  ng-repeat="(key, value) in stats.stats"><a href="#"> {{key}}:{{value}} </a></td>                       
+                        </tr>
 
-                    </ul>
+                        </tbody>
+                </table>
                 </div>
             </div>
             </div>

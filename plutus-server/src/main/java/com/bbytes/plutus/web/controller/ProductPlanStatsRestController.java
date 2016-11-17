@@ -35,6 +35,7 @@ public class ProductPlanStatsRestController {
 		try {
 			if (productPlanStats != null) {
 				productPlanStats.setSubscriptionKey(RequestContextHolder.getSubscriptionKey());
+				productPlanStats.setEntryDate(DateTime.now().toDate());
 				productPlanStats = productPlanStatsService.save(productPlanStats);
 			} else {
 				return new ProductStatsRestResponse("Product Plan Stats cannot be null", false);

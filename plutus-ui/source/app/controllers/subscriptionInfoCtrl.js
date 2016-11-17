@@ -56,7 +56,12 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
         $scope.showStats = true;
         subscriptionService.getCustomerDetails(subscriptionKey,$scope.selectedTime).then(function(response) {
             if (response && response.success) {
-                  $scope.customerStats = response.data;               
+                  $scope.customerStats = response.data;
+                    angular.forEach($scope.customerStats, function (value) {
+                   // $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
+                    $scope.dataStats=value.stats;
+                   });
+                 // $scope.dataStats=$scope.customerStats.stats;
                    }   
         });
 
@@ -111,4 +116,5 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
             }
         });
     };
+  
 });

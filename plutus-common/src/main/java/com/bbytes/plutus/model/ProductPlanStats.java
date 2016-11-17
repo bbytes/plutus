@@ -27,7 +27,7 @@ public class ProductPlanStats extends BaseEntity {
 	// that is sent from the client. Billing happens based on these nos
 	private Map<String, Number> stats = new HashMap<String, Number>();
 
-	// the stat for which subscription is refered here
+	// the stats for which subscription is refereed here
 	@Indexed
 	private String subscriptionKey;
 
