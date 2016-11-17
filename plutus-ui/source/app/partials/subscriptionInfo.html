@@ -4,7 +4,7 @@
             <div  class="col-md-6">
                 <div class="row col span_1_of_3">
 
-                     <div class="form-group">                                                                     
+                     <div class="form-group" style="width: 213%;">                                                                     
                             <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()" placeholder='Select Product'>
                                 <option ng-repeat="product in products" value="{{product.id}}">{{product.name}}</option>
                             </select>
@@ -14,10 +14,9 @@
 
                 </div>
             </div>
-            <div  class="col-md-6">
+            <div  class="col-md-6" >
                 <div class="row col span_1_of_3">
-
-                     <div class="form-group">                                                                     
+                     <div class="form-group" style="width: 213%;">                                                                     
                             <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod()" placeholder='Type of billing'>
                                 <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
                             </select>
