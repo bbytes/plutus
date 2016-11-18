@@ -80,18 +80,18 @@
 
             <div class="collapse navbar-collapse">
                     <table style="width:170%;">
-                    <thead >
-                        <tr  ng-repeat="item in customerStats">
+                    <thead>
+                        <tr>
                             <th style="width:20%;">Entry Date</th>                             
                             <th style="width:15%;">Subscription Key</th>
-                             <th style="width:15%;" ng-repeat="(key, val) in item.stats">{{key}}</th>
+                             <th style="width:15%;" ng-repeat="(key, val) in dataStats">{{key}}</th>
                         </tr>
                     </thead>                  
-                    <tbody ng-repeat="stats in customerStats">
+                    <tbody>
                         <tr>                        
-                            <td style="width:20%;"><a href="#"> </a>{{stats.entryDate | date:'MM/dd/yyyy @ h:mma'}} </td>
-                               <td style="width:20%;"><a href="#"> </a>{{stats.subscriptionKey}} </td>
-                            <td style="width:15%;"  ng-repeat="(key, value) in stats.stats"><a href="#">{{value}} </a></td>                       
+                            <td style="width:20%;"><a href="#"> </a>{{entryDate | date:'MM/dd/yyyy @ h:mma'}} </td>
+                               <td style="width:20%;"><a href="#"> </a>{{subKey}} </td>
+                            <td style="width:15%;"  ng-repeat="(key, value) in dataStats"><a href="#">{{value}} </a></td>                       
                         </tr>
 
                         </tbody>

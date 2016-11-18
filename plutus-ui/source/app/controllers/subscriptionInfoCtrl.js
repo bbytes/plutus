@@ -60,6 +60,9 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                     angular.forEach($scope.customerStats, function (value) {
                    // $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
                     $scope.dataStats=value.stats;
+                    $scope.entryDate=value.entryDate;
+                     $scope.subKey=value.subscriptionKey;
+                    
                    });
                  // $scope.dataStats=$scope.customerStats.stats;
                    }   
