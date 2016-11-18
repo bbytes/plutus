@@ -43,7 +43,7 @@ public class TestPricePlanController extends PlutusApplicationWebTests {
 
 		PricingPlan pricingPlan = new PricingPlan();
 		pricingPlan.setName("TEST");
-		pricingPlan.setBillingCycle(BillingCycle.Monthy);
+		pricingPlan.setBillingCycle(BillingCycle.Monthly);
 		pricingPlan.setCurrency(Currency.INR);
 		pricingPlan.setAppProfile(AppProfile.saas);
 		pricingPlan.setId("TEST2");

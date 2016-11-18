@@ -31,6 +31,7 @@
 
 	<modules>
 		<module>plutus-common</module>
+		<module>plutus-ui</module>
 		<module>plutus-server</module>
 		<module>plutus-client</module>
 	</modules>

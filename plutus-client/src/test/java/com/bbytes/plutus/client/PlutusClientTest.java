@@ -26,7 +26,7 @@ public class PlutusClientTest extends AbstractPlutusClientTest {
 		SubscriptionInfo subscriptionInfo = new SubscriptionInfo();
 		subscriptionInfo.setAppProfile(AppProfile.saas);
 		subscriptionInfo.setBillingAddress("none");
-		subscriptionInfo.setBillingCycle(BillingCycle.Monthy);
+		subscriptionInfo.setBillingCycle(BillingCycle.Monthly);
 		subscriptionInfo.setContactNo("1234567899");
 		subscriptionInfo.setCurrency(Currency.INR);
 		subscriptionInfo.setCustomerName("test");
