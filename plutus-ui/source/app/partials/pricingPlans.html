@@ -50,9 +50,7 @@
                 </div>
             </div>              
         </div>
-        {{type}}
-
-        {{pricingdetails}}
+      
         <div class="main-title" ng-show="type == 'Metered'">
             <h4>Metering Details</h4>
         </div>            
@@ -62,7 +60,7 @@
                     <tr ng-repeat="pri in pricingArray">
                         <td style="width:50%;"> {{pri.type}}</td>
                         <td style="width:30%;">  <input ng-model="pri.cost" ng-required="true" pattern="\d+"> </td>
-                        <td style="width:20%;"> <label for="comment" class="settings">{{symbol}}</label></td>                                                
+                        <td style="width:20%;">{{symbol}}</td>                                                
                     </tr>
                 </tbody>
             </table>
