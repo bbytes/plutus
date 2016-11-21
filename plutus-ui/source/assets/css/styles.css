@@ -4282,3 +4282,9 @@ tabs-left, .tabs-right {
 }
   table tr label { opacity:0; float:right }
   table tr:hover label { opacity:1 }
+  
+.heading{
+   font-size: 20px;
+   font-family: "Times New Roman", Times, serif;
+  }  
+  
