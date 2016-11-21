@@ -56,6 +56,9 @@ public class PlutusSecurityConfig extends WebSecurityConfigurerAdapter {
 				.servletApi().and().authorizeRequests()
 
 				// Allow logins urls
+				// Allow anonymous resource requests
+				.antMatchers("/").permitAll().antMatchers("/favicon.ico").permitAll().antMatchers("/**/*.html")
+				.permitAll().antMatchers("/**/*.css").permitAll().antMatchers("/**/*.js").permitAll()
 				.antMatchers("/auth/**").permitAll().and()
 				// Custom Token based authentication based on the header
 				// previously given to the client

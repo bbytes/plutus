@@ -31,11 +31,12 @@ var plutusApp = angular.module('plutusApp',
 plutusApp.run([
     '$rootScope',
     '$state',
+    'appAuthenticationService',
     'BASE_URL',
-    function ($rootScope, $state, BASE_URL) {
+    function ($rootScope, $state,appAuthenticationService, BASE_URL) {
 
         $rootScope.bodyClass = '';
-        $rootScope.baseUrl = BASE_URL;
+        $rootScope.baseUrl = 'http://localhost:7676/';
         $rootScope.apiUrl = 'api/v1';
         $rootScope.loggedStatus = false;
         $rootScope.authToken = '';
@@ -131,6 +132,10 @@ plutusApp.config([
                 'footer@pricing-plans': {
                     templateUrl: 'app/partials/home-footer.html'
                 }
+            },
+            data: {
+                authorization: 'pricingplans',
+                redirectTo: 'login'
             }
         }).state('subscription', {
             url: '/subscription',
@@ -148,6 +153,10 @@ plutusApp.config([
                 'footer@subscription': {
                     templateUrl: 'app/partials/home-footer.html'
                 }
+            },
+              data: {
+                authorization: 'subscription',
+                redirectTo: 'login'
             }
         }).state('admin', {
             url: '/admin',
@@ -165,6 +174,10 @@ plutusApp.config([
                 'footer@admin': {
                     templateUrl: 'app/partials/home-footer.html'
                 }
+            },
+             data: {
+                authorization: 'adminPage',
+                redirectTo: 'login'
             }
         }).state('forgot-password', {
             url: '/forgot-password',

@@ -14,10 +14,7 @@ angular.module('plutusApp').factory('authInterceptor', function ($rootScope, $q,
                     $rootScope.authToken = userInfo.accessToken;
                     $rootScope.loggedInUser = userInfo.email;
                     $rootScope.userName = userInfo.name;
-                    $rootScope.userRole = userInfo.userRoles;
-                    $rootScope.timePreference = userInfo.timePreference;
-                    $rootScope.switchState = userInfo.emailNotificationState;
-                    $rootScope.timeZone = userInfo.timeZone;
+                    $rootScope.userRole = userInfo.userRoles;          
                 }
             }
             return config;
