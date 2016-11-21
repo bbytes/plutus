@@ -190,7 +190,7 @@ plutusApp.config([
                 }
             },
             data: {
-                authorization: 'dashboard',
+                authorization: 'login',
                 redirectTo: 'login'
             }
         })
