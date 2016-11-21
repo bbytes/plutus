@@ -110,6 +110,10 @@ plutusApp.config([
                 'footer@products': {
                     templateUrl: 'app/partials/home-footer.html'
                 }
+            },
+             data: {
+                authorization: 'products',
+                redirectTo: 'login'
             }
         }).state('pricing-plans', {
             url: '/pricing-plans',
