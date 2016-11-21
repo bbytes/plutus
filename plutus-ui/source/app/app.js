@@ -36,7 +36,7 @@ plutusApp.run([
     function ($rootScope, $state,appAuthenticationService, BASE_URL) {
 
         $rootScope.bodyClass = '';
-        $rootScope.baseUrl = 'http://localhost:7676/';
+        $rootScope.baseUrl = BASE_URL;
         $rootScope.apiUrl = 'api/v1';
         $rootScope.loggedStatus = false;
         $rootScope.authToken = '';
