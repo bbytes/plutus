@@ -30,14 +30,13 @@
                         <div class="form-group">
 
                             <label for="comment" class="settings">Product Team Emails</label>
-                            <tags-input ng-model="email" name="email">
+                            <tags-input ng-model="email" name="email" allowed-tags-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" enable-editing-last-tag="yes"  allow-leftover-text="false">
                                 <auto-complete source="loadTags($query)"></auto-complete>
                             </tags-input>
-                            <span
-                                ng-show=" !isSubmitted && myForm.email.$error.required">Email is required.</span>
-                            <span ng-show="myForm.email.$error.email">Invalid email
-                                address.</span>
-                            </span>
+                                    <div ng-repeat="i in myForm.email.$error">    
+                                        <label>Please Enter Valid Email Id</label>
+                                    </div>
+  
                         </div>
 
                     </div>           
