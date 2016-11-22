@@ -5,6 +5,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     $scope.update = false;
     $scope.pricingArray = [];
     $scope.fixedRows = [];
+    $scope.meteredRows = [];
     $scope.newObject = {};
     // variable to store the all selected billing values
     var billingValue = [];
@@ -15,7 +16,18 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     $scope.addFixedDetails = function () {
         $scope.count++;
         if ($scope.count <= $scope.billingPeriods.length) {
-            $scope.fixedRows.push({priceCost: '', billing: ''});
+            $scope.fixedRows.push({cost: '', billing: '', key: 'Price Per Item'});
+        } else {
+            appNotifyService.error('There is no time period to add');
+        }
+    };
+
+//adding dynamic rows for metered  details
+    $scope.addMeteredDetails = function () {
+
+        $scope.count++;
+        if ($scope.count <= $scope.billingPeriods.length) {
+            $scope.meteredRows.push({key: '', cost: ''});
         } else {
             appNotifyService.error('There is no time period to add');
         }
@@ -33,16 +45,13 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         }
     };
 
-    //checking already existing time period drop down value for metered
+    // existing value cleared
     $scope.selectBillingMetered = function (index, value) {
-        var isBillingValueExist = billingValueMetered.indexOf(value);
 
-        if (isBillingValueExist === -1) {
-            billingValueMetered[index] = value;
-        } else {
-            appNotifyService.error('Selected billing cycle already there');
-            $scope.pricingArray[index].billing = "";
-        }
+        angular.forEach($scope.meteredRows, function (val) {
+            val.cost = '';
+            val.key = '';
+        });
     };
 
     // Remove fixedRows
@@ -50,7 +59,11 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         $scope.fixedRows.splice(index, 1);
     };
 
-//loading Products and currency
+    // Remove meteredRows
+    $scope.removeMeteredRows = function (index) {
+        $scope.meteredRows.splice(index, 1);
+    };
+    //loading Products and currency
     $scope.init = function () {
         $scope.update = false;
         productService.getProduct().then(function (response) {
@@ -75,8 +88,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                 $scope.billingPeriods = response.data;
             }
         });
-    }
 
+    }
     //dispalying symbol for corresponding currency
     $scope.selectLabel = function () {
         $scope.cur = $scope.currency;
@@ -88,11 +101,11 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             $scope.symbol = 'Rs';
         }
     }
-
     //displaying pricing Details based on product
     $scope.selectPricingDetails = function () {
 
         $scope.fixedRows = [];
+        $scope.meteredRows = [];
         $scope.pricingArray = [];
         $scope.productId = $scope.productName;
         pricingService.getPricingdetailsById($scope.productId).then(function (response) {
@@ -106,7 +119,9 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                     }
                 });
                 if ($scope.type == 'Fixed') {
-                    $scope.fixedRows.push({priceCost: '', billing: ''});
+                    $scope.fixedRows.push({cost: '', billing: '', key: 'Price Per Item'});
+                } else {
+                    $scope.meteredRows.push({key: '', cost: ''});
                 }
 
                 var priceObject = {};
@@ -131,20 +146,17 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
 
 
         if ($scope.pricingdetails.length > 0) {
-            angular.forEach($scope.pricingArray, function (value, key) {
-                var type = value.type;
+            angular.forEach($scope.meteredRows, function (value, key) {
+                var key = value.key;
                 var cost = value.cost;
-                $scope.item[type] = cost;
+                $scope.item[key] = cost;
             });
         } else {
             angular.forEach($scope.fixedRows, function (value, key) {
-                var type = value.billing;
+                var key = value.key;
                 var cost = value.cost;
-                $scope.item[type] = cost;
+                $scope.item[key] = cost;
             });
-//        $scope.type=$scope.pricingType;
-//         $scope.cost=$scope.priceCost;
-//           $scope.item[$scope.type] = $scope.cost;
         }
 
         $scope.productDetails = [];
@@ -181,7 +193,6 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
-
 //clear scope values
     $scope.clear = function () {
         $scope.planName = "";
@@ -190,11 +201,11 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         $scope.currency = "";
         $scope.billing = "";
     };
-
     //edit pricing
     $scope.edit = function (pricingId, productId) {
         $scope.update = true;
         $scope.email = [];
+        $scope.proId = productId;
         angular.forEach($scope.allPricingPlans, function (item) {
             if (item.id == pricingId) {
                 $scope.planName = item.name;
@@ -203,10 +214,23 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                 $scope.currency = item.currency;
                 $scope.billing = item.billingCycle;
 
+
+//             angular.forEach($scope.product, function (val) {
+//                    if ($scope.proId == val.id)
+//                    {
+//                        $scope.type = val.billingType;
+//
+//                    }
+//                });  
+//               if($scope.type=='Fixed')
+//                   {
+//                  $scope.fixedRows=  item.productPlanItemToCost ;
+//                    }else{
+//                  $scope.meteredRows=  item.productPlanItemToCost ;
+//            }
             }
         });
     };
-
     //update pricing
     $scope.updatePricing = function () {
 
@@ -237,7 +261,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             "desc": $scope.description,
             "currency": $scope.currency,
             "appProfile": null,
-            "billingCycle": null,
+            "billingCycle": $scope.billing,
             "discount": null
         };
         pricingService.updatePri(input).then(function (response) {
@@ -253,7 +277,6 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
-
     //delete pricing by id  
     $scope.delete = function (productId) {
 
@@ -270,5 +293,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
             appNotifyService.error('Error while creating project.');
         });
     };
+
+
+
 
 });
