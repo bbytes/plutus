@@ -667,7 +667,7 @@ select:first-child, select#f {
     font-size: 12px;
 }
 .main-title{
-    margin:40px auto;
+   // margin:40px auto;
     border-bottom: 2px solid #7c6991;
     margin-bottom: 11px;
 
@@ -728,9 +728,9 @@ select:first-child, select#f {
 }
 .create{
     background: #7c6991;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 30%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 10%;
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
@@ -753,8 +753,8 @@ select:first-child, select#f {
     border-bottom: 1px solid #e1e1e1;
 }
 .project-table td{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .project-img img{
     width:25px;
@@ -4299,5 +4299,11 @@ tabs-left, .tabs-right {
 .createAdmin:hover{
     background: #7c6991;
     color:#fff;
+}
+.sub-title{
+    //margin:40px auto;
+    border-bottom: 2px solid #7c6991;
+    margin-bottom: 11px;
+
 }
   
