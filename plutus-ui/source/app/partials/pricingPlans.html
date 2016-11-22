@@ -22,7 +22,7 @@
                     <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
                 </div>
             </div> 
-          
+
             <div class="col-md-4">
                 <label for="comment" class="settings">Currency</label>
                 <div class="form-group">                                   
@@ -39,7 +39,7 @@
                 </div>
             </div>              
         </div>
-      
+
         <div class="main-title" ng-show="type == 'Metered'">
             <h4>Metering Details</h4>
         </div>            
@@ -47,12 +47,12 @@
             <table ng-show="type == 'Metered'">               
                 <tbody>
                     <tr ng-repeat="pri in pricingArray">
-                         <td style="width:30%;"><select class="form-control" ng-model="pri.billing" ng-change="selectBilling(value.billing)">
-                        <option value="" disabled>Select BillingCycle</option>
-                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}' ng-disabled="{{value.billing}}">{{value}}</option>
-                    </select>
-                    </td>
-                    {{pri.billing}}
+                        <td style="width:30%;"><select class="form-control" ng-model="pri.billing" ng-change="selectBillingMetered($index, pri.billing)">
+                                <option value="" disabled>Select BillingCycle</option>
+                                <option ng-repeat='value in billingPeriods' value='{{value}}'>{{value}}</option>
+                            </select> 
+                        </td>
+
                         <td style="width:30%;"> {{pri.type}}</td>
                         <td style="width:20%;">  <input ng-model="pri.cost" ng-required="true" pattern="\d+"> </td>
                         <td style="width:10%;">{{symbol}}</td>                                                
@@ -60,59 +60,52 @@
                 </tbody>
             </table>
         </div> 
-             
-        
-        
-        
         <div class="main-title" ng-show="type == 'Fixed'">
             <h4>Fixed Details</h4>
         </div>
-        
-  
         <div class="row-md-12"  ng-show="type == 'Fixed'" ng-repeat="value in fixedRows">
-   
+
             <div class="col-sm-2 col-xs-12 pull-right" >
                 <a ng-click="removeFixedRows($index)" tooltip="Add">delete</a>  
             </div>
-                                                
-             <div class="col-md-1">
-                 <a ng-click='addFixedDetails()' tooltip="Add">add</a>                           
-             </div>
+
+            <div class="col-md-1">
+                <a ng-click='addFixedDetails()' tooltip="Add">add</a>                           
+            </div>
+
             <div class="col-md-4">
                 <label for="comment" class="settings">Fixed plan for Time Period</label>
                 <div class="form-group">                                   
-                    <select class="form-control" ng-model="value.billing" ng-change="selectBilling(value.billing)">
+                    <select class="form-control" ng-model="value.billing" ng-change="selectBilling($index, value.billing)">
                         <option value="" disabled>Select BillingCycle</option>
-                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}' ng-disabled="{{value.billing}}">{{value}}</option>
-                    </select>
-                    
-                     {{value.billing}}
+                        <option ng-repeat='value in billingPeriods' value='{{value}}'>{{value}}</option>
+                    </select>    
                 </div>
 
             </div>
             <div class="col-md-3">
-               
+
                 <br>
-                 <label for="comment" class="settings">Price Per Item</label>
+                <label for="comment" class="settings">Price Per Item</label>
                 <div class="form-group">                           
                     <!--input type="text" ng-model="pricingType" name="costType" placeholder="Price per Item"
                            class="form-control"  required-->  
                 </div>
             </div> 
             <div class="col-md-3">
-                 <label for="comment" class="settings"></label>
+                <label for="comment" class="settings"></label>
                 <div class="form-group">        
                     <input type="text" ng-model="value.cost"  
                            class="form-control" pattern="\d+" required>
-                    
+
                 </div>
             </div>
             <div class="col-md-1">
-                                                 
-                    <label for="comment" class="settings">{{symbol}}</label>
-              
+
+                <label for="comment" class="settings">{{symbol}}</label>
+
             </div>      
-               
+
         </div> 
         <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
                 ng-click="createPricing()">SAVE</button>    
