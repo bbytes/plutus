@@ -63,7 +63,7 @@
              <label for="comment" class="heading">STATS:</label>
               <div class="col-md-4">
                 <label for="comment" class="settings">Select TimePeriod</label>
-               <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod()" placeholder='Type of billing'>
+               <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod($index,selectedTime)" placeholder='Type of billing'>
                                 <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
                             </select>
             </div> 

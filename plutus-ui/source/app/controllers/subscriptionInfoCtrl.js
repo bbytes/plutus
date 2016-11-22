@@ -10,6 +10,8 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     $scope.itemsPerPage = 5;
     $scope.pagedItems = [];
     $scope.currentPage = 0;
+    
+    /*load all subscriptions,products */
     $scope.init = function () {
         subscriptionService.getSubscriptions().then(function (response) {
             if (response.success) {
@@ -22,29 +24,28 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                    });
                 
             };
-            
-     
-         productService.getProduct().then(function (response) {
+               
+        productService.getProduct().then(function (response) {
             if (response.success) {
                 $scope.products = response.data;
                 $scope.selectedProduct= $scope.products[0].id;
                 //appNotifyService.info("success ");
             }
         });
-          subscriptionService.getAllTimePeriods().then(function(response) {
+        
+        subscriptionService.getAllTimePeriods().then(function(response) {
             if (response && response.success) {
                   $scope.allTimePeriods = response.data;
-                  
-                  $scope.selectedTime = $scope.allTimePeriods[2];
-               
+                   
+                    $scope.selectedTime = $scope.allTimePeriods[2];
+                    
             }
           
         });
-        //$scope.getTimePeriod();
     });
 }
     
-
+    /*method to load subscriptions for selected product */
     $scope.getSubscriptionsForProd = function () {
         $scope.showStats = false;
         subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {
@@ -61,9 +62,18 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
         });
 
     };
+    
+    /* Method to load stats of particular customer*/
     $scope.getCustomerDetails = function (subscriptionKey) {
+        $rootScope.custsubkey=subscriptionKey;
         $scope.showStats = true;
-        subscriptionService.getCustomerDetails(subscriptionKey,$scope.selectedTime).then(function(response) {
+       $scope.getTimePeriod('0',$scope.selectedTime);
+    };
+    
+    /*On change of timeperiod load stats*/
+    $scope.getTimePeriod = function (index,value) {
+         $scope.selectedTime=value;
+             subscriptionService.getCustomerDetails($rootScope.custsubkey,$scope.selectedTime).then(function(response) {
             if (response && response.success) {
                   $scope.customerStats = response.data;
                     angular.forEach($scope.customerStats, function (value) {
@@ -76,25 +86,9 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                  // $scope.dataStats=$scope.customerStats.stats;
                    }   
         });
-
     };
-    
-    $scope.getTimePeriod = function () {
-         $scope.timeName=$scope.selectedTime;
-         subscriptionService.getAllTimePeriods().then(function(response) {
-            if (response && response.success) {
-                  $scope.allTimePeriods = response.data;
-                    if ($scope.selectedTime == undefined) {
-                    $scope.selectedTime = $scope.allTimePeriods[2];
-                    $scope.selectedTime = $scope.selectedTime;
-                } else {
-                    $scope.selectedTime= $scope.selectedTime;
-                }
-            }
-          
-        });
-    }
 
+    /*Activate or deactivate  customer*/
     $scope.deActivateCust = function (subscriptionkey) {
         $scope.showStats = false;
         subscriptionService.activateDeactivate(subscriptionkey).then(function(response) {
