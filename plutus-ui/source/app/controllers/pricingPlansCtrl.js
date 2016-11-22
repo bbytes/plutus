@@ -4,7 +4,45 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     $scope.emails = [];
     $scope.update = false;
      $scope.pricingArray=[]
+      $scope.fixedRows=[];
      $scope.newObject = {};
+      $scope.count=1;
+     //adding dynamic rows for fixed  details
+    $scope.addFixedDetails = function() {
+           alert($scope.billingPeriods.length);
+           $scope.count++;
+           alert($scope.count);
+           if($scope.count <= $scope.billingPeriods.length){
+        $scope.fixedRows.push({ priceCost: '', billing: ''});
+    }else{
+         appNotifyService.error('all time periods are done');
+    }
+    };
+  
+   
+    //displaying pricing Details based on product
+//    $scope.selectBilling = function (val) {
+//        $scope.selectedValue=val;
+//       $scope.billingValue=[];
+//          angular.forEach($scope.fixedRows, function (val) {
+//                    $scope.billingValue.push(val.billing);
+//                      
+//                      
+//                          if(val.billing==$scope.selectedValue &&$scope.count > 1)
+//                          {
+//                            appNotifyService.error('all time periods are done');   
+//                          }
+//                    
+//                      
+//                     
+//                    });
+//          
+//        
+//    };
+     // Remove fixedRows
+    $scope.removeFixedRows = function(index) {
+        $scope.fixedRows.splice(index, 1);
+    };
 //loading Products and currency
     $scope.init = function () {
         $scope.update = false;
@@ -30,6 +68,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                 $scope.billingPeriods = response.data;
             }
         });
+       
     }
     //dispalying symbol for corresponding currency
     $scope.selectLabel = function () {
@@ -44,6 +83,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     }
    //displaying pricing Details based on product
     $scope.selectPricingDetails = function () {
+        
+       $scope.fixedRows=[];
         $scope.pricingArray=[];
      $scope.productId=$scope.productName;
         pricingService.getPricingdetailsById($scope.productId).then(function (response) {
@@ -56,7 +97,9 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
                    
                      }
                     });
-                
+              if($scope.type=='Fixed'){
+                    $scope.fixedRows.push({ priceCost: '', billing: ''});
+                   }
                  var priceObject = {};
         angular.forEach($scope.pricingdetails, function (val) {
                     priceObject = {
@@ -75,6 +118,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
 //adding Pricing
     $scope.createPricing = function () {
         $scope.item={};
+        
+      
        if($scope.pricingdetails.length>0){
           angular.forEach($scope.pricingArray, function (value,key) {
             var type=value.type;
@@ -82,9 +127,14 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
            $scope.item[type] = cost;
         });
     }else{ 
-        $scope.type=$scope.pricingType;
-         $scope.cost=$scope.priceCost;
-           $scope.item[$scope.type] = $scope.cost;
+          angular.forEach($scope.fixedRows, function (value,key) {
+            var type=value.billing;
+           var cost=value.cost;   
+           $scope.item[type] = cost;
+        });
+//        $scope.type=$scope.pricingType;
+//         $scope.cost=$scope.priceCost;
+//           $scope.item[$scope.type] = $scope.cost;
     }
        
         $scope.productDetails=[];

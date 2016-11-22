@@ -6,7 +6,7 @@
 
         <div class="row-md-12">
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="comment" class="settings">Select Product</label>
                 <div class="form-group">                                   
                     <select class="form-control" ng-model="productName" ng-change="selectPricingDetails()">
@@ -16,23 +16,13 @@
                 </div>
             </div> 
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="comment" class="settings">Plan Name</label>
                 <div class="form-group">                                       
                     <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
                 </div>
             </div> 
-            <div class="col-md-4">
-                <label for="comment" class="settings">Billing Period</label>
-                <div class="form-group">                                   
-                    <select class="form-control" ng-model="billing" ng-change="selectBilling()">
-                        <option value="" disabled>Select BillingCycle</option>
-                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}'>{{value}}</option>
-                    </select>
-                </div>
-
-            </div>
-
+          
             <div class="col-md-4">
                 <label for="comment" class="settings">Currency</label>
                 <div class="form-group">                                   
@@ -57,35 +47,72 @@
             <table ng-show="type == 'Metered'">               
                 <tbody>
                     <tr ng-repeat="pri in pricingArray">
-                        <td style="width:50%;"> {{pri.type}}</td>
-                        <td style="width:30%;">  <input ng-model="pri.cost" ng-required="true" pattern="\d+"> </td>
-                        <td style="width:20%;">{{symbol}}</td>                                                
+                         <td style="width:30%;"><select class="form-control" ng-model="pri.billing" ng-change="selectBilling(value.billing)">
+                        <option value="" disabled>Select BillingCycle</option>
+                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}' ng-disabled="{{value.billing}}">{{value}}</option>
+                    </select>
+                    </td>
+                    {{pri.billing}}
+                        <td style="width:30%;"> {{pri.type}}</td>
+                        <td style="width:20%;">  <input ng-model="pri.cost" ng-required="true" pattern="\d+"> </td>
+                        <td style="width:10%;">{{symbol}}</td>                                                
                     </tr>
                 </tbody>
             </table>
         </div> 
+             
+        
+        
+        
         <div class="main-title" ng-show="type == 'Fixed'">
             <h4>Fixed Details</h4>
         </div>
-        <div class="row-md-12"  ng-show="type == 'Fixed'">
-            <div class="col-md-5">
+        
+  
+        <div class="row-md-12"  ng-show="type == 'Fixed'" ng-repeat="value in fixedRows">
+   
+            <div class="col-sm-2 col-xs-12 pull-right" >
+                <a ng-click="removeFixedRows($index)" tooltip="Add">delete</a>  
+            </div>
+                                                
+             <div class="col-md-1">
+                 <a ng-click='addFixedDetails()' tooltip="Add">add</a>                           
+             </div>
+            <div class="col-md-4">
+                <label for="comment" class="settings">Fixed plan for Time Period</label>
+                <div class="form-group">                                   
+                    <select class="form-control" ng-model="value.billing" ng-change="selectBilling(value.billing)">
+                        <option value="" disabled>Select BillingCycle</option>
+                        <option ng-repeat='(key,value) in billingPeriods' value='{{value}}' ng-disabled="{{value.billing}}">{{value}}</option>
+                    </select>
+                    
+                     {{value.billing}}
+                </div>
+
+            </div>
+            <div class="col-md-3">
+               
+                <br>
+                 <label for="comment" class="settings">Price Per Item</label>
                 <div class="form-group">                           
-                    <input type="text" ng-model="pricingType" name="costType" placeholder="Number Of Users"
-                           class="form-control"  required>  
+                    <!--input type="text" ng-model="pricingType" name="costType" placeholder="Price per Item"
+                           class="form-control"  required-->  
                 </div>
             </div> 
-            <div class="col-md-5">
+            <div class="col-md-3">
+                 <label for="comment" class="settings"></label>
                 <div class="form-group">        
-                    <input type="text" ng-model="priceCost"  
+                    <input type="text" ng-model="value.cost"  
                            class="form-control" pattern="\d+" required>
+                    
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">                                       
+            <div class="col-md-1">
+                                                 
                     <label for="comment" class="settings">{{symbol}}</label>
-                </div>
+              
             </div>      
-
+               
         </div> 
         <button type="button" class="btn btn-default create" ng-disabled="myForm.$invalid"
                 ng-click="createPricing()">SAVE</button>    
