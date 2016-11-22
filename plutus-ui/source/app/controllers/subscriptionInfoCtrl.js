@@ -97,6 +97,8 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
             }
         });
     };
+    
+    /* Method to open selected plans in modal*/
     $scope.openWizard = function (pricingPlan,itemcost) {
         $uibModal.open({
             animation: true,

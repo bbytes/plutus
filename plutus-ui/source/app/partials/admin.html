@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label for="comment" class="settings">EMAIL</label> <input
                             type="email" name="email" ng-model="email"
-                            class="form-control" required> <span style="color: red"
+                            class="form-control" placeholder="Email" required> <span style="color: red"
                             ng-show="myForm.email.$dirty && myForm.email.$invalid"> <span
                                 ng-show=" !isSubmitted && myForm.email.$error.required">Email is required.</span>
                             <span ng-show="myForm.email.$error.email">Invalid email
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="comment" class="settings">USERNAME</label>
 
-                        <input type="text" ng-model="name" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
+                        <input type="text" ng-model="name" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" placeholder="Name" required>                    
 
                     </div>
                 </div>
@@ -56,21 +56,22 @@
             </div>
 
             <div class="project-table" ng-init="init()">
-                <table style="width:170%;">
+                <table style="width:160%;">
                     <thead>
                         <tr>
-                            <th style="width:30%;">Name</th>                             
-                            <th style="width:40%;">email</th>
-                            <th style="width:30%;">userRole</th>
+                            <th style="width:40%;">Name</th>                             
+                            <th style="width:40%;">Email</th>
+                            <th style="width:40%;">UserRole</th>
+                            <th style="width:40%;">Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="user in allUsers| filter:searchText"> {{$index}}                       
-                            <td style="width:30%;">{{user.name}}</td>
-                            <td style="width:30%;">{{user.email}}</td>
-                            <td style="width:30%;">{{user.userRole}}</td>
-                            <td style="width:10%;">
+                            <td style="width:40%;">{{user.name}}</td>
+                            <td style="width:40%;">{{user.email}}</td>
+                            <td style="width:40%;">{{user.userRole}}</td>
+                            <td style="width:40%;">
                                 <a href="#" ng-click="deleteUser(user.email, allUsers.indexOf(user))" confirm="Are you sure you want to delete the item?" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/delete.svg"  tooltips tooltip-template="Delete">
                                    </a>  
 
