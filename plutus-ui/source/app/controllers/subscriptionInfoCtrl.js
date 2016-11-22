@@ -31,7 +31,16 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                 //appNotifyService.info("success ");
             }
         });
-        $scope.getTimePeriod();
+          subscriptionService.getAllTimePeriods().then(function(response) {
+            if (response && response.success) {
+                  $scope.allTimePeriods = response.data;
+                  
+                  $scope.selectedTime = $scope.allTimePeriods[2];
+               
+            }
+          
+        });
+        //$scope.getTimePeriod();
     });
 }
     
@@ -71,7 +80,7 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     };
     
     $scope.getTimePeriod = function () {
-         $scope.showStats = false;
+         $scope.timeName=$scope.selectedTime;
          subscriptionService.getAllTimePeriods().then(function(response) {
             if (response && response.success) {
                   $scope.allTimePeriods = response.data;
@@ -87,6 +96,7 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     }
 
     $scope.deActivateCust = function (subscriptionkey) {
+        $scope.showStats = false;
         subscriptionService.activateDeactivate(subscriptionkey).then(function(response) {
             if (response && response.success) {
                   $scope.customerStats = response.data;
