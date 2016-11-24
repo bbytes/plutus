@@ -12,13 +12,16 @@ body, html{
 
 
 .body-standalone{
-    background: url(../img/bg.jpg) no-repeat fixed;
+    background: url(../img/bg-1.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background: #fff;
+   
     min-height: 100%;
+}
+.standalone{
+    background:#fff;
 }
 .wrapper{
     padding: 0 15px;
@@ -99,7 +102,7 @@ header{
     margin:110px auto;
     width:34%;
     padding:25px;
-    background: url('../img/line.png')repeat-Y;
+    background:#80cbf0;// url('../img/line.png')repeat-Y;
     background-size:100%;
 }
 

@@ -3,7 +3,7 @@
  */
 angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope, appNotifyService, adminService) {
 
-
+  $rootScope.bodyClass = 'standalone'; //avoiding background image
 //loading user details
     $scope.init = function () {
         $scope.update = false;

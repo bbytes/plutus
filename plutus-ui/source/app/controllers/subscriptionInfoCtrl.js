@@ -4,12 +4,13 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
      $scope.pricingPlans=[];
 //  Variales for pagination
     $scope.gap = 5;
-    
+    $rootScope.bodyClass = 'standalone'; //avoiding background image
     $scope.filteredItems = [];
     $scope.groupedItems = [];
     $scope.itemsPerPage = 5;
     $scope.pagedItems = [];
     $scope.currentPage = 0;
+    $rootScope.bodyClass = 'standalone'; //avoiding background image
     
     /*load all subscriptions,products */
     $scope.init = function () {

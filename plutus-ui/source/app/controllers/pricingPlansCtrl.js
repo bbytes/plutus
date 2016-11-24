@@ -7,6 +7,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     $scope.fixedRows = [];
     $scope.meteredRows = [];
     $scope.newObject = {};
+    $rootScope.bodyClass = 'standalone'; //avoiding background image
     // variable to store the all selected billing values
     var billingValue = [];
     var billingValueMetered = [];
