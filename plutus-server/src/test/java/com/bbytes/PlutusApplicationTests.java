@@ -16,6 +16,7 @@ import com.bbytes.plutus.auth.AuthUtil;
 import com.bbytes.plutus.auth.PlutusSecurityConfig;
 import com.bbytes.plutus.auth.TokenHandler;
 import com.bbytes.plutus.model.PlutusUser;
+import com.bbytes.plutus.service.PaymentHistoryService;
 import com.bbytes.plutus.service.PricingPlanService;
 import com.bbytes.plutus.service.ProductService;
 import com.bbytes.plutus.service.SubscriptionService;
@@ -34,6 +35,9 @@ public class PlutusApplicationTests {
 
 	@Autowired
 	protected ProductService productService;
+	
+	@Autowired
+	protected PaymentHistoryService paymentHistoryService;
 
 	@Autowired
 	protected UserService userService;

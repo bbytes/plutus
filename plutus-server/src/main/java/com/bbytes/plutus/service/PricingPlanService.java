@@ -13,6 +13,9 @@ import com.bbytes.plutus.repo.PricingPlanRepository;
 public class PricingPlanService extends AbstractService<PricingPlan, String> {
 
 	private PricingPlanRepository pricingPlanRepository;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
 	public PricingPlanService(PricingPlanRepository pricingPlanRepository) {
@@ -22,5 +25,9 @@ public class PricingPlanService extends AbstractService<PricingPlan, String> {
 
 	public List<PricingPlan> findByProduct(Product product) {
 		return pricingPlanRepository.findByProduct(product);
+	}
+	
+	public List<PricingPlan> findByProductName(String productName) {
+		return pricingPlanRepository.findByProduct(productService.findByName(productName));
 	}
 }
