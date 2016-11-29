@@ -1,27 +1,18 @@
 <div class="tab-content" ng-init="init()">
         <div class="col-md-offset-2 col-md-8">
-            <div class="row-md-12">         
-            <div class="col-md-4">
+             <div class="main-title">
+            <div class="section group">
+                <div class="col span_1_of_3">
+                    <h4>Subcription Info</h4>
+                </div>
+                <div class="col-md-4">
                 <label for="comment" class="settings">Select Product</label>
                 <div class="form-group">                                                                                          
                             <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()" placeholder='Select Product'>
                                 <option ng-repeat="product in products" value="{{product.id}}">{{product.name}}</option>
                             </select>
                 </div>
-            </div> 
-            <div class="col-md-4">
-                <label for="comment" class="settings">Select TimePeriod</label>
-               <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod()" placeholder='Type of billing'>
-                                <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
-                            </select>
-            </div>        
             </div>
-             <div class="main-title">
-            <div class="section group">
-                <div class="col span_1_of_3">
-                    <h4>Subcription Info</h4>
-                </div>
-
                 <div class="col span_1_of_3">                    
                     <div class="right-inner-addon ">
                         <i class="fa fa-search"></i> <input ng-model="searchText"
@@ -68,6 +59,12 @@
                 </dir-pagination-controls>
              <div class="main-title" ng-if="showStats == true">
              <label for="comment" class="heading">STATS:</label>
+              <div class="col-md-4">
+                <label for="comment" class="settings">Select TimePeriod</label>
+               <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod($index,selectedTime)" placeholder='Type of billing'>
+                                <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
+                            </select>
+            </div> 
             <div class="project-table" >
                 <table style="width:160%;">
                     <thead>

@@ -3,6 +3,7 @@
 angular.module('plutusApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter,toaster) {
     $scope.emails = [];
     $scope.update = false;
+      $rootScope.bodyClass = 'standalone'; //avoiding background image
 //loading products
     $scope.init = function () {
         $scope.update = false;

@@ -12,13 +12,16 @@ body, html{
 
 
 .body-standalone{
-    background: url(../img/bg.jpg) no-repeat fixed;
+    background: url(../img/bg-1.jpg) no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background: #fff;
+   
     min-height: 100%;
+}
+.standalone{
+    background:#fff;
 }
 .wrapper{
     padding: 0 15px;
@@ -99,7 +102,7 @@ header{
     margin:110px auto;
     width:34%;
     padding:25px;
-    background: url('../img/line.png')repeat-Y;
+    background:#80cbf0;// url('../img/line.png')repeat-Y;
     background-size:100%;
 }
 
@@ -667,7 +670,7 @@ select:first-child, select#f {
     font-size: 12px;
 }
 .main-title{
-    margin:40px auto;
+   // margin:40px auto;
     border-bottom: 2px solid #7c6991;
     margin-bottom: 11px;
 
@@ -728,9 +731,9 @@ select:first-child, select#f {
 }
 .create{
     background: #7c6991;
-    margin-top: 31px;
-    margin-bottom: 31px;
-    width: 30%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 10%;
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
@@ -753,8 +756,8 @@ select:first-child, select#f {
     border-bottom: 1px solid #e1e1e1;
 }
 .project-table td{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .project-img img{
     width:25px;
@@ -1104,9 +1107,9 @@ input[type="file"] {
     cursor: pointer;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    padding-bottom: 25px;
+    padding-bottom: 8px;
     padding-left: 25px;
-    padding-top: 25px;
+    padding-top: 0px;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -4286,5 +4289,24 @@ tabs-left, .tabs-right {
 .heading{
    font-size: 20px;
    font-family: "Times New Roman", Times, serif;
-  }  
+  } 
+ .createAdmin{
+    background: #7c6991;
+    margin-top: 31px;
+    margin-bottom: 31px;
+    width: 30%;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.createAdmin:hover{
+    background: #7c6991;
+    color:#fff;
+}
+.sub-title{
+    //margin:40px auto;
+    border-bottom: 2px solid #7c6991;
+    margin-bottom: 11px;
+
+}
   
