@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bbytes.plutus.enums.PaymentMode;
 import com.bbytes.plutus.model.BillingInfo;
 import com.bbytes.plutus.model.Customer;
+import com.bbytes.plutus.model.PaymentHistory;
 import com.bbytes.plutus.model.PricingPlan;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.Subscription;
@@ -117,6 +119,38 @@ public class SubscriptionRestController {
 		if (!subscription.isEnable() || subscription.isExpired() || subscription.isDeactivate()) {
 			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
 		}
+		
+		PaymentHistory paymentHistory1 = new PaymentHistory();
+		paymentHistory1.setAmount(100);
+		paymentHistory1.setPaymentDate(DateTime.now().minusDays(5).toDate());
+		paymentHistory1.setPaymentMode(PaymentMode.PAYMENT_GATEWAY);
+		paymentHistory1.setSubscription(subscription);
+	
+		subscription.addPaymentHistory(paymentHistory1);
+		
+		PaymentHistory paymentHistory2 = new PaymentHistory();
+		paymentHistory2.setAmount(20);
+		paymentHistory2.setPaymentDate(DateTime.now().minusDays(3).toDate());
+		paymentHistory2.setPaymentMode(PaymentMode.CHEQUE);
+		paymentHistory2.setSubscription(subscription);
+	
+		subscription.addPaymentHistory(paymentHistory2);
+		
+		PaymentHistory paymentHistory3 = new PaymentHistory();
+		paymentHistory3.setAmount(880);
+		paymentHistory3.setPaymentDate(DateTime.now().minusDays(1).toDate());
+		paymentHistory3.setPaymentMode(PaymentMode.NEFT);
+		paymentHistory3.setSubscription(subscription);
+	
+		subscription.addPaymentHistory(paymentHistory3);
+		
+		PaymentHistory paymentHistory4 = new PaymentHistory();
+		paymentHistory4.setAmount(45);
+		paymentHistory4.setPaymentDate(DateTime.now().minusDays(1).toDate());
+		paymentHistory4.setPaymentMode(PaymentMode.CASH);
+		paymentHistory4.setSubscription(subscription);
+	
+		subscription.addPaymentHistory(paymentHistory4);
 
 		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistoryList());
 		return status;
