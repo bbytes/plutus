@@ -15,9 +15,8 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
 
 //adding dynamic rows for metered  details
     $scope.addMeteredDetails = function () {
-
-        $scope.count++;
-        if ($scope.count <= $scope.billingPeriods.length) {
+        if ($scope.count <  $scope.billingPeriodsCount.length) {
+              $scope.count++;
             $scope.meteredRows.push({key: '', cost: ''});
         } else {
             appNotifyService.error('There is no time period to add');
@@ -47,7 +46,9 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
 
     // Remove meteredRows
     $scope.removeMeteredRows = function (index) {
+        $scope.count--;
         $scope.meteredRows.splice(index, 1);
+       
     };
     //loading Products and currency
     $scope.init = function () {
@@ -72,6 +73,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
         pricingService.getAllBillings().then(function (response) {
             if (response.success) {
                 $scope.billingPeriods = response.data;
+                $scope.billingPeriodsCount= $scope.billingPeriods;
             }
         });
 
