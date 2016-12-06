@@ -102,7 +102,7 @@ header{
     margin:110px auto;
     width:34%;
     padding:25px;
-    background:#80cbf0;// url('../img/line.png')repeat-Y;
+    background:#7696a7;// url('../img/line.png')repeat-Y;
     background-size:100%;
 }
 
@@ -673,6 +673,20 @@ select:first-child, select#f {
    // margin:40px auto;
     border-bottom: 2px solid #7c6991;
     margin-bottom: 11px;
+    width: 971px;
+
+}
+.main-type{
+   // margin:40px auto;
+    border-bottom: 2px solid #7c6991;
+    margin-bottom: 11px;
+    
+
+}
+.main-sub{
+    margin-bottom: 11px;
+    width: 971px;
+    
 
 }
 .project-nav a{

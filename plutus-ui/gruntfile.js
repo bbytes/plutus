@@ -182,7 +182,7 @@ module.exports = function (grunt) {
                 },
                 connect: {
                     options: {
-                        port: 81,
+                        port: 91,
                         livereload: 35729,
                         // change this to '0.0.0.0' to access the server from
                         // outside
@@ -218,7 +218,7 @@ module.exports = function (grunt) {
                 watch: {
                     options: {
                         spawn: false,
-                        livereload: true
+                        livereload: false
                     },
                     scripts: {
                         files: ['source/**'],

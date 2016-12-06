@@ -1,110 +1,118 @@
 <div class="tab-content" ng-init="init()">
-        <div class="col-md-offset-2 col-md-8">
-             <div class="main-title">
+    <div class="col-md-offset-2 col-md-8">
+        <div></div>
+        <br><br><br>
+
+        <div class="create-project">
+            <div class="col-md-6">
+                <label for="comment" class="settings">Select Product</label>
+                <div class="form-group">                                                                                          
+                    <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()" placeholder='Select Product'>
+                        <option ng-repeat="product in products" value="{{product.id}}">{{product.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="main-title">
             <div class="section group">
                 <div class="col span_1_of_3">
                     <h4>Subcription Info</h4>
                 </div>
-                <div class="col-md-4">
-                <label for="comment" class="settings">Select Product</label>
-                <div class="form-group">                                                                                          
-                            <select class="form-control" ng-model="selectedProduct"  ng-change="getSubscriptionsForProd()" placeholder='Select Product'>
-                                <option ng-repeat="product in products" value="{{product.id}}">{{product.name}}</option>
-                            </select>
-                </div>
-            </div>
+
                 <div class="col span_1_of_3">                    
                     <div class="right-inner-addon ">
                         <i class="fa fa-search"></i> <input ng-model="searchText"
                                                             class="form-control" placeholder="Search...">
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
-            <div class="main-title">
+        <div class="main-sub">
             <div class="project-table" ng-if="subscriptionsList.length != 0">
-                <table style="width:160%;">
+                <table style="width:100%;">
                     <thead>
                         <tr>
-                            <th style="width:25%;">Customer Name</th>                             
-                            <th style="width:20%;">Plan</th>
-                            <th style="width:25%;">Renewal Date</th>
-                            <th style="width:20%;">Status</th>
-                             <th style="width:30%;">Pending Invoice ($)</th>
-                             <th style="width:40%;">Action</th>
+                            <th style="width:15%;">Customer Name</th>                             
+                            <th style="width:15%;">Plan</th>
+                            <th style="width:20%;">Renewal Date</th>
+                            <th style="width:10%;">Status</th>
+                            <th style="width:20%;">Pending Invoice ($)</th>
+                            <th style="width:10%;">Action</th>
+                            <th style="width:10%;"></th>
                         </tr>
                     </thead>                  
                     <tbody>
                         <tr dir-paginate="subscription in subscriptionsList | filter:searchText | itemsPerPage:5">                        
-                            <td style="width:25%;"><a href="#" ng-click="getCustomerDetails(subscription.subscriptionKey)">{{subscription.customer.name}}</a></td>
-                            <td style="width:20%;"><a href="#" ng-click="openWizard(subscription.pricingPlan,subscription.pricingPlan.productPlanItemToCost)">Current Plan</a></td>
-                            <td style="width:25%;"><sapan > 20 Nov 2016</span></td>
-                            <td style="width:20%;" ng-if="subscription.deactivate == false">Active</td>
-                             <td style="width:20%;" ng-if="subscription.deactivate == true">InActive</td>
-                            <td style="width:30%;">{{subscription.billingAmount}}</td>
-                        <td style="width:40%;"><button a href="#" type="button" ng-if="subscription.deactivate == false" style="width:100%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to deactivate the customer?">Deactivate</button><button type="button" ng-if="subscription.deactivate == true" style="width:100%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to activate the customer?">Activate</button></td>
+                            <td style="width:15%;"><a href="#" ng-click="getCustomerDetails(subscription.subscriptionKey)">{{subscription.customer.name}}</a></td>
+                            <td style="width:15%;"><a href="#" ng-click="openWizard(subscription.pricingPlan, subscription.pricingPlan.productPlanItemToCost)">Current Plan</a></td>
+                            <td style="width:20%;"><sapan > 20 Nov 2016</span></td>
+                        <td style="width:10%;" ng-if="subscription.deactivate == false">Active</td>
+                        <td style="width:20%;" ng-if="subscription.deactivate == true">InActive</td>
+                        <td style="width:10%;">{{subscription.billingAmount}}</td>
+                        <td style="width:20%;"><button a href="#" type="button" ng-if="subscription.deactivate == false" style="width:100%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to deactivate the customer?">Deactivate</button><button type="button" ng-if="subscription.deactivate == true" style="width:100%;" class="btn btn-default create" ng-click="deActivateCust(subscription.subscriptionKey)"  confirm="Are you sure you want to activate the customer?">Activate</button></td>
                         </tr>
                         </tbody>
                 </table>
             </div>
             <div class="project-table" ng-if="subscriptionsList.length == 0">
-                     <h3>No customers to show</h3>
+                <h3>No customers to show</h3>
             </div>
         </div>
-        
-                <dir-pagination-controls
-                    max-size="5"
-                    direction-links="true"
-                    boundary-links="true" >
-                </dir-pagination-controls>
-             <div class="main-title" ng-if="showStats == true">
-             <label for="comment" class="heading">STATS:</label>
-              <div class="col-md-4">
+
+        <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true" >
+        </dir-pagination-controls>
+        <div class="main-title" ng-if="showStats == true">
+            <label for="comment" class="heading">STATS:</label>
+            <div class="col-md-4">
                 <label for="comment" class="settings">Select TimePeriod</label>
-               <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod($index,selectedTime)" placeholder='Type of billing'>
-                                <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
-                            </select>
+                <select class="form-control" ng-model="selectedTime"  ng-change="getTimePeriod($index, selectedTime)" placeholder='Type of billing'>
+                    <option ng-repeat="time in allTimePeriods" value="{{time}}">{{time}}</option>
+                </select>
             </div> 
             <div class="project-table" >
                 <table style="width:160%;">
                     <thead>
                         <tr>
-                          <th style="width:20%;">Entry Date</th>                             
+                            <th style="width:20%;">Entry Date</th>                             
                             <th style="width:15%;">Subscription Key</th>
-                             <th style="width:15%;" ng-repeat="(key, val) in dataStats">{{key}}</th>
+                            <th style="width:15%;" ng-repeat="(key, val) in dataStats">{{key}}</th>
                         </tr>
                     </thead>                  
                     <tbody>
-                      <tr ng-repeat=" stats in customerStats">                        
-                            <td style="width:20%;"><a href="#"> </a>{{stats.entryDate | date:'MM/dd/yyyy @ h:mma'}} </td>
-                               <td style="width:20%;"><a href="#"> </a>{{stats.subscriptionKey}} </td>
+                        <tr ng-repeat=" stats in customerStats">                        
+                            <td style="width:20%;"><a href="#"> </a>{{stats.entryDate| date:'MM/dd/yyyy @ h:mma'}} </td>
+                            <td style="width:20%;"><a href="#"> </a>{{stats.subscriptionKey}} </td>
                             <td style="width:15%;"  ng-repeat="(key, value) in dataStats"><a href="#">{{value}} </a></td>                       
                         </tr>
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
-             </div>
-            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container">
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Plans</h4>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Plans</h4>
+                </div>
+                <div class="modal-body" ng-repeat="(key, value) in pricingPlans">
+                    <td> {{key}} </td> : <td> {{ value}} </td>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body" ng-repeat="(key, value) in pricingPlans">
-           <td> {{key}} </td> : <td> {{ value }} </td>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
