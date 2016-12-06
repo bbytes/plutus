@@ -1,7 +1,6 @@
 <div class="tab-content" ng-init='init()'>
     <div class="col-md-offset-2 col-md-8">
-        <div></div>
-        <br><br><br>
+        <br>
         <div class="create-project">
             <form name="myForm">
                 <div class="row-md-12">
@@ -133,7 +132,7 @@
 
                     </div> 
                 </div>
-        </div>
+     
         <button type="button" class="btn btn-default createAdmin" ng-disabled='(myForm.$invalid) || (update == true)'
                 ng-click="createPricing(myForm.$valid)">SAVE</button>    
 
@@ -142,6 +141,7 @@
         <button type="button" class="btn btn-default createAdmin" 
                 ng-click="updatePricing()" ng-disabled='update == false'>UPDATE</button>
         </form>
+               </div>
         <div class="project-table" ng-init="init()">
             <div class="main-title">
                 <div class="section group">
