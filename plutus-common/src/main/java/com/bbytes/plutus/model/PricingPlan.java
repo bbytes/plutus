@@ -22,7 +22,7 @@ public class PricingPlan extends BaseEntity {
 
 	// the reference to product object that contain info like product name ,
 	// desc etc
-	@DBRef
+	@DBRef(lazy=true)
 	@CascadeSave
 	private Product product;
 	

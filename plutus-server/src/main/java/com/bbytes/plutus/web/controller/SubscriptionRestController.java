@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bbytes.plutus.enums.PaymentMode;
 import com.bbytes.plutus.model.BillingInfo;
 import com.bbytes.plutus.model.Customer;
-import com.bbytes.plutus.model.PaymentHistory;
 import com.bbytes.plutus.model.PricingPlan;
 import com.bbytes.plutus.model.Product;
 import com.bbytes.plutus.model.Subscription;

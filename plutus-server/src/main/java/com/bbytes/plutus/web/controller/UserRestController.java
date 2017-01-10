@@ -32,8 +32,6 @@ public class UserRestController {
 		return status;
 	}
 
-	
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	private PlutusRestResponse create(@RequestBody PlutusUser user) throws PlutusException {
 
@@ -46,8 +44,8 @@ public class UserRestController {
 
 		user = userService.create(user);
 
-		PlutusRestResponse status = new PlutusRestResponse("User save success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true, user);
+		return response;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -61,17 +59,18 @@ public class UserRestController {
 		}
 		user = userService.update(user);
 
-		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true, user);
+		return response;
 	}
-	
+
 	@RequestMapping(value = "/updatePassword/{email}", method = RequestMethod.POST)
-	private PlutusRestResponse updatePassword(@PathVariable String email, @RequestParam("password") String newPassword ) throws PlutusException {
+	private PlutusRestResponse updatePassword(@PathVariable String email, @RequestParam("password") String newPassword)
+			throws PlutusException {
 
 		if (!userService.exists(email)) {
 			throw new PlutusException("User does not exist");
 		}
-		
+
 		userService.updatePassword(email, newPassword);
 
 		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);

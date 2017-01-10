@@ -56,8 +56,8 @@ public class ProductRestController {
 
 		product = productService.save(product);
 
-		PlutusRestResponse status = new PlutusRestResponse("Product save success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true,product);
+		return response;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -71,8 +71,8 @@ public class ProductRestController {
 		}
 		product = productService.save(product);
 
-		PlutusRestResponse status = new PlutusRestResponse("Product update success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true,product);
+		return response;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

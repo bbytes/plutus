@@ -56,8 +56,8 @@ public class PricingPlanRestController {
 
 		pricingPlan = pricingPlanService.save(pricingPlan);
 
-		PlutusRestResponse status = new PlutusRestResponse("Pricing Plan save success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true, pricingPlan);
+		return response;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -72,8 +72,8 @@ public class PricingPlanRestController {
 
 		pricingPlan = pricingPlanService.save(pricingPlan);
 
-		PlutusRestResponse status = new PlutusRestResponse("Pricing Plan update success", true);
-		return status;
+		PlutusRestResponse response = new PlutusRestResponse(true, pricingPlan);
+		return response;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
