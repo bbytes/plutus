@@ -1316,7 +1316,7 @@ small img{
     border: 0;
     border-radius: 0;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .125);
-    width: 64% !important;
+    width: 100% !important;
     margin: 0px auto !important;;
 }
 .save-close{

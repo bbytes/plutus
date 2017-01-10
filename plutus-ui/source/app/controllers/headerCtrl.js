@@ -8,6 +8,9 @@ angular.module('plutusApp').controller('headerCtrl', function ($rootScope, $scop
     $scope.partTypeInline=[];
 
 
+ $scope.popUp = function () {
+       alert("hi");
+    };
     $scope.headerInit = function () {
         // Do not load view modes in vm stand alone page
         if ($rootScope.vmStandAloneMode) {partTypes

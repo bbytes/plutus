@@ -1,6 +1,6 @@
 
 
-angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, pricingService) {
+angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $uibModal,$rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, pricingService) {
     $scope.emails = [];
     $scope.update = false;
     $scope.pricingArray = [];
@@ -196,49 +196,84 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ro
     };
     //edit pricing
     $scope.edit = function (pricingId, productId) {
-        $scope.update = true;
-        $scope.item1 = [];
-        $scope.proId = productId;
-        $scope.meteredRowsforEdit = [];
-        $scope.fixedRowsForEdit = [];
-        angular.forEach($scope.allPricingPlans, function (item) {
-            if (item.id == pricingId) {
-                $scope.planName = item.name;
-                $scope.productName = item.product.name;
-                $scope.description = item.desc;
-                $scope.currency = item.currency;
-                $scope.billing = item.billingCycle;
-                angular.forEach($scope.product, function (val) {
-                    if ($scope.proId == val.id)
-                    {
-                        $scope.type = val.billingType;
-
+        
+          
+         var uibModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/partials/addPopup.html',
+                controller: 'addPopupCtrl',
+                backdrop: 'static',
+                size: 'md',
+                resolve: {
+                    options: function () {
+                        return {
+                            "title": 'Add Users',
+                            "data": $scope.product,
+                            "billEditStatus":true,
+                            "productId":productId,
+                            "pricingId":pricingId,
+                             "pricing":true,
+                             "allPricingPlans":$scope.allPricingPlans
+                             
+                        };
                     }
-                });
-                if ($scope.type == 'Fixed')
-                {
-                    $scope.fixedRows = item.productPlanItemToCost;
-                    angular.forEach($scope.fixedRows, function (value, key) {
-                        $scope.selectedNodeObj = {
-                            key: key,
-                            cost: value
-                        };
-                        $scope.fixedRowsForEdit.push($scope.selectedNodeObj);
-                        $scope.fixedRows = $scope.fixedRowsForEdit;
-                    });
-                } else {
-                    $scope.meteredRows = item.productPlanItemToCost;
-                    angular.forEach($scope.meteredRows, function (value, key) {
-                        $scope.selectedNodeObj = {
-                            key: key,
-                            cost: value
-                        };
-                        $scope.meteredRowsforEdit.push($scope.selectedNodeObj);
-                        $scope.meteredRows = $scope.meteredRowsforEdit;
-                    });
                 }
-            }
-        });
+            });
+
+            uibModalInstance.result.then(function (selection) {
+              
+                $rootScope.popUpStatus=true;
+             //   $state.go('products');
+                  //alert($rootScope.popUpStatus);
+               
+            });
+        
+        
+        
+        
+//        $scope.update = true;
+//        $scope.item1 = [];
+//        $scope.proId = productId;
+//        $scope.meteredRowsforEdit = [];
+//        $scope.fixedRowsForEdit = [];
+//        angular.forEach($scope.allPricingPlans, function (item) {
+//            if (item.id == pricingId) {
+//                $scope.planName = item.name;
+//                $scope.productName = item.product.name;
+//                $scope.description = item.desc;
+//                $scope.currency = item.currency;
+//                $scope.billing = item.billingCycle;
+//                angular.forEach($scope.product, function (val) {
+//                    if ($scope.proId == val.id)
+//                    {
+//                        $scope.type = val.billingType;
+//
+//                    }
+//                });
+//                if ($scope.type == 'Fixed')
+//                {
+//                    $scope.fixedRows = item.productPlanItemToCost;
+//                    angular.forEach($scope.fixedRows, function (value, key) {
+//                        $scope.selectedNodeObj = {
+//                            key: key,
+//                            cost: value
+//                        };
+//                        $scope.fixedRowsForEdit.push($scope.selectedNodeObj);
+//                        $scope.fixedRows = $scope.fixedRowsForEdit;
+//                    });
+//                } else {
+//                    $scope.meteredRows = item.productPlanItemToCost;
+//                    angular.forEach($scope.meteredRows, function (value, key) {
+//                        $scope.selectedNodeObj = {
+//                            key: key,
+//                            cost: value
+//                        };
+//                        $scope.meteredRowsforEdit.push($scope.selectedNodeObj);
+//                        $scope.meteredRows = $scope.meteredRowsforEdit;
+//                    });
+//                }
+//            }
+//        });
     };
     //update pricing
     $scope.updatePricing = function () {
