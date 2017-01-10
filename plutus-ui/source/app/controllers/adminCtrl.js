@@ -31,6 +31,8 @@ angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope
 
                 if (response.success) {
                     appNotifyService.success('User created successfully');
+                    $scope.email='';
+                    $scope.name='';
                     $scope.init();
                 }
             }, function (error) {

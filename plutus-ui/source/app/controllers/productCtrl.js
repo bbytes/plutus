@@ -1,21 +1,28 @@
 
 /* Product controller*/
-angular.module('plutusApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter,toaster) {
+angular.module('plutusApp').controller('productCtrl', function ($scope, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, toaster, $uibModal) {
     $scope.emails = [];
     $scope.update = false;
-      $rootScope.bodyClass = 'standalone'; //avoiding background image
+    $rootScope.bodyClass = 'standalone'; //avoiding background image
 //loading products
+
+  
+    if ($rootScope.popUpStatus == true)
+    {
+        $scope.init();
+    }
     $scope.init = function () {
         $scope.update = false;
         productService.getProduct().then(function (response) {
             if (response.success) {
-                $scope.product = response.data;     
+                $scope.product = response.data;
             }
         });
-        
-         productService.getBillingType().then(function (response) {
+
+        productService.getBillingType().then(function (response) {
             if (response.success) {
                 $scope.billingTypes = response.data;
+                $rootScope.billingData = $scope.billingTypes;
                 // $scope.selectedTimePeriod =  $scope.currency[0];
             }
         });
@@ -35,7 +42,7 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             "name": $scope.productName,
             "desc": $scope.description,
             "productTeamEmails": $scope.emails,
-            "billingType":$scope.billingType,
+            "billingType": $scope.billingType,
         };
 
         productService.add(input).then(function (response) {
@@ -66,19 +73,46 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
     };
     //edit product
     $scope.edit = function (productId) {
-        $scope.update = true;
-        $scope.email = [];
-        angular.forEach($scope.product, function (item) {
-            if (item.id == productId) {
-                $scope.productName = item.name;
-                $scope.description = item.desc;
-                $scope.billingType=item.billingType;
-                angular.forEach(item.productTeamEmails, function (value) {
-                    $scope.email.push(value);
-                });
 
+
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/addPopup.html',
+            controller: 'addPopupCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                options: function () {
+                    return {
+                        "title": 'Add Users',
+                        "data": $scope.product,
+                        "status": true,
+                        "productId": productId
+                    };
+                }
             }
         });
+
+        uibModalInstance.result.then(function (selection) {
+
+            $rootScope.popUpStatus = true;
+            //   $state.go('products');
+          //  alert($rootScope.popUpStatus);
+
+        });
+//        $scope.update = true;
+//        $scope.email = [];
+//        angular.forEach($scope.product, function (item) {
+//            if (item.id == productId) {
+//                $scope.productName = item.name;
+//                $scope.description = item.desc;
+//                $scope.billingType=item.billingType;
+//                angular.forEach(item.productTeamEmails, function (value) {
+//                    $scope.email.push(value);
+//                });
+//
+//            }
+//        });
     };
     //update product
     $scope.updateProduct = function (product) {
@@ -95,11 +129,11 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             "desc": $scope.description,
             "productTeamEmails": $scope.emails
         };
-       productService.updatePro(input).then(function (response) {
+        productService.updatePro(input).then(function (response) {
             if (response.success) {
                 $scope.init();
                 $scope.clear();
-               appNotifyService.success("Product Updated Successfully");
+                appNotifyService.success("Product Updated Successfully");
 
             } else {
                 appNotifyService.error(response.message);
@@ -115,7 +149,7 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             if (response.success) {
 
                 $scope.init();
-               appNotifyService.success("Product Deleted Successfully");
+                appNotifyService.success("Product Deleted Successfully");
 
             } else {
                 appNotifyService.error(response.message);

@@ -1,8 +1,7 @@
 <div class="tab-content" ng-init='init()'>
     <div class="col-md-offset-2 col-md-8">
-        <div></div>
-        <br><br><br>
-        <div class="create-project">
+        <br>
+        <!--div class="create-project">
             <form name="myForm">
                 <div class="row-md-12">
                     <div class="col-md-6">
@@ -44,7 +43,7 @@
                     </div>              
                 </div>
 
-                <div class="main-title" ng-show="type == 'Metered'">
+                <div class="main-type" ng-show="type == 'Metered'">
                     <h4>Metering Details</h4>
                 </div>  
 
@@ -61,11 +60,11 @@
                     <div class="col-md-9" ng-repeat="value in meteredRows" ng-show="type == 'Metered'">
 
                         <div class="col-sm-1 col-xs-12 pull-right" style="cursor: pointer;">
-                            <a ng-click="removeMeteredRows($index)" tooltip="delete">delete</a>  
+                            <a ng-click="removeMeteredRows($index)" tooltip="delete"><img src="../../assets/img/del.jpg"  tooltips tooltip-template="Delete"></a>  
                         </div>
 
                         <div class="col-sm-1 col-xs-12 pull-right"  style="cursor: pointer;">
-                            <a ng-click='addMeteredDetails()' tooltip="Add">add</a>                           
+                            <a ng-click='addMeteredDetails()' tooltip="Add"><img src="../../assets/img/plus.png"  tooltips tooltip-template="add"></a>                           
                         </div>
 
 
@@ -92,7 +91,7 @@
 
                 </div> 
 
-                <div class="main-title" ng-show="type == 'Fixed'">
+                <div class="main-type" ng-show="type == 'Fixed'">
                     <h4>Fixed Details</h4>
                 </div>
 
@@ -133,7 +132,7 @@
 
                     </div> 
                 </div>
-        </div>
+     
         <button type="button" class="btn btn-default createAdmin" ng-disabled='(myForm.$invalid) || (update == true)'
                 ng-click="createPricing(myForm.$valid)">SAVE</button>    
 
@@ -142,6 +141,7 @@
         <button type="button" class="btn btn-default createAdmin" 
                 ng-click="updatePricing()" ng-disabled='update == false'>UPDATE</button>
         </form>
+               </div-->
         <div class="project-table" ng-init="init()">
             <div class="main-title">
                 <div class="section group">
@@ -165,7 +165,8 @@
                         <th style="width:20%;">Billing Type</th>
                         <th style="width:30%;">Description</th>
                         <th style="width:30%;">Itemised Details</th>
-                        <th style="width:20%;">Action</th>
+                        <th style="width:10%;">Action</th>
+                        <th style="width:10%;"></th>
                     </tr>
                 </thead>
                 <tbody>

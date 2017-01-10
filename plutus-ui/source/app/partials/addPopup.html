@@ -1,0 +1,255 @@
+<div class="modal-header clearfix" >
+    
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <span><a class="pull-right glyphicon glyphicon-remove icon-clear"
+             ng-click="cancel()"></a></span>
+
+</div>
+<div class="modal-body data-row-body">
+
+    <div class="create-project" ng-init="init()" ng-show="pricing == false || pricing == undefined && adminStatus == undefined">
+        <form name="myForm">
+            <div class="row">    
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="comment" class="settings">Product Name</label>
+                        <input type="text" ng-model="productName" name="productName"
+                               class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>
+                        <span style="color: red"
+                              ng-show="!isSubmitted && myForm.customer.$dirty && myForm.customer.$error.required">The
+                            name is required.</span> <span style="color: red" ng-show="myForm.customer.$dirty && myForm.customer.$error.pattern">Product Name is invalid</span>
+                    </div>
+                </div>                                                   
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="comment" class="settings">Billing Type</label>                                                           
+                        <select class="form-control" ng-model="billingType">
+                            <option value="">Select Product</option>
+                            <option ng-repeat='bill in billingTypes' value='{{bill}}'>{{bill}}</option>
+                        </select>
+                    </div>
+                </div>                          
+            </div>  
+            <div class="row">                        
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label for="comment" class="settings">Product Team Emails</label>
+                        <tags-input ng-model="email" name="email" allowed-tags-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" enable-editing-last-tag="yes"  allow-leftover-text="false">
+                            <auto-complete source="loadTags($query)"></auto-complete>
+                        </tags-input>
+                        <div ng-repeat="i in myForm.email.$error">    
+                            <label>Please Enter Valid Email Id</label>
+                        </div>
+
+                    </div>
+
+                </div>           
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="comment" class="settings" >Description</label>
+                        <textarea type="text" ng-model="description" name="description"
+                                  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>
+                        <span style="color: red"
+                              ng-show="!isSubmitted && description.customer.$dirty && myForm.description.$error.required">The
+                            Description Name is required.</span> <span style="color: red" ng-show="myForm.description.$dirty && myForm.description.$error.pattern">Product Name is invalid</span>
+                    </div>
+
+                </div>  
+
+
+            </div> 
+
+            <button type="button" class="btn btn-default createAdmin" ng-hide=' (update == true)' 
+                    ng-click="createProduct()">ADD</button>
+            <button type="button" class="btn btn-default createAdmin" ng-hide=' (update == true)'
+                    ng-click="clearProducts(myForm.$valid)">CLEAR</button>
+
+            <button type="button" class="btn btn-default createAdmin" ng-hide='update == false'
+                    ng-click="updateProduct()">UPDATE</button>
+
+
+        </form>
+
+    </div>
+
+    <div class="create-project" ng-show="pricing == true && adminStatus == undefined" ng-init="init()">
+        <form name="myForm">
+            <div class="row-md-12">
+                <div class="col-md-6">
+                    <label for="comment" class="settings">Select Product</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" name="productName" ng-model="productName" ng-change="selectPricingDetails()">
+                            <option value="" disabled>Select Product</option>
+                            <option ng-repeat='pro in product' value='{{pro.id}}'>{{pro.name}}</option>
+                        </select>
+
+                        <span class="mdl-tooltip mdl-tooltip--validation" for="productName" 
+                              ng-show="myForm.productName.$invalid && basicDetailsForm.productName.$touched">
+                            <span ng-show="myForm.productName.$error.required">Please select product</span>
+                        </span>
+                    </div>
+                </div> 
+
+                <div class="col-md-6">
+                    <label for="comment" class="settings">Plan Name</label>
+                    <div class="form-group">                                       
+                        <input type="text" ng-model="planName" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required>                    
+                    </div>
+                </div> 
+
+                <div class="col-md-4">
+                    <label for="comment" class="settings">Currency</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="currency" ng-change="selectLabel()">
+                            <option value="" disabled>Select Currency</option>
+                            <option ng-repeat='cur in currencys' value='{{cur}}'>{{cur}}</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-md-8">
+                    <label for="comment" class="settings">Description</label>
+                    <div class="form-group">                                       
+                        <textarea type="text" ng-model="description" name="description"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" required></textarea>      
+                    </div>
+                </div>              
+            </div>
+
+            <div class="main-type" ng-show="type == 'Metered'">
+                <h4>Metering Details</h4>
+            </div>  
+
+            <div class="row-md-12" ng-show="type == 'Metered'" >
+                <div class="col-md-3">
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="billing" ng-change="selectBillingMetered($index, billing)">
+                            <option value="" disabled>Select BillingCycle</option>
+                            <option ng-repeat='value in billingPeriods' value='{{value}}'>{{value}}</option>
+                        </select>     
+                    </div>
+                </div>
+
+                <div class="col-md-9" ng-repeat="value in meteredRows" ng-show="type == 'Metered'">
+
+                    <div class="col-sm-1 col-xs-12 pull-right" style="cursor: pointer;">
+                        <a ng-click="removeMeteredRows($index)" tooltip="delete"><img src="../../assets/img/del.jpg"  tooltips tooltip-template="Delete"></a>  
+                    </div>
+
+                    <div class="col-sm-1 col-xs-12 pull-right"  style="cursor: pointer;">
+                        <a ng-click='addMeteredDetails()' tooltip="Add"><img src="../../assets/img/plus.png"  tooltips tooltip-template="add"></a>                           
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">                           
+                            <input type="text" ng-model="value.key" 
+                                   class="form-control" > 
+                        </div>
+                    </div> 
+                    <div class="col-md-3">
+                        <div class="form-group">        
+                            <input type="text" ng-model="value.cost"  
+                                   class="form-control" pattern="\d+" required>
+
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+
+                        <label for="comment" class="settings">{{symbol}}</label>
+
+                    </div>      
+
+                </div>
+
+            </div> 
+
+            <div class="main-type" ng-show="type == 'Fixed'">
+                <h4>Fixed Details</h4>
+            </div>
+
+            <div class="row-md-12"  ng-show="type == 'Fixed'">
+                <div class="col-md-3" >
+                    <label for="comment" class="settings">Fixed plan for Time Period</label>
+                    <div class="form-group">                                   
+                        <select class="form-control" ng-model="billing" ng-change="selectBilling($index, value.billing)">
+                            <option value="" disabled>Select BillingCycle</option>
+                            <option ng-repeat='value in billingPeriods' value='{{value}}'>{{value}}</option>
+                        </select>    
+                    </div>
+                </div>
+
+                <div class="col-md-9" ng-repeat="value in fixedRows">
+                    <div class="col-md-5">
+                        <br>
+                        <label for="comment" class="settings"></label>
+                        <div class="form-group">                           
+                            <input type="text" ng-model="value.key" 
+                                   class="form-control" readonly> 
+                        </div>
+                    </div> 
+                    <div class="col-md-3">
+                        <br>
+                        <label for="comment" class="settings"></label>
+                        <div class="form-group">        
+                            <input type="text" ng-model="value.cost"  
+                                   class="form-control" pattern="\d+" required>
+
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <br><br>                 
+                        <label for="comment" class="settings">{{symbol}}</label>
+
+                    </div>      
+
+                </div> 
+            </div>
+
+            <button type="button" class="btn btn-default createAdmin" ng-hide='(update == true)'
+                    ng-click="createPricing()">SAVE</button>    
+
+            <button type="button" class="btn btn-default createAdmin" ng-hide='(update == true)'
+                    ng-click="clear()">CLEAR ALL</button>
+            <button type="button" class="btn btn-default createAdmin" 
+                    ng-click="updatePricing()" ng-hide='update == false'>UPDATE</button>
+        </form>
+    </div>
+
+    <div class="create-project" ng-show="adminStatus == true">
+        <form name="myForm">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="comment" class="settings">EMAIL</label> <input
+                            type="email" name="email" ng-model="email"
+                            class="form-control" placeholder="Email" required> <span style="color: red"
+                            ng-show="myForm.email.$dirty && myForm.email.$invalid"> <span
+                                ng-show=" !isSubmitted && myForm.email.$error.required">Email is required.</span>
+                            <span ng-show="myForm.email.$error.email">Invalid email
+                                address.</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="comment" class="settings">USERNAME</label>
+
+                        <input type="text" ng-model="name" name="planName"  class="form-control" ng-pattern="/^[a-zA-Z0-9\_\- ]*$/" placeholder="Name" required>                    
+
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default createAdmin" ng-disabled="myForm.$invalid"
+                    ng-click="createUser(myForm.$valid)">Create User</button>
+
+        </form>
+    </div>
+
+</div>
+
+<!--div class="modal-footer add-user" >
+    <button class="btn save-close" ng-click="ok()" ng-click="cancel()" style="align:right;">Close</button>
+</div-->

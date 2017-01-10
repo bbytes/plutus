@@ -179,7 +179,7 @@ plutusApp.config([
                 authorization: 'adminPage',
                 redirectTo: 'login'
             }
-        }).state('forgot-password', {
+        }) .state('forgot-password', {
             url: '/forgot-password',
             views: {
                 '': {
