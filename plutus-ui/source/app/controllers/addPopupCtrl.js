@@ -86,7 +86,9 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
         };
         productService.updatePro(input).then(function (response) {
             if (response.success) {
+                $scope.product = response.data;
                 $scope.init();
+                $rootScope.$broadcast('product', $scope.product);
                 $scope.ok();
 
                 appNotifyService.success("Product Updated Successfully");
@@ -121,9 +123,11 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
 
         productService.add(input).then(function (response) {
             if (response.success) {
+                $scope.product = response.data;
+                $rootScope.$broadcast('product', $scope.product);
+
 
                 $scope.ok();
-                $scope.init();
 
                 appNotifyService.success("Product Added Successfully");
 
@@ -198,6 +202,8 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
 
         pricingService.addPricing(input).then(function (response) {
             if (response.success) {
+                $scope.allPricingPlans = response.data;
+                $rootScope.$broadcast('pricing', $scope.allPricingPlans);
                 $scope.init();
                 $scope.ok();
                 $scope.clear();
@@ -357,6 +363,8 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
         };
         pricingService.updatePri(input).then(function (response) {
             if (response.success) {
+                $scope.allPricingPlans = response.data;
+                $rootScope.$broadcast('pricing', $scope.allPricingPlans);
                 $scope.init();
                 $scope.ok();
                 $scope.clear();
@@ -391,6 +399,8 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
             adminService.addingUser(input).then(function (response) {
 
                 if (response.success) {
+                    $scope.allUsers = response.data;
+                    $rootScope.$broadcast('user', $scope.allUsers);
                     appNotifyService.success('User created successfully');
                     $scope.email = '';
                     $scope.name = '';

@@ -1,9 +1,13 @@
 /*
  * User Controller
  */
-angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope, appNotifyService, adminService) {
+angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope, appNotifyService, adminService, $state) {
 
-  $rootScope.bodyClass = 'standalone'; //avoiding background image
+    $rootScope.bodyClass = 'standalone'; //avoiding background image
+    $scope.$on('user', function (response, data) {
+        $scope.allUsers = data;
+        $state.reload();
+    });
 //loading user details
     $scope.init = function () {
         $scope.update = false;
@@ -31,8 +35,8 @@ angular.module('plutusApp').controller('adminCtrl', function ($scope, $rootScope
 
                 if (response.success) {
                     appNotifyService.success('User created successfully');
-                    $scope.email='';
-                    $scope.name='';
+                    $scope.email = '';
+                    $scope.name = '';
                     $scope.init();
                 }
             }, function (error) {

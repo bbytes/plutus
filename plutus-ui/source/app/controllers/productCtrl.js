@@ -5,12 +5,12 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
     $scope.update = false;
     $rootScope.bodyClass = 'standalone'; //avoiding background image
 //loading products
+//listening product data from popup
+    $scope.$on('product', function (response, data) {
+        $scope.product = data;
+        $state.reload();
+    });
 
-  
-    if ($rootScope.popUpStatus == true)
-    {
-        $scope.init();
-    }
     $scope.init = function () {
         $scope.update = false;
         productService.getProduct().then(function (response) {
@@ -97,7 +97,7 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
 
             $rootScope.popUpStatus = true;
             //   $state.go('products');
-          //  alert($rootScope.popUpStatus);
+            //  alert($rootScope.popUpStatus);
 
         });
 //        $scope.update = true;

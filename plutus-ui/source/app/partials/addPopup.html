@@ -1,5 +1,5 @@
 <div class="modal-header clearfix" >
-    
+
     <h4 class="modal-title pull-left">{{title}}</h4>
     <span><a class="pull-right icon-clear"
              ng-click="cancel()" style="cursor: pointer;"><img src="../../assets/img/cross1.png"  tooltips tooltip-template="Close" ></a></span>
@@ -7,7 +7,7 @@
 </div>
 <div class="modal-body data-row-body">
 
-    <div class="create-project" ng-init="init()" ng-show="pricing == false || pricing == undefined && adminStatus == undefined">
+    <div class="create-project" ng-init="init()" ng-show="pricing == false || pricing == undefined && adminStatus == undefined" >
         <form name="myForm">
             <div class="row">    
                 <div class="col-md-6">
@@ -64,8 +64,6 @@
 
             <button type="button" class="btn btn-default createAdmin" ng-hide=' (update == true)' 
                     ng-click="createProduct()">ADD</button>
-            <button type="button" class="btn btn-default createAdmin" ng-hide=' (update == true)'
-                    ng-click="clearProducts(myForm.$valid)">CLEAR</button>
 
             <button type="button" class="btn btn-default createAdmin" ng-hide='update == false'
                     ng-click="updateProduct()">UPDATE</button>
@@ -210,8 +208,6 @@
             <button type="button" class="btn btn-default createAdmin" ng-hide='(update == true)'
                     ng-click="createPricing()">SAVE</button>    
 
-            <button type="button" class="btn btn-default createAdmin" ng-hide='(update == true)'
-                    ng-click="clear()">CLEAR ALL</button>
             <button type="button" class="btn btn-default createAdmin" 
                     ng-click="updatePricing()" ng-hide='update == false'>UPDATE</button>
         </form>

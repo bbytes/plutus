@@ -1,6 +1,6 @@
 
 
-angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $uibModal,$rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, pricingService) {
+angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $uibModal, $rootScope, $state, productService, appNotifyService, $sessionStorage, $window, $filter, pricingService) {
     $scope.emails = [];
     $scope.update = false;
     $scope.pricingArray = [];
@@ -12,11 +12,15 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
     var billingValue = [];
     var billingValueMetered = [];
     $scope.count = 1;
-
+    //listening   product data from popup
+    $scope.$on('pricing', function (response, data) {
+        $scope.allPricingPlans = data;
+        $state.reload();
+    });
 //adding dynamic rows for metered  details
     $scope.addMeteredDetails = function () {
-        if ($scope.count <  $scope.billingPeriodsCount.length) {
-              $scope.count++;
+        if ($scope.count < $scope.billingPeriodsCount.length) {
+            $scope.count++;
             $scope.meteredRows.push({key: '', cost: ''});
         } else {
             appNotifyService.error('There is no time period to add');
@@ -48,7 +52,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
     $scope.removeMeteredRows = function (index) {
         $scope.count--;
         $scope.meteredRows.splice(index, 1);
-       
+
     };
     //loading Products and currency
     $scope.init = function () {
@@ -73,7 +77,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
         pricingService.getAllBillings().then(function (response) {
             if (response.success) {
                 $scope.billingPeriods = response.data;
-                $scope.billingPeriodsCount= $scope.billingPeriods;
+                $scope.billingPeriodsCount = $scope.billingPeriods;
             }
         });
 
@@ -167,7 +171,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
             "desc": $scope.description,
             "productPlanItemToCost": $scope.item,
             "desc":$scope.description,
-            "currency": $scope.currency,
+                    "currency": $scope.currency,
             "appProfile": null,
             "billingCycle": $scope.billing,
             "discount": null
@@ -196,41 +200,41 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
     };
     //edit pricing
     $scope.edit = function (pricingId, productId) {
-        
-          
-         var uibModalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'app/partials/addPopup.html',
-                controller: 'addPopupCtrl',
-                backdrop: 'static',
-                size: 'md',
-                resolve: {
-                    options: function () {
-                        return {
-                            "title": 'Add Users',
-                            "data": $scope.product,
-                            "billEditStatus":true,
-                            "productId":productId,
-                            "pricingId":pricingId,
-                             "pricing":true,
-                             "allPricingPlans":$scope.allPricingPlans
-                             
-                        };
-                    }
-                }
-            });
 
-            uibModalInstance.result.then(function (selection) {
-              
-                $rootScope.popUpStatus=true;
-             //   $state.go('products');
-                  //alert($rootScope.popUpStatus);
-               
-            });
-        
-        
-        
-        
+
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/addPopup.html',
+            controller: 'addPopupCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                options: function () {
+                    return {
+                        "title": 'Add Users',
+                        "data": $scope.product,
+                        "billEditStatus": true,
+                        "productId": productId,
+                        "pricingId": pricingId,
+                        "pricing": true,
+                        "allPricingPlans": $scope.allPricingPlans
+
+                    };
+                }
+            }
+        });
+
+        uibModalInstance.result.then(function (selection) {
+
+            $rootScope.popUpStatus = true;
+            //   $state.go('products');
+            //alert($rootScope.popUpStatus);
+
+        });
+
+
+
+
 //        $scope.update = true;
 //        $scope.item1 = [];
 //        $scope.proId = productId;
@@ -340,7 +344,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
             appNotifyService.error('Error while creating project.');
         });
     };
-    
-    
-    
+
+
+
 });
