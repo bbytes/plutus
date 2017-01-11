@@ -61,11 +61,11 @@ angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, 
 
                 $rootScope.popUpStatus = true;
                 // $state.go('products');
-                alert($rootScope.popUpStatus);
+                // alert($rootScope.popUpStatus);
 
             });
         } else if ($rootScope.activeTab == "/pricing-plans") {
-           
+
             var uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/partials/addPopup.html',
@@ -87,11 +87,11 @@ angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, 
 
                 $rootScope.popUpStatus = true;
                 //  $state.go('products');
-                alert($rootScope.popUpStatus);
+                // alert($rootScope.popUpStatus);
 
             });
-        }else if ($rootScope.activeTab == "/admin") {
-          
+        } else if ($rootScope.activeTab == "/admin") {
+
             var uibModalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/partials/addPopup.html',
@@ -102,8 +102,8 @@ angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, 
                     options: function () {
                         return {
                             "title": 'Admin',
-                            "adminStatus":true
-                            
+                            "adminStatus": true
+
                         };
                     }
                 }
@@ -113,7 +113,7 @@ angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, 
 
                 $rootScope.popUpStatus = true;
                 //  $state.go('products');
-                alert($rootScope.popUpStatus);
+                // alert($rootScope.popUpStatus);
 
             });
         }

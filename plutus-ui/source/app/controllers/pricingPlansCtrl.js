@@ -167,7 +167,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
             "desc": $scope.description,
             "productPlanItemToCost": $scope.item,
             "desc":$scope.description,
-                    "currency": $scope.currency,
+            "currency": $scope.currency,
             "appProfile": null,
             "billingCycle": $scope.billing,
             "discount": null
@@ -340,4 +340,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
             appNotifyService.error('Error while creating project.');
         });
     };
+    
+    
+    
 });
