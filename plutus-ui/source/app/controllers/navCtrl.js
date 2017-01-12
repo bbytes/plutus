@@ -92,7 +92,7 @@ angular.module('plutusApp').controller('navCtrl', function ($scope, $rootScope, 
                 resolve: {
                     options: function () {
                         return {
-                            "title": 'Admin',
+                            "title": 'Create User',
                             "adminStatus": true
 
                         };
