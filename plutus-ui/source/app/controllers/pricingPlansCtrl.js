@@ -211,7 +211,7 @@ angular.module('plutusApp').controller('pricingPlansCtrl', function ($scope, $ui
             resolve: {
                 options: function () {
                     return {
-                        "title": 'Add Users',
+                        "title": 'Edit Pricing Details',
                         "data": $scope.product,
                         "billEditStatus": true,
                         "productId": productId,

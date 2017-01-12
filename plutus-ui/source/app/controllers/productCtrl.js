@@ -84,7 +84,7 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
             resolve: {
                 options: function () {
                     return {
-                        "title": 'Add Users',
+                        "title": 'Edit Product Details',
                         "data": $scope.product,
                         "status": true,
                         "productId": productId
