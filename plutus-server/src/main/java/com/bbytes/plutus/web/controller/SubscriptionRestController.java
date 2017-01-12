@@ -1,6 +1,7 @@
 package com.bbytes.plutus.web.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,6 @@ import com.bbytes.plutus.model.SubscriptionInfo;
 import com.bbytes.plutus.response.PlutusRestResponse;
 import com.bbytes.plutus.response.SubscriptionRegisterRestResponse;
 import com.bbytes.plutus.response.SubscriptionStatusRestResponse;
-import com.bbytes.plutus.service.BillingService;
 import com.bbytes.plutus.service.CustomerService;
 import com.bbytes.plutus.service.PlutusException;
 import com.bbytes.plutus.service.PricingPlanService;
@@ -52,9 +52,6 @@ public class SubscriptionRestController {
 
 	@Autowired
 	private ProductService productService;
-
-	@Autowired
-	private BillingService billingService;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	private PlutusRestResponse getAll() throws PlutusException {
@@ -97,6 +94,43 @@ public class SubscriptionRestController {
 		return status;
 	}
 
+	@RequestMapping(value = "/feature/{id}", method = RequestMethod.POST)
+	private PlutusRestResponse addFeatureData(@PathVariable String id, @RequestBody Map<String, Object> featureData)
+			throws PlutusException {
+		if (id == null)
+			throw new PlutusException("Subscription id is empty or null");
+
+		PlutusRestResponse response = null;
+
+		Subscription subscription = subscriptionService.findOne(id);
+		if (subscription != null) {
+			subscription.setProductFeatureToValueMap(featureData);
+			subscriptionService.save(subscription);
+			response = new PlutusRestResponse(true, subscription);
+		} else {
+			response = new PlutusRestResponse("Subscription for given id missing", false);
+		}
+
+		return response;
+	}
+
+	@RequestMapping(value = "/feature/{id}", method = RequestMethod.GET)
+	private PlutusRestResponse getFeatureDataMap(@PathVariable String id) throws PlutusException {
+		if (id == null)
+			throw new PlutusException("Subscription id is empty or null");
+
+		PlutusRestResponse response = null;
+
+		Subscription subscription = subscriptionService.findOne(id);
+		if (subscription != null) {
+			response = new PlutusRestResponse(true, subscription.getProductFeatureToValueMap());
+		} else {
+			response = new PlutusRestResponse("Subscription for given id missing", false);
+		}
+
+		return response;
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	private PlutusRestResponse delete(@PathVariable String id) throws PlutusException {
 		if (id == null)
@@ -117,7 +151,7 @@ public class SubscriptionRestController {
 		if (!subscription.isEnable() || subscription.isExpired() || subscription.isDeactivate()) {
 			throw new SubscriptionInvalidException("Subscription inactive or expired or deactivated");
 		}
-		
+
 		PlutusRestResponse status = new PlutusRestResponse(true, subscription.getPaymentHistoryList());
 		return status;
 
@@ -151,7 +185,6 @@ public class SubscriptionRestController {
 		List<PricingPlan> pricingPlanList = pricingPlanService.findByProduct(product);
 		if (pricingPlanList != null && !pricingPlanList.isEmpty())
 			subscription.setPricingPlan(pricingPlanList.get(0));
-
 
 		subscription.setSubscriptionKey(KeyUtil.getSubscriptionKey());
 		subscription.setSubscriptionSecret(KeyUtil.getSubscriptionSecret());

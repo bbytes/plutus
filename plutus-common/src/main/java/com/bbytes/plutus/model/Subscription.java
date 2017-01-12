@@ -3,7 +3,9 @@ package com.bbytes.plutus.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -87,6 +89,8 @@ public class Subscription extends BaseEntity {
 	@DBRef
 	@JsonManagedReference
 	private List<PaymentHistory> paymentHistoryList = new ArrayList<>();
+	
+	private Map<String,Object> productFeatureToValueMap = new HashMap<String, Object>();
 
 	// string form stored in db but converted during runtime
 	@Getter(AccessLevel.NONE)

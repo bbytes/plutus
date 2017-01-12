@@ -45,6 +45,8 @@ public class Product {
 	// all the emails to which any communication about this product like
 	// feature request , issues etc has to be sent
 	private List<String> productTeamEmails = new ArrayList<>();
+	
+	private List<String>  productFeatureFields = new ArrayList<>();
 
 	public void addProductTeamEmails(String... emails) {
 		productTeamEmails.addAll(Arrays.asList(emails));

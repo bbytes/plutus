@@ -56,7 +56,7 @@ public class ProductRestController {
 
 		product = productService.save(product);
 
-		PlutusRestResponse response = new PlutusRestResponse(true,product);
+		PlutusRestResponse response = new PlutusRestResponse(true, product);
 		return response;
 	}
 
@@ -71,7 +71,43 @@ public class ProductRestController {
 		}
 		product = productService.save(product);
 
-		PlutusRestResponse response = new PlutusRestResponse(true,product);
+		PlutusRestResponse response = new PlutusRestResponse(true, product);
+		return response;
+	}
+
+	@RequestMapping(value = "/feature/{id}", method = RequestMethod.GET)
+	private PlutusRestResponse getproductFeatures(@PathVariable String id) throws PlutusException {
+		if (id == null)
+			throw new PlutusException("Product id is empty or null");
+
+		PlutusRestResponse response = null;
+
+		Product product = productService.findOne(id);
+		if (product != null) {
+			response = new PlutusRestResponse(true, product.getProductFeatureFields());
+		} else {
+			response = new PlutusRestResponse("Product with given id missing ", false);
+		}
+
+		return response;
+	}
+	
+	@RequestMapping(value = "/feature/{id}", method = RequestMethod.POST)
+	private PlutusRestResponse addProductFeatureList(@PathVariable String id,@RequestBody List<String> featureFieldsList) throws PlutusException {
+		if (id == null)
+			throw new PlutusException("Product id is empty or null");
+
+		PlutusRestResponse response = null;
+
+		Product product = productService.findOne(id);
+		if (product != null) {
+			product.setProductFeatureFields(featureFieldsList);
+			productService.save(product);
+			response = new PlutusRestResponse(true, product);
+		} else {
+			response = new PlutusRestResponse("Product with given id missing ", false);
+		}
+
 		return response;
 	}
 
