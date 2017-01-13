@@ -11,6 +11,34 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     $scope.pagedItems = [];
     $scope.currentPage = 0;
     $rootScope.bodyClass = 'standalone'; //avoiding background image
+     $scope.editLicense = function (productId) {
+     //  $state.go('license')
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/license.html',
+            controller: 'licenseCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                options: function () {
+                    return {
+                        "title": 'Edit License',
+                        "productID":productId,
+                        "editLicense":true
+                        
+                    };
+                }
+            }
+        });
+
+        uibModalInstance.result.then(function (selection) {
+
+            $rootScope.popUpStatus = true;
+            //   $state.go('products');
+            //  alert($rootScope.popUpStatus);
+
+        });
+    };
     
     /*load all subscriptions,products */
     $scope.init = function () {

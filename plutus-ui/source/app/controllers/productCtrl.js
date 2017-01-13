@@ -10,7 +10,33 @@ angular.module('plutusApp').controller('productCtrl', function ($scope, $rootSco
         $scope.product = data;
         $state.reload();
     });
+  $scope.addLicense = function (productId) {
+     //  $state.go('license')
+        var uibModalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'app/partials/license.html',
+            controller: 'licenseCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                options: function () {
+                    return {
+                        "title": 'Add License Fields',
+                        "productID":productId
+                        
+                    };
+                }
+            }
+        });
 
+        uibModalInstance.result.then(function (selection) {
+
+            $rootScope.popUpStatus = true;
+            //   $state.go('products');
+            //  alert($rootScope.popUpStatus);
+
+        });
+    };
     $scope.init = function () {
         $scope.update = false;
         productService.getProduct().then(function (response) {

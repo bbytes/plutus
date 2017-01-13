@@ -158,23 +158,26 @@
                 </div>
             </div>
 
-            <table style="width:170%;">
+            <table style="width:200%;">
                 <thead>
                     <tr>
-                        <th style="width:20%;">Name</th> 
+                        <th style="width:20%;">Product Name</th> 
+                        <th style="width:20%;">Pricing Name</th> 
                         <th style="width:20%;">Billing Type</th>
-                        <th style="width:30%;">Description</th>
-                        <th style="width:30%;">Itemised Details</th>
+                        <th style="width:20%;">Description</th>
+                        <th style="width:80%;">Itemised Details</th>
                         <th style="width:10%;">Action</th>
                         <th style="width:10%;"></th>
+                     
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="pricing in allPricingPlans| filter:searchText">                        
+                    <tr ng-repeat="pricing in allPricingPlans| filter:searchText">    
+                        <td style="width:20%;">{{pricing.product.name}}</td>
                         <td style="width:20%;">{{pricing.name}}</td>
                         <td style="width:20%;">{{pricing.billingCycle}}</td>
                         <td style="width:20%;">{{pricing.desc}}</td>
-                        <td style="width:20%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
+                        <td style="width:80%;"><span ng-repeat="(key,value) in pricing.productPlanItemToCost">{{key}}:{{value}},</span></td>
                         <td style="width:10%;">
                             <a href="#" ng-click="edit(pricing.id, pricing.product.id)" class="navbar-toggle collapse in icon-menu" data-toggle="collapse" id="menu-toggle-2"><img src="../../assets/img/edit.png"  tooltips tooltip-template="Edit"></a> 
                         </td>

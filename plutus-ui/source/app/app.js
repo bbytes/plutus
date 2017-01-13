@@ -116,6 +116,27 @@ plutusApp.config([
                 authorization: 'products',
                 redirectTo: 'login'
             }
+        }).state('license', {
+            url: '/license',
+            views: {
+                '': {
+                    templateUrl: 'app/partials/home.html'
+                },
+                'header@pricing-plans': {
+                    templateUrl: 'app/partials/home-header.html'
+                },
+                'main@pricing-plans': {
+                    templateUrl: 'app/partials/license.html',
+                    controller: 'licenseCtrl',
+                },
+                'footer@pricing-plans': {
+                    templateUrl: 'app/partials/home-footer.html'
+                }
+            },
+            data: {
+                authorization: 'pricingplans',
+                redirectTo: 'login'
+            }
         }).state('pricing-plans', {
             url: '/pricing-plans',
             views: {

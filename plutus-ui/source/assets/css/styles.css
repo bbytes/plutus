@@ -673,7 +673,14 @@ select:first-child, select#f {
    // margin:40px auto;
     border-bottom: 2px solid #7c6991;
     margin-bottom: 11px;
-    width: 971px;
+    width: 1137px;
+
+}
+.main-title1{
+   // margin:40px auto;
+    border-bottom: 2px solid #7c6991;
+    margin-bottom: 11px;
+    width: 970px;
 
 }
 .main-type{

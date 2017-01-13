@@ -1,0 +1,91 @@
+<div class="modal-header clearfix" >
+
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <span><a class="pull-right icon-clear"
+             ng-click="cancel()" style="cursor: pointer;"><img src="../../assets/img/cross1.png"  tooltips tooltip-template="Close" ></a></span>
+
+</div>
+<div class="modal-body data-row-body">
+
+
+    <div class="create-project" ng-init="init()" ng-if="editLicense == undefined">
+        <form name="myForm">
+            <div class="row-md-12" >
+
+                {{meteredRows}}
+                <div class="col-md-12" ng-repeat="value in meteredRows" >
+
+                    <div class="col-sm-1 col-xs-12 pull-right" style="cursor: pointer;">
+                        <a ng-click="removeMeteredRows($index)" tooltip="delete"><img src="../../assets/img/del.jpg"  tooltips tooltip-template="Delete"></a>  
+                    </div>
+
+                    <div class="col-sm-1 col-xs-12 pull-right"  style="cursor: pointer;">
+                        <a ng-click='addMeteredDetails()' tooltip="Add"><img src="../../assets/img/plus.png"  tooltips tooltip-template="add"></a>                           
+                    </div>
+
+
+                    <div class="col-md-9">
+                        <div class="form-group">                           
+                            <input type="text" ng-model="value.key" 
+                                   class="form-control" > 
+                        </div>
+                    </div> 
+
+
+
+                </div>
+
+            </div> 
+
+
+
+
+            <button type="button" class="btn btn-default createAdmin" 
+                    ng-click="addFields()">Add Fields</button>    
+
+
+        </form>
+    </div> 
+
+    <div class="create-project" ng-init="init()" ng-if="editLicense == true">
+        <form name="myForm">
+            <div class="row-md-12" >
+
+                {{editLicense}}
+                <div class="col-md-12" ng-repeat="value in meteredRows" >
+
+                    <div class="col-sm-1 col-xs-12 pull-right" style="cursor: pointer;">
+                        <a ng-click="removeMeteredRows($index)" tooltip="delete"><img src="../../assets/img/del.jpg"  tooltips tooltip-template="Delete"></a>  
+                    </div>
+
+                    <div class="col-sm-1 col-xs-12 pull-right"  style="cursor: pointer;">
+                        <a ng-click='addMeteredDetails()' tooltip="Add"><img src="../../assets/img/plus.png"  tooltips tooltip-template="add"></a>                           
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">                           
+                            <input type="text" ng-model="value.key" 
+                                   class="form-control" > 
+                        </div>
+                    </div> 
+                    <div class="col-md-3">
+                        <div class="form-group">                           
+                            <input type="text" ng-model="value.key" 
+                                   class="form-control" > 
+                        </div>
+                    </div> 
+                </div>
+
+            </div> 
+
+            <button type="button" class="btn btn-default createAdmin" 
+                    ng-click="addFields()">Update License</button>    
+
+
+        </form>
+    </div> 
+</div>
+<!--div class="modal-footer add-user" >
+    <button class="btn save-close" ng-click="ok()" ng-click="cancel()" style="align:right;">Close</button>
+</div-->
