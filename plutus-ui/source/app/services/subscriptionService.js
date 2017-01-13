@@ -1,4 +1,23 @@
 angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q) {
+    
+     this.addFeatureFields = function (id, input) {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: $rootScope.baseUrl + 'api/v1/subscription/feature/' + id,
+            data: input,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).success(function (response, status, headers, config) {
+
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject(response);
+        });
+
+        return deferred.promise;
+    };
 
     this.getSubscriptions = function () {
 

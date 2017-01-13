@@ -1,7 +1,7 @@
-angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope,productService, $uibModal, subscriptionService, appNotifyService) {
+angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope, $rootScope, productService, $uibModal, subscriptionService, appNotifyService) {
     /*declare variables */
     $scope.showStats = false;
-     $scope.pricingPlans=[];
+    $scope.pricingPlans = [];
 //  Variales for pagination
     $scope.gap = 5;
     $rootScope.bodyClass = 'standalone'; //avoiding background image
@@ -11,8 +11,17 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
     $scope.pagedItems = [];
     $scope.currentPage = 0;
     $rootScope.bodyClass = 'standalone'; //avoiding background image
-     $scope.editLicense = function (productId) {
-     //  $state.go('license')
+    $scope.editLicense = function (subscriptionKey) {
+        angular.forEach($scope.subscriptionsList, function (value) {
+            if (value.subscriptionKey == subscriptionKey)
+            {
+                $scope.productId = value.pricingPlan.product.id;
+                $scope.subscriptionId = value.id;
+
+            }
+
+        });
+        //  $state.go('license')
         var uibModalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'app/partials/license.html',
@@ -23,9 +32,10 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                 options: function () {
                     return {
                         "title": 'Edit License',
-                        "productID":productId,
-                        "editLicense":true
-                        
+                        "productID": $scope.productId,
+                        "subscriptionId": $scope.subscriptionId,
+                        "editLicense": true
+
                     };
                 }
             }
@@ -39,100 +49,100 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
 
         });
     };
-    
+
     /*load all subscriptions,products */
     $scope.init = function () {
         subscriptionService.getSubscriptions().then(function (response) {
             if (response.success) {
                 $scope.subscriptionsList = response.data;
-                   angular.forEach($scope.subscriptionsList, function (value) {
-                    if(value.pricingPlan && value.pricingPlan.productPlanItemToCost){   
-                     $scope.pricingPlans=(value.pricingPlan.productPlanItemToCost);
+                angular.forEach($scope.subscriptionsList, function (value) {
+                    if (value.pricingPlan && value.pricingPlan.productPlanItemToCost) {
+                        $scope.pricingPlans = (value.pricingPlan.productPlanItemToCost);
                     }
-                   
-                   });
-                
-            };
-               
-        productService.getProduct().then(function (response) {
-            if (response.success) {
-                $scope.products = response.data;
-                $scope.selectedProduct= $scope.products[0].id;
-                //appNotifyService.info("success ");
+
+                });
+
             }
-        });
-        
-        subscriptionService.getAllTimePeriods().then(function(response) {
-            if (response && response.success) {
-                  $scope.allTimePeriods = response.data;
-                   
+            ;
+
+            productService.getProduct().then(function (response) {
+                if (response.success) {
+                    $scope.products = response.data;
+                    $scope.selectedProduct = $scope.products[0].id;
+                    //appNotifyService.info("success ");
+                }
+            });
+
+            subscriptionService.getAllTimePeriods().then(function (response) {
+                if (response && response.success) {
+                    $scope.allTimePeriods = response.data;
+
                     $scope.selectedTime = $scope.allTimePeriods[2];
-                    
-            }
-          
+
+                }
+
+            });
         });
-    });
-}
-    
+    }
+
     /*method to load subscriptions for selected product */
     $scope.getSubscriptionsForProd = function () {
         $scope.showStats = false;
-        subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function(response) {
+        subscriptionService.getSubscriptionsForProd($scope.selectedProduct).then(function (response) {
             if (response && response.success) {
-                  $scope.subscriptionsList = response.data;
-                   angular.forEach($scope.subscriptionsList, function (value) {
-                    $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
-                    $scope.custStatus=value.deactivate;
-                   });
-            }else{
+                $scope.subscriptionsList = response.data;
+                angular.forEach($scope.subscriptionsList, function (value) {
+                    $scope.pricingPlans = value.pricingPlan.productPlanItemToCost;
+                    $scope.custStatus = value.deactivate;
+                });
+            } else {
                 appNotifyService.error("Something went wrong... ");
             }
-          
+
         });
 
     };
-    
+
     /* Method to load stats of particular customer*/
     $scope.getCustomerDetails = function (subscriptionKey) {
-        $rootScope.custsubkey=subscriptionKey;
+        $rootScope.custsubkey = subscriptionKey;
         $scope.showStats = true;
-       $scope.getTimePeriod('0',$scope.selectedTime);
+        $scope.getTimePeriod('0', $scope.selectedTime);
     };
-    
+
     /*On change of timeperiod load stats*/
-    $scope.getTimePeriod = function (index,value) {
-         $scope.selectedTime=value;
-             subscriptionService.getCustomerDetails($rootScope.custsubkey,$scope.selectedTime).then(function(response) {
+    $scope.getTimePeriod = function (index, value) {
+        $scope.selectedTime = value;
+        subscriptionService.getCustomerDetails($rootScope.custsubkey, $scope.selectedTime).then(function (response) {
             if (response && response.success) {
-                  $scope.customerStats = response.data;
-                    angular.forEach($scope.customerStats, function (value) {
-                   // $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
-                    $scope.dataStats=value.stats;
-                    $scope.entryDate=value.entryDate;
-                     $scope.subKey=value.subscriptionKey;
-                    
-                   });
-                 // $scope.dataStats=$scope.customerStats.stats;
-                   }   
+                $scope.customerStats = response.data;
+                angular.forEach($scope.customerStats, function (value) {
+                    // $scope.pricingPlans=value.pricingPlan.productPlanItemToCost;
+                    $scope.dataStats = value.stats;
+                    $scope.entryDate = value.entryDate;
+                    $scope.subKey = value.subscriptionKey;
+
+                });
+                // $scope.dataStats=$scope.customerStats.stats;
+            }
         });
     };
 
     /*Activate or deactivate  customer*/
     $scope.deActivateCust = function (subscriptionkey) {
         $scope.showStats = false;
-        subscriptionService.activateDeactivate(subscriptionkey).then(function(response) {
+        subscriptionService.activateDeactivate(subscriptionkey).then(function (response) {
             if (response && response.success) {
-                  $scope.customerStats = response.data;
-                  $scope.init();
-                }
-            else{
-                    appNotifyService.error(response.message);
+                $scope.customerStats = response.data;
+                $scope.init();
+            } else {
+                appNotifyService.error(response.message);
             }
         });
     };
-    
+
     /* Method to open selected plans in modal*/
-    $scope.openWizard = function (pricingPlan,itemcost) {
+    $scope.openWizard = function (pricingPlan, itemcost) {
         $uibModal.open({
             animation: true,
             templateUrl: 'app/partials/wizard-modal.html',
@@ -144,7 +154,7 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
                     return {
                         "title": 'Plans',
                         "list": pricingPlan,
-                         "test": itemcost
+                        "test": itemcost
                     };
                 }
             }
@@ -154,5 +164,5 @@ angular.module('plutusApp').controller('subscriptionInfoCtrl', function ($scope,
             }
         });
     };
-  
+
 });

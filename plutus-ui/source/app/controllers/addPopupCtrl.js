@@ -13,7 +13,7 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
     $scope.pricing = options.pricing;
     $scope.productId = options.productId;
     $scope.title = options.title;
-    $scope.adminStatus = options.adminStatus; 
+    $scope.adminStatus = options.adminStatus;
     $scope.pricingArray = [];
     $scope.fixedRows = [];
     $scope.meteredRows = [];
@@ -162,7 +162,7 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
 
 
     ////pricing functions
-    
+
     //adding dynamic rows for metered  details
     $scope.addMeteredDetails = function () {
         if ($scope.count < $scope.billingPeriodsCount.length) {
@@ -172,7 +172,7 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
             appNotifyService.error('There is no time period to add');
         }
     };
-    
+
     // existing value cleared
     $scope.selectBillingMetered = function (index, value) {
 
@@ -181,7 +181,7 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
             val.key = '';
         });
     };
-    
+
     // Remove meteredRows
     $scope.removeMeteredRows = function (index) {
         $scope.count--;
@@ -190,7 +190,7 @@ angular.module('plutusApp').controller('addPopupCtrl', function ($scope, $rootSc
     };
 
     //adding Pricing
-    
+
     $scope.createPricing = function () {
 //        if (!pricingdetails) {
 //            appNotifyService.error('Please enter a valid product name');
