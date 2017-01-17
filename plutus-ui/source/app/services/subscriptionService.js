@@ -1,6 +1,6 @@
 angular.module('plutusApp').service('subscriptionService', function ($rootScope, $http, $q) {
-    
-     this.addFeatureFields = function (id, input) {
+    //updating feature fields in subscription page
+    this.addFeatureFields = function (id, input) {
         var deferred = $q.defer();
         $http({
             method: 'POST',
@@ -37,11 +37,11 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-    
-     this.getSubscriptionsForProd = function (product) {
+
+    this.getSubscriptionsForProd = function (product) {
 
         var deferred = $q.defer();
-        
+
         $http({
             method: 'GET',
             url: $rootScope.baseUrl + 'api/v1/subscription/' + product,
@@ -56,11 +56,11 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-    
-      this.deleteSubscription = function (product) {
+
+    this.deleteSubscription = function (product) {
 
         var deferred = $q.defer();
-        
+
         $http({
             method: 'DELETE',
             url: $rootScope.baseUrl + $rootScope.apiUrl + 'subscription' + id,
@@ -75,7 +75,7 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-    
+
     this.getAllTimePeriods = function () {
 
         var deferred = $q.defer();
@@ -94,14 +94,14 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-   
-     this.getCustomerDetails = function (key,timeperiod) {
+
+    this.getCustomerDetails = function (key, timeperiod) {
 
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
-            url: $rootScope.baseUrl + 'api/v1/product/stats/' + timeperiod  + '/' + key,
+            url: $rootScope.baseUrl + 'api/v1/product/stats/' + timeperiod + '/' + key,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -113,8 +113,8 @@ angular.module('plutusApp').service('subscriptionService', function ($rootScope,
 
         return deferred.promise;
     };
-       
-     this.activateDeactivate = function (subkey) {
+
+    this.activateDeactivate = function (subkey) {
 
         var deferred = $q.defer();
 
